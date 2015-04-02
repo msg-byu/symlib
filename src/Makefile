@@ -1,0 +1,115 @@
+# Set up conditional compilation so that one Makefile can handle
+# multiple platforms/compilers. Branch according to an environmental
+# variable F90. I wish someone would show me a better way of doing this.
+
+ifeq (${F90},gfortran)  # free fortran compiler
+  FFLAGS =  -g -fbounds-check -fPIC -pedantic -Wall -ffree-line-length-none
+  FOUND = true
+endif
+
+ifeq (${F90},ifort)  # Intel compiler
+  ifeq (${DEBUG},false)
+     FFLAGS =  -O3 -fPIC
+     FOUND = true
+  endif
+  ifeq (${DEBUG},true)
+     FFLAGS =  -g -error-limit 7 -traceback -check bounds -check uninit -check pointers -fp-stack-check  -warn -heap-arrays -fpic
+     FOUND = true
+  endif
+  ifeq (${DEBUG},)
+     FFLAGS =  -g -error-limit 7 -traceback -check bounds -warn -heap-arrays -fpic
+     FOUND = true
+  endif
+
+endif
+
+ifeq (${F90},ifc)  # Intel compiler
+  F90 =  /opt/intel/fc/9.1.040/bin/ifort
+  FFLAGS =  -g -fPIC -error-limit 7 -traceback -check bounds -warn -heap-arrays
+  FOUND = true
+endif
+ifeq (${F90},xlf90) # IBM compiler
+  FFLAGS = -g -C -fPIC -qsuffix=f=f90  
+  FOUND = true
+endif
+ifeq (${F90},f95) # Absoft PPC compiler
+  FFLAGS = -Rb -Rc  -z2 -ea -fPIC
+# B80 entry into each subroutine  ; Rb bounds; Rc array conformance
+  FOUND = true
+endif
+ifeq (${F90},)  # If the variable isn't set, make sure compilation bombs
+error:
+	echo Error environmental variable "F90" not set!
+endif
+ifneq (${FOUND},true) # If it's set but no matching flags then bomb
+error:	
+	echo Error: makefile doesn\'t have flags for this compiler
+endif
+
+SRC = num_types.f90 utilities.f90 numerical_utilities.f90	\
+vector_matrix_utilities.f90 symmetry_module.f90 compare_structures.f90 \
+combinatorics.f90 rational_mathematics.f90 group_theory.f90
+OBJS = ${SRC:.f90=.o}
+
+
+.SUFFIXES :  
+.SUFFIXES :  .f .f90 .f95 .o
+
+all: libutils.a libsym.a libcomparestructs.a librational.a \
+     libcombinatorics.a
+
+libutils.a: num_types.o utilities.o numerical_utilities.o \
+            vector_matrix_utilities.o
+	ar ru $@ $?
+	ranlib  $@
+
+libutils.so:  num_types.o utilities.o numerical_utilities.o \
+              vector_matrix_utilities.o
+	ifort -dynamiclib -fpic -o libutils.so num_types.f90 utilities.f90 numerical_utilities.f90 vector_matrix_utilities.f90
+#	ar ru $@ $?
+#	ranlib  $@
+
+libsym.a: symmetry_module.o group_theory.o
+	ar ru $@ $?
+	ranlib $@
+
+libcomparestructs.a: compare_structures.o
+	ar ru $@ $?
+	ranlib $@
+
+librational.a: rational_mathematics.o
+	ar ru $@ $?
+	ranlib $@
+
+libcombinatorics.a: combinatorics.o
+	ar ru $@ $?
+	ranlib $@
+
+compare.x: compare.o compare_driver.o
+	${F90} ${LDFLAGS} -o $@ compare.o compare_driver.o 
+
+#test.x:  combinatorics.o test_mask.o 
+#	${F90} ${LDFLAGS} -o $@  combinatorics.o test_mask.o libutils.a
+test.x:  test_reduce.o 
+	${F90} ${LDFLAGS} -o $@  test_reduce.o libutils.a librational.a
+
+HNFSNF_check: HNF_driver.o
+	${F90} ${LDFLAGS} -o $@ ${OBJS}
+
+.f95.o : 
+	${F90} ${FFLAGS} -c $<
+
+.f90.o : 
+	${F90} ${FFLAGS} -c $<
+
+CLEAN  = *.o *.mod *.a
+clean : 
+	rm -f ${CLEAN}
+
+remake:
+	make clean
+	make
+
+clobber: 
+	rm -f  ${CLEAN}  *~ \#*
+	make

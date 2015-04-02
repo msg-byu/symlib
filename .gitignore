@@ -1,4 +1,13 @@
+# Emacs Editing
+*.*~
+\#*#
+\#*
+
+# Unit Testing
+staging/
+
 # Compiled Object files
+src/compile.log
 *.slo
 *.lo
 *.o

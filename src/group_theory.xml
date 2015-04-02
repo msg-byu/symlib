@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fortpy mode="docstring">
+  <decorates name="group_theory.grouper">
+    <group name="group_tests" purpose="testing" staging="../staging/">
+      <test identifier="original" description="Original grouper testing" timed="true"
+	    cases="1152, 441, 384, 256, 120a, 120b, 576">
+	<output identifier="grouper.out" folder="./tests" file="grouper.out.{}"
+		template="integer.xml" />
+	<target name="g" compareto="grouper.out" varfile="grouper.out" when="each" />
+      </test>
+      <assignment name="g" value="generators" allocate="true"> 
+	<value identifier="generators" folder="./tests" file="grouper.in.{}" rename="grouper.in"/>
+      </assignment>
+    </group>
+  </decorates>
+</fortpy>
