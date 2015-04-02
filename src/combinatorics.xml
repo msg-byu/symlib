@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fortpy mode="docstring">
   <decorates name="combinatorics.nchoosek">
-    <group name="binomial_tests" purpose="testing" staging="./unittests/">
+    <group name="binomial_tests" purpose="testing" staging="../staging/">
       <test identifier="Manolopoulos" description="Yannis Manolopoulos
 						   binomial function testing"
 	    timed="true" >
-	<input folder="./tests" file="nchoosek.in">
+	<input folder="../tests/combinatorics" file="nchoosek.in">
 	  <line id="n_k" type="integer" values="2" names="n, k" />
 	</input>  
-	<output identifier="nchoosek.out" folder="./tests" file="nchoosek.out" 
+	<output identifier="nchoosek.out" folder="../tests/combinatorics" file="nchoosek.out" 
 		template="integer.xml" />
 	<target name="[default]" compareto="nchoosek.out" varfile="nchoosek.out" when="each" />
       </test>
     </group>
   </decorates>
   <decorates name="combinatorics.nchoosek_orig">
-    <group name="binomial_tests" purpose="testing" staging="./unittests/">
+    <group name="binomial_tests" purpose="testing" staging="../staging/">
       <test identifier="original" description="Original binomial function testing"
 	    timed="true" >
-	<input folder="./tests" file="nchoosek.in">
+	<input folder="../tests/combinatorics" file="nchoosek.in">
 	  <line id="n_k" type="integer" values="2" names="n, k" />
 	</input>  
-	<output identifier="nchoosek.out" folder="./tests" file="nchoosek.out" 
+	<output identifier="nchoosek.out" folder="../tests/combinatorics" file="nchoosek.out" 
 		template="integer.xml" />
 	<target name="[default]" compareto="nchoosek.out" varfile="nchoosek.out" when="each" />
       </test>
