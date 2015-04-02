@@ -39,15 +39,15 @@ ifeq (${F90},f95) # Absoft PPC compiler
 endif
 ifeq (${F90},)  # If the variable isn't set, make sure compilation bombs
 error:
-	echo Error environmental variable "F90" not set!
+	echo Error: environmental variable "F90" not set! Use make F90=[gfortran|ifort]
 endif
 ifneq (${FOUND},true) # If it's set but no matching flags then bomb
 error:	
-	echo Error: makefile doesn\'t have flags for this compiler
+	echo Error: makefile doesn\'t have flags for this compiler; use make F90=[gfortran|ifort]
 endif
 
 SRC = num_types.f90 utilities.f90 numerical_utilities.f90	\
-vector_matrix_utilities.f90 symmetry_module.f90 compare_structures.f90 \
+vector_matrix_utilities.f90 symmetry.f90 compare_structures.f90 \
 combinatorics.f90 rational_mathematics.f90 group_theory.f90
 OBJS = ${SRC:.f90=.o}
 
@@ -69,7 +69,7 @@ libutils.so:  num_types.o utilities.o numerical_utilities.o \
 #	ar ru $@ $?
 #	ranlib  $@
 
-libsym.a: symmetry_module.o group_theory.o
+libsym.a: symmetry.o group_theory.o
 	ar ru $@ $?
 	ranlib $@
 

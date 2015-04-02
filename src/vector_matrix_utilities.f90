@@ -1,6 +1,6 @@
 MODULE vector_matrix_utilities
 use num_types
-use utilities_module
+use utilities
 use numerical_utilities
 implicit none
 private

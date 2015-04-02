@@ -8,7 +8,7 @@ Symmetry-related routines for cluster expansion and other codes that rely on sym
 
 ```
 cd src/
-make
+make F90=\[gfortran|ifort\]
 ```
 
 This will generate libraries `libutils.a libsym.a libcomparestructs.a librational.a libcombinatorics.a`. For API references on these libraries (which have to still be generated using `fortpy`), check out the wiki page.

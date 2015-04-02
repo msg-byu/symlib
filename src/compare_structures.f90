@@ -11,7 +11,7 @@ MODULE compare_structures
 use num_types 
 use vector_matrix_utilities, only: volume, determinant, matrix_inverse
 use numerical_utilities, only: equal 
-use symmetry_module 
+use symmetry
 implicit none 
 private
 public compare_arbitrary_structures, is_derivative, is_equiv_lattice, is_lattice_point

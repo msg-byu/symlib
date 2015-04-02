@@ -1,5 +1,5 @@
 MODULE group_theory
-use utilities_module, only : ralloc
+use utilities, only : ralloc
 implicit none
 private
 public grouper

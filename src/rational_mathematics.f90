@@ -1,7 +1,7 @@
 MODULE rational_mathematics
   use num_types
   use vector_matrix_utilities
-  use utilities_module, only: ralloc
+  use utilities, only: ralloc
 implicit none
 private
 public gcd, SmithNormalForm, HermiteNormalForm, is_a_rational_in_range,&
