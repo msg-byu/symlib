@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fortpy mode="docstring">
+  <decorates name="numerical_utilities.equal_rank1">
+    <group name="equal_rank1" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 1 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_rank1.out" folder="../tests/numerical_utilities"
+		file="equal_rank1.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank1.out" varfile="equal_rank1.out"
+		when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities" file="equal_rank1_a.in.{}"
+	       rename="equal_rank1_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin" allocate="true"> 
+	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank1_b.in.{}"
+	       rename="equal_rank1_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_rank1_tol.in.{}" rename="equal_rank1_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_rank2">
+    <group name="equal_rank2" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_rank2.out" folder="../tests/numerical_utilities"
+		file="equal_rank2.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank2.out" varfile="equal_rank2.out"
+		when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities" file="equal_rank2_a.in.{}"
+	       rename="equal_rank2_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin" allocate="true"> 
+	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank2_b.in.{}"
+	       rename="equal_rank2_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities" file="equal_rank2_tol.in.{}"
+	       rename="equal_rank2_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_scalar">
+    <group name="equal_scalar" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_scalar.out" folder="../tests/numerical_utilities"
+		file="equal_scalar.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_scalar.out" varfile="equal_scalar.out"
+		when="each" />
+      </test>
+      <assignment name="a" value="ain"> 
+	<value identifier="ain" folder="../tests/numerical_utilities" file="equal_scalar_a.in.{}"
+	       rename="equal_scalar_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin"> 
+	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_scalar_b.in.{}"
+	       rename="equal_scalar_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_scalar_tol.in.{}" rename="equal_scalar_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_scalar_real_int">
+    <group name="equal_scalar_real_int" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_scalar_real_int.out" folder="../tests/numerical_utilities"
+		file="equal_scalar_real_int.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_scalar_real_int.out"
+		varfile="equal_scalar_real_int.out" when="each" />
+      </test>
+      <assignment name="a" value="ain"> 
+	<value identifier="ain" folder="../tests/numerical_utilities"
+	       file="equal_scalar_real_int_a.in.{}" rename="equal_scalar_real_int_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin"> 
+	<value identifier="bin" folder="../tests/numerical_utilities"
+	       file="equal_scalar_real_int_b.in.{}" rename="equal_scalar_real_int_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_scalar_real_int_tol.in.{}" rename="equal_scalar_real_int_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_scalar_int_int">
+    <group name="equal_scalar_int_int" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_scalar_int_int.out" folder="../tests/numerical_utilities"
+		file="equal_scalar_int_int.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_scalar_int_int.out"
+		varfile="equal_scalar_int_int.out" when="each" />
+      </test>
+      <assignment name="a" value="ain"> 
+	<value identifier="ain" folder="../tests/numerical_utilities"
+	       file="equal_scalar_int_int_a.in.{}" rename="equal_scalar_int_int_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin"> 
+	<value identifier="bin" folder="../tests/numerical_utilities"
+	       file="equal_scalar_int_int_b.in.{}" rename="equal_scalar_int_int_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_scalar_int_int_tol.in.{}" rename="equal_scalar_int_int_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_rank1_rank0">
+    <group name="equal_rank1_rank0" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_rank1_rank0.out" folder="../tests/numerical_utilities"
+		file="equal_rank1_rank0.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank1_rank0.out"
+		varfile="equal_rank1_rank0.out" when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities"
+	       file="equal_rank1_rank0_a.in.{}" rename="equal_rank1_rank0_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin"> 
+	<value identifier="bin" folder="../tests/numerical_utilities"
+	       file="equal_rank1_rank0_b.in.{}" rename="equal_rank1_rank0_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_rank1_rank0_tol.in.{}" rename="equal_rank1_rank0_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_rank2_rank0">
+    <group name="equal_rank2_rank0" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_rank2_rank0.out" folder="../tests/numerical_utilities"
+		file="equal_rank2_rank0.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank2_rank0.out"
+		varfile="equal_rank2_rank0.out" when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities"
+	       file="equal_rank2_rank0_a.in.{}" rename="equal_rank2_rank0_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin"> 
+	<value identifier="bin" folder="../tests/numerical_utilities"
+	       file="equal_rank2_rank0_b.in.{}" rename="equal_rank2_rank0_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_rank2_rank0_tol.in.{}" rename="equal_rank2_rank0_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_rank2_real_int">
+    <group name="equal_rank2_real_int" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_rank2_real_int.out" folder="../tests/numerical_utilities"
+		file="equal_rank2_real_int.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank2_real_int.out"
+		varfile="equal_rank2_real_int.out" when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities"
+	       file="equal_rank2_real_int_a.in.{}" rename="equal_rank2_real_int_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin" allocate="true"> 
+	<value identifier="bin" folder="../tests/numerical_utilities"
+	       file="equal_rank2_real_int_b.in.{}" rename="equal_rank2_real_int_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_rank2_real_int_tol.in.{}" rename="equal_rank2_real_int_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_rank1_real_int">
+    <group name="equal_rank1_real_int" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[1-50]">
+	<output identifier="equal_rank1_real_int.out" folder="../tests/numerical_utilities"
+		file="equal_rank1_real_int.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank1_real_int.out"
+		varfile="equal_rank1_real_int.out" when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities"
+	       file="equal_rank1_real_int_a.in.{}" rename="equal_rank1_real_int_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin" allocate="true"> 
+	<value identifier="bin" folder="../tests/numerical_utilities"
+	       file="equal_rank1_real_int_b.in.{}" rename="equal_rank1_real_int_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_rank1_real_int_tol.in.{}" rename="equal_rank1_real_int_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="numerical_utilities.equal_rank3">
+    <group name="equal_rank3" purpose="testingf?_uncle_bug?" staging="../unittests/">
+      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
+	    cases="[46-50]">
+	<output identifier="equal_rank3.out" folder="../tests/numerical_utilities"
+		file="equal_rank3.out.{}" template="string.xml" />
+	<target name="[default]" compareto="equal_rank3.out" varfile="equal_rank3.out"
+		when="each" />
+      </test>
+      <assignment name="a" value="ain" allocate="true"> 
+	<value identifier="ain" folder="../tests/numerical_utilities" file="equal_rank3_a.in.{}"
+	       rename="equal_rank3_a.in"/>
+      </assignment>
+      <assignment name="b" value="bin" allocate="true"> 
+	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank3_b.in.{}"
+	       rename="equal_rank3_b.in"/>
+      </assignment>
+      <assignment name="tolerance" value="tin"> 
+	<value identifier="tin" folder="../tests/numerical_utilities"
+	       file="equal_rank3_tol.in.{}" rename="equal_rank3_tol.in"/>
+      </assignment>
+    </group>
+  </decorates>
+</fortpy>

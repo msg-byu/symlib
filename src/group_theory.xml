@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fortpy mode="docstring">
   <decorates name="group_theory.grouper">
-    <group name="group_tests" purpose="testing" staging="../staging/">
+    <group name="group_tests" purpose="testing" staging="../unittests/">
       <test identifier="original" description="Original grouper testing" timed="true"
 	    cases="1152, 441, 384, 256, 120a, 120b, 576">
 	<output identifier="grouper.out" folder="../tests/groups" file="grouper.out.{}"
