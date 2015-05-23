@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fortpy mode="docstring">
+
+  <decorates name="compare_structures.compare_arbitrary_structures">
+    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+	   staging="../unittests/">
+      <test identifier="compare_arbitrary_structures"
+	    description="Test the comparison of arbitrary structures." timed="true" >
+	<output identifier="identical.out" folder="../tests/compare_structs"
+		file="compare_arbitrary_structures_identical.out.{}" template="equal.out.xml" />
+	<target name="identical" compareto="identical.out" varfile="identical.out" when="each" />
+      </test>
+      <assignment name="LVin" value="LVfil" allocate="true">
+	<value identifier="LVfil" file="compare_arbitrary_structures_LVin.in.{}"
+	       folder="../tests/compare_structs" rename="LVin.in"/>
+      </assignment>
+      <assignment name="LV2in" value="LV2fil" allocate="true">
+	<value identifier="LV2fil" file="compare_arbitrary_structures_LV2in.in.{}"
+	       folder="../tests/compare_structs" rename="LV2in.in"/>
+      </assignment>
+      <assignment name="aTyp1in" value="atp1in" allocate="true">
+	<value identifier="atp1in" file="compare_arbitrary_structures_aTyp1in.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp1in.in"/>
+      </assignment>
+      <assignment name="aTyp2in" value="atp2in" allocate="true">
+	<value identifier="atp2in" file="compare_arbitrary_structures_aTyp2in.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp2in.in"/>
+      </assignment>
+      <assignment name="aPos1in" value="aps1in" allocate="true">
+	<value identifier="aps1in" file="compare_arbitrary_structures_aPos1in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos1in.in"/>
+      </assignment>
+      <assignment name="aPos2in" value="aps2in" allocate="true">
+	<value identifier="aps2in" file="compare_arbitrary_structures_aPos2in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos2in.in"/>
+      </assignment>
+      <assignment name="aPos2in" value="aps2in" allocate="true">
+	<value identifier="aps2in" file="compare_arbitrary_structures_aPos2in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos2in.in"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="compare_arbitrary_structures_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.is_equiv_lattice">
+    <group name="compare_structures" purpose="testing" staging="../unittests/">
+      <test identifier="is_equiv_lattice"
+	    description="Test the comparison of equivalent lattices." timed="true"
+	    cases="[1-50]">
+	<output identifier="is_equiv_lattice.out" folder="../tests/compare_structs"
+		file="is_equiv_lattice.out.{}" template="equal.out.xml" />
+	<target name="[default]" compareto="is_equiv_lattice.out" varfile="is_equiv_lattice.out"
+		when="each" />
+      </test>
+      <assignment name="lat1" value="lat1f">
+	<value identifier="lat1f" file="is_equiv_lattice_lat1.in.{}"
+	       folder="../tests/compare_structs" rename="lat1.in"/>
+      </assignment>
+      <assignment name="lat2" value="lat2f">
+	<value identifier="lat2f" file="is_equiv_lattice_lat2.in.{}"
+	       folder="../tests/compare_structs" rename="lat2.in"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="is_equiv_lattice_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.is_derivative">
+    <group name="compare_structures" purpose="testing" staging="../unittests/">
+      <test identifier="is_derivative"
+	    description="Test the comparison of equivalent lattices." timed="true"
+	    cases="[1-50]">
+	<output identifier="is_derivative.out" folder="../tests/compare_structs"
+		file="is_derivative.out.{}" template="string.xml" />
+	<target name="[default]" compareto="is_derivative.out" varfile="is_derivative.out"
+		when="each" />
+      </test>
+      <assignment name="lat1" value="lat1f" allocate="true">
+	<value identifier="lat1f" file="is_derivative_lat1.in.{}"
+	       folder="../tests/compare_structs" rename="lat1.in"/>
+      </assignment>
+      <assignment name="lat2" value="lat2f" allocate="true">
+	<value identifier="lat2f" file="is_derivative_lat2.in.{}"
+	       folder="../tests/compare_structs" rename="lat2.in"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="is_derivative_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.is_lattice_point">
+    <group name="compare_structures" purpose="testing" staging="../unittests/">
+      <test identifier="is_lattice_point"
+	    description="Test the comparison of equivalent lattices." timed="true"
+	    cases="[1-50]">
+	<output identifier="is_lattice_point.out" folder="../tests/compare_structs"
+		file="is_lattice_point.out.{}" template="string.xml" />
+	<target name="[default]" compareto="is_lattice_point.out" varfile="is_lattice_point.out"
+		when="each" />
+      </test>
+      <assignment name="LV" value="LVf" allocate="true">
+	<value identifier="LVf" file="is_lattice_point_LV.in.{}"
+	       folder="../tests/compare_structs" rename="LV.in"/>
+      </assignment>
+      <assignment name="pt" value="ptf" allocate="true">
+	<value identifier="ptf" file="is_lattice_point_pt.in.{}"
+	       folder="../tests/compare_structs" rename="pt.in"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="is_lattice_point_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.are_lattice_points">
+    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+	   staging="../unittests/">
+      <test identifier="are_lattice_points"
+	    description="Test the comparison of equivalent lattices." timed="true" >
+	<output identifier="are_lattice_points.out" folder="../tests/compare_structs"
+		file="are_lattice_points.out.{}" template="string.xml" />
+	<target name="[default]" compareto="are_lattice_points.out"
+		varfile="are_lattice_points.out" when="each" />
+      </test>
+      <assignment name="LV" value="LVf" allocate="true">
+	<value identifier="LVf" file="are_lattice_points_LV.in.{}"
+	       folder="../tests/compare_structs" rename="LV.in"/>
+      </assignment>
+      <assignment name="pB" value="bpf" allocate="true">
+	<value identifier="pbf" file="are_lattice_points_LV.in.{}"
+	       folder="../tests/compare_structs" rename="pB.in"/>
+      </assignment>
+      <assignment name="pt" value="ptf" allocate="true">
+	<value identifier="ptf" file="are_lattice_points_pt.in.{}"
+	       folder="../tests/compare_structs" rename="pt"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="are_lattice_points_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.mapping_translation_exists">
+    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+	   staging="../unittests/">
+      <test identifier="are_lattice_points"
+	    description="Test the comparison of equivalent lattices." timed="true" >
+	<output identifier="mapping_translation_exists.out" folder="../tests/compare_structs"
+		file="mapping_translation_exists.out.{}" template="string.xml" />
+	<target name="[default]" compareto="mapping_translation_exists.out"
+		varfile="mapping_translation_exists.out" when="each" />
+      </test>
+      <assignment name="LV2" value="LV2f" allocate="true">
+	<value identifier="LV2f" file="mapping_translation_exists_LV2.in.{}"
+	       folder="../tests/compare_structs" rename="LV2.in"/>
+      </assignment>
+      <assignment name="aTyp1in" value="atp1in" allocate="true">
+	<value identifier="atp1in" file="mapping_translation_exists_aTyp1in.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp1in.in"/>
+      </assignment>
+      <assignment name="aTyp2" value="atp2" allocate="true">
+	<value identifier="atp2" file="mapping_translation_exists_aTyp2.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp2.in"/>
+      </assignment>
+      <assignment name="aPos1" value="aps1" allocate="true">
+	<value identifier="aps1" file="mapping_translation_exists_aPos1.in.{}"
+	       folder="../tests/compare_structs" rename="aPos1.in"/>
+      </assignment>
+      <assignment name="aPos2" value="aps2" allocate="true">
+	<value identifier="aps2" file="mapping_translation_exists_aPos2.in.{}"
+	       folder="../tests/compare_structs" rename="aPos2.in"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="mapping_translation_exists_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.get_basis_permutations">
+    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+	   staging="../unittests/">
+      <test identifier="get_basis_permutations"
+	    description="Test the comparison of equivalent lattices." timed="true" >
+	<output identifier="get_basis_permutations.out" folder="../tests/compare_structs"
+		file="get_basis_permutations_perms.out.{}" template="" />
+	<target name="perms" compareto="get_basis_permutations.out"
+		varfile="get_basis_permutations.out" when="each" />
+      </test>
+      <global name="perms" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="uqlist" value="listf" allocate="true">
+	<value identifier="listf" file="get_basis_permutations_uqlist.in.{}"
+	       folder="../tests/compare_structs" rename="uqlist.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.unique">
+    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+	   staging="../unittests/">
+      <test identifier="unique"
+	    description="Test the comparison of equivalent lattices." timed="true" >
+	<output identifier="unique.out" folder="../tests/compare_structs"
+		file="unique.out.{}" template="" />
+	<target name="uqlist" compareto="unique.out"
+		varfile="unique.out" when="each" />
+      </test>
+      <global name="uqlist" type="integer" modifiers="pointer" dimensions=":"/>
+      <global name="block" type="integer" modifiers="pointer" dimensions=":"/>
+      <assignment name="list" value="listf" allocate="true">
+	<value identifier="listf" file="unique_list.in.{}"
+	       folder="../tests/compare_structs" rename="list.in"/>
+      </assignment>
+    </group>
+  </decorates>
+</fortpy>
