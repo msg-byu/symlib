@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fortpy mode="docstring">
+
   <decorates name="combinatorics.nchoosek">
-    <group name="binomial_tests" purpose="testing" staging="../staging/">
-      <test identifier="Manolopoulos" description="Yannis Manolopoulos
-						   binomial function testing"
-	    timed="true" >
-	<input folder="../tests/combinatorics" file="nchoosek.in">
-	  <line id="n_k" type="integer" values="2" names="n, k" />
-	</input>  
-	<output identifier="nchoosek.out" folder="../tests/combinatorics" file="nchoosek.out" 
-		template="integer.xml" />
-	<target name="[default]" compareto="nchoosek.out" varfile="nchoosek.out" when="each" />
-      </test>
-    </group>
-  </decorates>
-  <decorates name="combinatorics.nchoosek_orig">
-    <group name="binomial_tests" purpose="testing" staging="../staging/">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
       <test identifier="original" description="Original binomial function testing"
 	    timed="true" >
 	<input folder="../tests/combinatorics" file="nchoosek.in">
@@ -27,6 +14,248 @@
       </test>
       <global name="n" type="integer" />
       <global name="k" type="integer" />
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.binomial">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="binom" description="Calculates the binomial coefficients."
+  	    timed="true" >
+  	<input folder="../tests/combinatorics" file="nchoosek.in">
+  	  <line id="n_k" type="integer" values="2" names="n, k" />
+  	</input>
+  	<output identifier="binomial.out" folder="../tests/combinatorics" file="nchoosek.out"
+  		template="integer.xml" />
+  	<target name="[default]" compareto="binomial.out" varfile="binomial.out" when="each" />
+      </test>
+      <global name="n" type="integer" />
+      <global name="k" type="integer" />
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.multinomial">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="multinomial" description="Multinomial function testing"
+  	    timed="true" cases="[1-100]">
+  	<output identifier="multinomial.out" folder="../tests/combinatorics"
+		file="multinomial.out{}" template="integer.xml" />
+  	<target name="[default]" compareto="multinomial.out" varfile="multinomial.out"
+		when="each" />
+      </test>
+      <assignment name="n" value="nfile" allocate="true">
+  	<value identifier="nfile" file="multinomial.in{}"
+  	       folder="../tests/combinatorics" rename="multinomial.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.find_unique">
+    <group name="binomial_tests" purpose="testingf_too_deep" staging="../unittests/">
+      <test identifier="find_unique" description="Find unique subroutine testing"
+  	    timed="true" cases="[1-50]">
+  	<output identifier="find_unique.out" folder="../tests/combinatorics"
+		file="find_unique.out.{}" template="integer.xml" />
+  	<target name="uqlist" compareto="find_unique.out" varfile="find_unique.out"
+		when="each" />
+      </test>
+      <assignment name="list" value="lfile" allocate="true">
+  	<value identifier="lfile" file="find_unique.in.{}"
+  	       folder="../tests/combinatorics" rename="find_unique.in"/>
+      </assignment>
+      <assignment name="uqlist" allocate="size(list)"/>
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.get_permutations">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="original" description="Testing of the get_permutations subroutine."
+  	    timed="true" cases="[1-50]">
+  	<output identifier="get_permutations.out" folder="../tests/combinatorics"
+		file="get_permutations.out.{}" template="integer.xml" />
+  	<target name="perms" compareto="get_permutations.out" varfile="get_permutaitons.out"
+		when="each" />
+      </test>
+      <assignment name="list" value="lfile2" allocate="true">
+  	<value identifier="lfile2" file="get_permutations.in.{}"
+  	       folder="../tests/combinatorics" rename="get_permutaitons.in"/>
+  	</assignment>
+  	<global name="perms" type="integer" modifiers="pointer" dimensions=":,:"/>
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.k_ary_counter">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="k_ary" description="Testing of k array building routine."
+  	    timed="true" cases="[1-50]" >
+  	<output identifier="k_ary_counter.out" folder="../tests/combinatorics"
+		file="k_ary_counter.out.{}" template="integer.xml" />
+  	<target name="list" compareto="k_ary_counter.out" varfile="k_ary_counter.out"
+		when="each" />
+      </test>
+      <global name="list" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="base" value="kfile">
+  	<value identifier="kfile" file="k_ary_counter.in.k.{}"
+  	       folder="../tests/combinatorics" rename="k_ary_counter.in.k"/>
+      </assignment>
+      <assignment name="n" value="nfile">
+  	<value identifier="nfile" file="k_ary_counter.in.n.{}"
+  	       folder="../tests/combinatorics" rename="k_ary_counter.in.n"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.m_partitions_of_n">
+    <group name="binomial_tests" purpose="testingf" staging="../unittests/">
+      <test identifier="original" description="Testing of the integer partitioning subroutine."
+  	    timed="true" cases="[1-50]">
+  	<output identifier="m_partitions_of_n.out" folder="../tests/combinatorics"
+  		file="m_partitions_of_n.out.{}" template="integer.xml" />
+  	<target name="part" compareto="m_partitions_of_n.out"
+  		varfile="m_partitions_of_n.out" when="each" />
+      </test>
+      <global name="part" type="integer" modifiers="pointer" dimensions=":,:" />
+      <assignment name="n" value="nfile2">
+  	<value identifier="nfile2" folder="../tests/combinatorics"
+  	       file="m_partitions_of_n.in.n.{}" rename="m_partitions_of_n.in.n"/>
+      </assignment>
+      <assignment name="m" value="mfile2">
+  	<value identifier="mfile2" folder="../tests/combinatorics"
+  	       file="m_partitions_of_n.in.m.{}" rename="m_partitions_of_n.in.m"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.factorial_long_int">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="factorial_long_int" description="Testing of the long integer factorial."
+  	    timed="true" >
+  	<input folder="../tests/combinatorics" file="factorial.in">
+  	  <line id="N" type="integer" values="1" names="N" />
+  	</input>
+  	<output identifier="factorial_li.out" folder="../tests/combinatorics"
+		file="factorial_li.out" template="integer.xml" />
+  	<target name="[default]" compareto="factorial_li.out" varfile="factorial_li.out"
+		when="each" />
+      </test>
+      <global name="N" type="integer(li)" />
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.factorial_int_scalar">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="factorial_int_scalar" description="Testing of the integer factorial."
+  	    timed="true" >
+  	<input folder="../tests/combinatorics" file="factorial.in">
+  	  <line id="N" type="integer" values="1" names="N" />
+  	</input>
+  	<output identifier="factorial_int.out" folder="../tests/combinatorics"
+		file="factorial_int.out" template="integer.xml" />
+  	<target name="[default]" compareto="factorial_int.out" varfile="factorial_int.out"
+		when="each" />
+      </test>
+      <global name="N" type="integer" />
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.factorial_int_rank1">
+    <group name="binomial_tests" purpose="testing?_fortpy_bug" staging="../unittests/">
+      <test identifier="factorial_int_rank1" 
+	    description="Testing of the array of integers factorial." timed="true" >
+  	<output identifier="factorial_int_arry.out" folder="../tests/combinatorics" 
+		file="factorial_int_arry.out" template="integer.xml" />
+  	<target name="[default]" compareto="factorial_int_arry.out" 
+		varfile="factorial_int_arry.out" when="each" />
+      </test>
+      <assignment name="N" value="mfile2" allocat="true">
+  	<value identifier="mfile2" folder="../tests/combinatorics"
+  	       file="factorial_array.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.factorial_dp_rank1">
+    <group name="binomial_tests" purpose="testing?_fortpy_bug" staging="../unittests/">
+      <test identifier="factorial_dp_rank1" description="Testing of the arry of reals factorial."
+  	    timed="true" >
+  	<output identifier="factorial_real_arry.out" folder="../tests/combinatorics"
+		file="factorial_real_arry.out" template="float.xml" />
+  	<target name="[default]" compareto="factorial_real_arry.out"
+		varfile="factorial_real_arry.out" when="each" />
+      </test>
+      <assignment name="N" value="mfile2" allocate="true">
+  	<value identifier="mfile2" folder="../tests/combinatorics"
+  	       file="factorial_array.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.factorial_dp_scalar">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="factorial_dp_scalar" description="Testing of the type real factorial."
+  	    timed="true" >
+  	<input folder="../tests/combinatorics" file="factorial_real.in">
+  	  <line id="N" type="integer" values="1" names="N" />
+  	</input>
+  	<output identifier="factorial_real.out" folder="../tests/combinatorics"
+		file="factorial_real.out" template="float.xml" />
+  	<target name="[default]" compareto="factorial_real.out" varfile="factorial_real.out"
+		when="each" />
+      </test>
+      <global name="N" type="real(dp)" />
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.permutation_parity">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="permutation_parity"
+	    description="Testing of the permutation parity routine." timed="true"
+	    cases="x[1-20]">
+  	<output identifier="permutation_parity.out" folder="../tests/combinatorics" 
+		file="permutation_parity.out.{}" template="integer.xml" />
+  	<target name="[default]" compareto="permutation_parity.out" 
+		varfile="permutation_parity.out" when="each" />
+      </test>
+      <assignment name="aP" value="nfile" allocate="true">
+  	<value identifier="nfile" file="permutation_parity.in.{}"
+  	       folder="../tests/combinatorics" rename="permutation_parity.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.initialize_subset_mask">
+    <group name="binomial_tests" purpose="testing?" staging="../unittests/">
+      <test identifier="initialize_subset_mask" description="Testing of the mask initialization."
+  	    timed="true" cases="[1-10]">
+  	<output identifier="initialize_subset_mask.out" folder="../tests/combinatorics"
+  		file="initialize_subset_mask.out.{}" template="logical.xml" />
+  	<target name="mask" generator="print_subset_mask" compareto="initialize_subset_mask.out"
+  		varfile="initialize_subset_mask.out" when="each" />
+      </test>
+      <global name="initial_mask" type="logical" modifiers="pointer" dimensions=":"/>
+      <assignment name="initial_mask" value="mask_in" allocate="true">
+	<value identifier="mask_in" file="initialize_subset_mask.in.{}"
+	       folder="../tests/combinatorics" rename="initialize_subset_mask.in"/>
+      </assignment>
+      <global name="mask" type="type" kind="subset_mask"/>
+    </group>
+  </decorates>
+
+  <decorates name="combinatorics.generate_next_subset">
+    <group name="binomial_tests" purpose="testing?_fortpy_bug" staging="../unittests/">
+      <test identifier="generate_next_subset" description="Testing of the mask iteration
+  							   over sets."
+  	    timed="true" cases="[1-20]">
+  	<input folder="../tests/combinatorics" file="generate_next_subset.in.{}"
+  	       rename="generate_next_subset.in">
+  	  <line id="N" type="logical" values="*" names="initial_mask" />
+  	</input>
+  	<output identifier="generate_subset_mask.out" folder="../tests/combinatorics"
+  		file="generate_subset_mask.out.{}" template="logical.xml" />
+  	<target name="outputmask" compareto="generate_subset_mask.out"
+  		varfile="generate_subset_mask.out" when="each" />
+      </test>
+      <prereq method="combinatorics.initialize_subset_mask" terminate="true"/>
+      <global name="initial_mask" type="logical" allocate="true"/>
     </group>
   </decorates>
 </fortpy>
