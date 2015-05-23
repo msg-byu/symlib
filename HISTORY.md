@@ -8,6 +8,8 @@ Added unit tests for compare_structures.f90, it has working unit tests for 100% 
 
 Added unit tests for numerical_utilities.f90, it has working unit tests for 90% of it's subroutines. Also changed the equal subroutines so that if the value are the same it returns true no matter the tolerance that is used. Added the XML documentation to numerical_utilities.f90, the unit test files, and the numerical_utililties.xml file.
 
+Added unit tests for rational_mathematics.f90, it has working unit tests for 64% of it's subroutines. The last 37% are waiting on a fortpy bug to get sorted out.
+
 ## Initial Repository: Revision 0.0.0
 
 The first few commits were to get the repo up to scratch and nice and clean with installation instructions etc. This includes the commit for new revision number 0.0.0. It includes an update of the `*.xml` files defining the unit tests so that they work with the distribution directory's structure.
