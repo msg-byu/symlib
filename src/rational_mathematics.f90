@@ -256,27 +256,6 @@ CONTAINS
     tmpCol = M(:,k); M(:,k) = M(:,maxidx(1)); M(:,maxidx(1)) = tmpCol
   endsubroutine swap_column
 
-  !!<summary>Prints the matrices A, M and B</summary>
-  !!<parameter name="A" regular="True"></parameter>
-  !!<parameter name="M" regular="true"></parameter>
-  !!<parameter name="B" regular="true"></parameter>
-  subroutine printAMB(A,M,B)
-    integer, intent(in), dimension(3,3) :: A,M,B
-    integer :: i
-    do i = 1,3
-       write(*,'(3(3x,3i4))') A(i,:),M(i,:),B(i,:);enddo;print *
-  endsubroutine printAMB
-
-  !!<summary>Prints H and B</summary>
-  !!<parameter name="H" regular="true"></parameter>
-  !!<parameter name="B" regular="true"></parameter>
-  subroutine printHB(H,B)
-    integer, intent(in), dimension(3,3) :: H,B
-    integer :: i
-    do i = 1,3
-       write(*,'(2(3x,3i4))') H(i,:),B(i,:);enddo;print *
-  endsubroutine printHB
-
   !!<summary>Finds the indices corresponding the minimum and maximum
   !!values in an integer vector.</summary>
   !!<parameter name="invec" regular="true"></parameter>
