@@ -10,9 +10,11 @@ Added unit tests for numerical_utilities.f90, it has working unit tests for 90% 
 
 Added unit tests for rational_mathematics.f90, it has working unit tests for 64% of it's subroutines. The last 37% are waiting on a fortpy bug to get sorted out.
 
-Added unit tests for symmetry.f90 but it is still a big mess. For the 10 subroutines only 2 have fully functional unit tests. The rest are rank3 arrays, or require logical inputs. There are a few, marked in the xml doc, that fail because the saved and new files have different precision apparently dp8 and dp4.
+Added unit tests for symmetry.f90 but it is still a bit messy. For the 10 subroutines only 2 have fully functional unit tests. The rest are rank3 arrays, or require logical inputs. There are a few, marked in the xml doc, that fail because the saved and new files have different precision apparently dp8 and dp4.
 
 Added unit tests for utilities.f90, none work because of fortpy issue but 100% of the subroutines have tests written.
+
+Added unit tests for vector_utilities.f90. It is now 70% unit tested though the unit tests have some buggy floating point issues.
 
 ## Initial Repository: Revision 0.0.0
 

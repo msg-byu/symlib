@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fortpy mode="docstring">
+
+  <decorates name="vector_matrix_utilities.minkowski_conditions_check">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="minkowski_conditions_check" description="minkowski function testing"
+  	    timed="true" cases="[1-1000]">
+  	<output identifier="minkowski_conditions_check.out"
+		folder="../tests/vector_matrix_utilities" file="minkowski_condition_check.out.{}"
+		template="string.xml" />
+  	<target name="[default]" compareto="minkowski_conditions_check.out"
+		varfile="minkowski_conditions_check.out" when="each" />
+      </test>
+      <assignment name="basis" value="basisfile" allocate="true">
+  	<value identifier="basisfile" file="minkowski_condition_check_basis.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="basis.in"/>
+      </assignment>
+      <assignment name="eps" value="epsfile">
+  	<value identifier="epsfile" file="minkowski_condition_check_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.reduce_C_in_ABC">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="reduce_C_in_ABC_C" description="Reducer testing"
+  	    timed="true" cases="[1-100]">
+  	<output identifier="reduce_C_in_ABC_C.out" folder="../tests/vector_matrix_utilities"
+		file="reduce_C_in_ABC_C.out.{}" template="float.xml" />
+  	<target name="C" compareto="reduce_C_in_ABC_C.out" varfile="reduc_C_in_ABC_C.out"
+		when="each" />
+      </test>
+      <assignment name="A" value="Afile" allocate="true">
+  	<value identifier="Afile" file="reduce_C_in_ABC_A.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="A.in"/>
+      </assignment>
+      <assignment name="B" value="Bfile" allocate="true">
+  	<value identifier="Bfile" file="reduce_C_in_ABC_B.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="B.in"/>
+      </assignment>
+      <assignment name="C" value="Cfile" allocate="true">
+  	<value identifier="Cfile" file="reduce_C_in_ABC_C.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="C.in"/>
+      </assignment>
+      <assignment name="eps" value="epsfile" allocate="true">
+  	<value identifier="epsfile" file="reduce_C_in_ABC_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.reduce_C_in_ABC">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="reduce_C_in_ABC_B" description="Reducer testing"
+  	    timed="true" cases="[1-100]">
+  	<output identifier="reduce_C_in_ABC_B.out" folder="../tests/vector_matrix_utilities"
+		file="reduce_C_in_ABC_B.out.{}" template="float.xml" />
+  	<target name="B" compareto="reduce_C_in_ABC_B.out" varfile="reduc_C_in_ABC_B.out"
+		when="each" />
+      </test>
+      <assignment name="A" value="Afile" allocate="true">
+  	<value identifier="Afile" file="reduce_C_in_ABC_A.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="A.in"/>
+      </assignment>
+      <assignment name="B" value="Bfile" allocate="true">
+  	<value identifier="Bfile" file="reduce_C_in_ABC_B.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="B.in"/>
+      </assignment>
+      <assignment name="C" value="Cfile" allocate="true">
+  	<value identifier="Cfile" file="reduce_C_in_ABC_C.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="C.in"/>
+      </assignment>
+      <assignment name="eps" value="epsfile" allocate="true">
+  	<value identifier="epsfile" file="reduce_C_in_ABC_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.reduce_C_in_ABC">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="reduce_C_in_ABC_A" description="Reducer testing"
+  	    timed="true" cases="[1-100]">
+  	<output identifier="reduce_C_in_ABC_A.out" folder="../tests/vector_matrix_utilities"
+		file="reduce_C_in_ABC_A.out.{}" template="float.xml" />
+  	<target name="A" compareto="reduce_C_in_ABC_A.out" varfile="reduc_C_in_ABC_A.out"
+		when="each" />
+      </test>
+      <assignment name="A" value="Afile" allocate="true">
+  	<value identifier="Afile" file="reduce_C_in_ABC_A.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="A.in"/>
+      </assignment>
+      <assignment name="B" value="Bfile" allocate="true">
+  	<value identifier="Bfile" file="reduce_C_in_ABC_B.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="B.in"/>
+      </assignment>
+      <assignment name="C" value="Cfile" allocate="true">
+  	<value identifier="Cfile" file="reduce_C_in_ABC_C.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="C.in"/>
+      </assignment>
+      <assignment name="eps" value="epsfile" allocate="true">
+  	<value identifier="epsfile" file="reduce_C_in_ABC_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.gaussian_reduce_two_vectors">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="gaussian_reduce_two_vectors_U"
+	    description="Testing of the gaussian reduce subroutine." timed="true"
+	    cases="[1-100]">
+  	<output identifier="gaussian_reduce_two_vectors_U.out"
+		folder="../tests/vector_matrix_utilities"
+		file="gaussian_reduce_two_vectors_U.out.{}" template="float.xmr" />
+  	<target name="U" compareto="gaussian_reduce_two_vectors_U.out"
+		varfile="gaussian_reduce_two_vectors_U.out" when="each" />
+      </test>
+      <assignment name="U" value="Ufile" allocate="true">
+  	<value identifier="Ufile" file="gaussian_reduce_two_vectors_U.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="U.in"/>
+  	</assignment>
+      <assignment name="V" value="Vfile" allocate="true">
+  	<value identifier="Vfile" file="gaussian_reduce_two_vectors_V.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="V.in"/>
+  	</assignment>
+      <assignment name="eps" value="epsfile" allocate="true">
+  	<value identifier="epsfile" file="gaussian_reduce_two_vectors_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+  	</assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.gaussian_reduce_two_vectors">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="gaussian_reduce_two_vectors_V"
+	    description="Testing of the gaussian reduce subroutine." timed="true"
+	    cases="[1-100]">
+  	<output identifier="gaussian_reduce_two_vectors_V.out"
+		folder="../tests/vector_matrix_utilities"
+		file="gaussian_reduce_two_vectors_V.out.{}" template="float.xmr" />
+  	<target name="V" compareto="gaussian_reduce_two_vectors_V.out"
+		varfile="gaussian_reduce_two_vectors_V.out" when="each" />
+      </test>
+      <assignment name="U" value="Ufile" allocate="true">
+  	<value identifier="Ufile" file="gaussian_reduce_two_vectors_U.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="U.in"/>
+  	</assignment>
+      <assignment name="V" value="Vfile" allocate="true">
+  	<value identifier="Vfile" file="gaussian_reduce_two_vectors_V.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="V.in"/>
+  	</assignment>
+      <assignment name="eps" value="epsfile" allocate="true">
+  	<value identifier="epsfile" file="gaussian_reduce_two_vectors_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+  	</assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.minkowski_reduce_basis">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="OUT" description="Testing of minkowski basis reduction subroutine."
+  	    timed="true" cases="[1-1000]" >
+  	<output identifier="minkowski_reduce_basis_OUT.out"
+		folder="../tests/vector_matrix_utilities" file="minkowski_reduce_basis_OUT.out.{}"
+		template="float.xml" />
+  	<target name="OUT" compareto="minkowski_reduce_basis_OUT.out"
+		varfile="minkowski_reduce_basis_OUT.out" when="each" />
+      </test>
+      <assignment name="IN" value="INfile" allocate="true">
+  	<value identifier="INfile" file="minkowski_reduce_basis_IN.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="IN.in"/>
+      </assignment>
+      <assignment name="eps" value="epsfile">
+  	<value identifier="epsfile" file="minkowski_reduce_basis_eps.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.orthogonality_defect">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="orthogonality_defect"
+	    description="Testing of finding of defects subroutine." timed="true" cases="[1-99]">
+  	<output identifier="orthogonality_defect.out" folder="../tests/vector_matrix_utilities"
+  		file="orthogonality_defect.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="orthogonality_defect.out"
+  		varfile="orthogonality_defect.out" when="each" />
+      </test>
+      <assignment name="basis" value="basisfile" allocate="true">
+  	<value identifier="basisfile" folder="../tests/vector_matrix_utilities"
+  	       file="orthogonality_defect_basis.in.{}" rename="basis.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.matrix_inverse">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="matrix_inverse" description="Testing of matrix inversion."
+  	    timed="true" cases="[1-100]">
+  	<output identifier="matrix_inverse_b.out" folder="../tests/vector_matrix_utilities"
+		file="matrix_inverse_b.out.{}" template="float.xml" />
+  	<target name="b" compareto="matrix_inverse_b.out" varfile="matrix_inverse_b.out"
+		when="each" />
+      </test>
+      <assignment name="a" value="afile" allocate="true">
+  	<value identifier="afile" folder="../tests/vector_matrix_utilities"
+  	       file="matrix_inverse_a.in.{}" rename="a.in"/>
+      </assignment>
+      <assignment name="eps_" value="epsfile" >
+  	<value identifier="epsfile" folder="../tests/vector_matrix_utilities"
+  	       file="matrix_inverse_eps.in.{}" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.cross_product">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="cross_product" description="Testing of the cross product."
+  	    timed="true" cases="[1-100]">
+  	<output identifier="cross_product.out" folder="../tests/vector_matrix_utilities"
+		file="cross_product.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="cross_product.out" varfile="cross_product.out"
+		when="each" />
+      </test>
+      <assignment name="a" value="afile" allocate="true">
+  	<value identifier="afile" folder="../tests/vector_matrix_utilities"
+  	       file="cross_product_a.in.{}" rename="a.in"/>
+      </assignment>
+      <assignment name="b" value="bfile" allocate="true">
+  	<value identifier="bfile" folder="../tests/vector_matrix_utilities"
+  	       file="cross_product_b.in.{}" rename="b.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.norm_real_vector">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="norm_real_vector" description="Testing of the norm function."
+	    timed="true" cases="[1-1002]" >
+  	<output identifier="norm_real_vector.out" folder="../tests/vector_matrix_utilities" 
+		file="norm_real_vector.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="norm_real_vector.out" 
+		varfile="norm_real_vector.out" when="each" />
+      </test>
+      <assignment name="vector" value="vfile" allocat="true">
+  	<value identifier="vfile" folder="../tests/vector_matrix_utilities"
+  	       file="norm_real_vector_vector.in.{}" rename="vector.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.norms_real_vector_list">
+    <group name="minkowski_tests" purpose="testingf?_fortpy_bug?" staging="../unittests/">
+      <test identifier="norm_real_vector_list" 
+	    description="Testing of the norm function." timed="true" cases="[1-100]">
+  	<output identifier="norm_real_vector_list.out" folder="../tests/vector_matrix_utilities" 
+		file="norm_real_vector_list.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="norm_real_vector_list.out" 
+		varfile="norm_real_vector_list.out" when="each" />
+      </test>
+      <assignment name="vector_list" value="vfile" allocat="true">
+  	<value identifier="vfile" folder="../tests/vector_matrix_utilities"
+  	       file="norm_real_vector_vector_list.in.{}" rename="vector_list.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.determinant_real">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="determinant_real" description="Testing of the determinant."
+  	    timed="true" cases="[1-100]">
+  	<output identifier="determinant_real.out" folder="../tests/vector_matrix_utilities"
+		file="determinant_real.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="determinant_real.out"
+		varfile="determinant_real.out" when="each" />
+      </test>
+      <assignment name="a" value="afile" allocate="true">
+  	<value identifier="afile" folder="../tests/vector_matrix_utilities"
+  	       file="determinant_real_a.in.{}" rename="a.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.determinant_integer">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="determinant_integer" description="Testing of the determinant."
+  	    timed="true" cases="[1-100]" >
+  	<output identifier="determinant_integer.out" folder="../tests/vector_matrix_utilities"
+		file="determinant_integer.out.{}" template="integer.xml" />
+  	<target name="[default]" compareto="determinant_integer.out"
+		varfile="determinant_integer.out" when="each" />
+      </test>
+      <assignment name="a" value="afile" allocate="true">
+  	<value identifier="afile" folder="../tests/vector_matrix_utilities"
+  	       file="determinant_integer_a.in.{}" rename="a.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.volume">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
+      <test identifier="volume" description="Testing of the volume function."
+  	    timed="true" cases="[1-100]">
+  	<output identifier="volume.out" folder="../tests/vector_matrix_utilities"
+		file="volume.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="volume.out" varfile="volume.out"
+		when="each" />
+      </test>
+      <assignment name="a1" value="a1file" allocate="true">
+  	<value identifier="a1file" folder="../tests/vector_matrix_utilities"
+  	       file="volume_a1.in.{}" rename="a1.in"/>
+      </assignment>     
+      <assignment name="a2" value="a2file" allocate="true">
+  	<value identifier="a2file" folder="../tests/vector_matrix_utilities"
+  	       file="volume_a2.in.{}" rename="a2.in"/>
+      </assignment>     
+      <assignment name="a3" value="a3file" allocate="true">
+  	<value identifier="a3file" folder="../tests/vector_matrix_utilities"
+  	       file="volume_a3.in.{}" rename="a3.in"/>
+      </assignment>     
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_lvalue_in_larray1">
+    <group name="minkowski_tests" purpose="testingf?_fortpy_logical_array"
+	   staging="../unittests/">
+      <test identifier="find_lvalue_in_larray1"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_lvalue_in_larray1_loc.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_lvalue_in_larray1_loc.out.{}" template="integer.xml" />
+  	<target name="loc" compareto="find_lvalue_in_larray1_loc.out" 
+		varfile="find_lvalue_in_larray1_loc.out" when="each" />
+      </test>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_lvalue_in_larray1_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_lvalue_in_larray1_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_lvalue_in_larray1">
+    <group name="minkowski_tests" purpose="testingf?_fortpy_logical_array"
+	   staging="../unittests/">
+      <test identifier="find_lvalue_in_larray1"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_lvalue_in_larray1_nfound.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_lvalue_in_larray1_nfound.out.{}" template="integer.xml" />
+  	<target name="nfound" compareto="find_lvalue_in_larray1_nfound.out" 
+		varfile="find_lvalue_in_larray1_nfound.out" when="each" />
+      </test>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_lvalue_in_larray1_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_lvalue_in_larray1_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_intvalue_in_intarray3">
+    <group name="minkowski_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+      <test identifier="find_intvalue_in_intarray3"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_intvalue_in_intarray3_loc.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_intvalue_in_intarray3_loc.out.{}" template="integer.xml" />
+  	<target name="loc" compareto="find_intvalue_in_intarray3_loc.out" 
+		varfile="find_intvalue_in_intarray3_loc.out" when="each" />
+      </test>
+      <global name="loc" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_intvalue_in_intarray3_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_intvalue_in_intarray3_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_intvalue_in_intarray3">
+    <group name="minkowski_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+      <test identifier="find_intvalue_in_intarray3"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_intvalue_in_intarray3_nfound.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_intvalue_in_intarray3_nfound.out.{}" template="integer.xml" />
+  	<target name="nfound" compareto="find_intvalue_in_intarray3_nfound.out" 
+		varfile="find_intvalue_in_intarray3_nfound.out" when="each" />
+      </test>
+      <global name="loc" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_intvalue_in_intarray3_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_intvalue_in_intarray3_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_sintvalue_in_sintarray3">
+    <group name="minkowski_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+      <test identifier="find_sintvalue_in_sintarray3"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_sintvalue_in_sintarray3_loc.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_sintvalue_in_sintarray3_loc.out.{}" template="integer.xml" />
+  	<target name="loc" compareto="find_sintvalue_in_sintarray3_loc.out" 
+		varfile="find_sintvalue_in_sintarray3_loc.out" when="each" />
+      </test>
+      <global name="loc" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_sintvalue_in_sintarray3_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_sintvalue_in_sintarray3_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_sintvalue_in_sintarray3">
+    <group name="minkowski_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+      <test identifier="find_sintvalue_in_sintarray3"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_sintvalue_in_sintarray3_nfound.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_sintvalue_in_sintarray3_nfound.out.{}" template="integer.xml" />
+  	<target name="nfound" compareto="find_sintvalue_in_sintarray3_nfound.out" 
+		varfile="find_sintvalue_in_sintarray3_nfound.out" when="each" />
+      </test>
+      <global name="loc" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_sintvalue_in_sintarray3_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_sintvalue_in_sintarray3_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_intvalue_in_intarray4">
+    <group name="minkowski_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+      <test identifier="find_intvalue_in_intarray4"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_intvalue_in_intarray4_loc.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_intvalue_in_intarray4_loc.out.{}" template="integer.xml" />
+  	<target name="loc" compareto="find_intvalue_in_intarray4_loc.out" 
+		varfile="find_intvalue_in_intarray4_loc.out" when="each" />
+      </test>
+      <global name="loc" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_intvalue_in_intarray4_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_intvalue_in_intarray4_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="vector_matrix_utilities.find_intvalue_in_intarray4">
+    <group name="minkowski_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+      <test identifier="find_intvalue_in_intarray4"
+	    description="Testing of find a value in an array." timed="true"
+	    cases="[]">
+  	<output identifier="find_intvalue_in_intarray4_nfound.out"
+		folder="../tests/vector_matrix_utilities" 
+		file="find_intvalue_in_intarray4_nfound.out.{}" template="integer.xml" />
+  	<target name="nfound" compareto="find_intvalue_in_intarray4_nfound.out" 
+		varfile="find_intvalue_in_intarray4_nfound.out" when="each" />
+      </test>
+      <global name="loc" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <assignment name="array" value="arrayfile" allocate="true">
+  	<value identifier="arrayfile" file="find_intvalue_in_intarray4_array.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="array.in"/>
+      </assignment>
+      <assignment name="vals" value="valsfile" allocate="true">
+  	<value identifier="valsfile" file="find_intvalue_in_intarray4_vals.in.{}"
+  	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
+      </assignment>
+    </group>
+  </decorates>
+</fortpy>
