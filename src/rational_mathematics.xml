@@ -76,7 +76,7 @@
       <test identifier="HNF_H" description="Tests the HNF."
   	    timed="true" cases="[1-50]">
   	<output identifier="H.out" folder="../tests/rational_mathematics"
-		file="HermiteNormalForm_H.out" template="integer.xml" />
+		file="HermiteNormalForm_H.out.{}" template="integer.xml" />
   	<target name="H" compareto="H.out" varfile="H.out" when="each" />
       </test>
       <assignment name="S" value="sin">
@@ -97,7 +97,7 @@
       <test identifier="HNF_B" description="Tests the HNF."
   	    timed="true" cases="[1-50]">
   	<output identifier="B.out" folder="../tests/rational_mathematics"
-		file="HermiteNormalForm_B.out" template="integer.xml" />
+		file="HermiteNormalForm_B.out.{}" template="integer.xml" />
   	<target name="B" compareto="B.out" varfile="Bf.out" when="each" />
       </test>
       <assignment name="S" value="sin" >
@@ -118,7 +118,7 @@
       <test identifier="swapr_M" description="Swap function testing."
   	    timed="true" cases="[1-50]">
   	<output identifier="M.out" folder="../tests/rational_mathematics"
-		file="swap_row_M.out{}" template="integer.xml" />
+		file="swap_row_M.out.{}" template="integer.xml" />
   	<target name="M" compareto="M.out" varfile="M.out"
 		when="each" />
       </test>
@@ -142,7 +142,7 @@
       <test identifier="swapr_A" description="Swap function testing."
   	    timed="true" cases="[1-50]">
   	<output identifier="A.out" folder="../tests/rational_mathematics"
-		file="swap_row_A.out{}" template="integer.xml" />
+		file="swap_row_A.out.{}" template="integer.xml" />
   	<target name="A" compareto="A.out" varfile="A.out"
 		when="each" />
       </test>
@@ -166,7 +166,7 @@
       <test identifier="swapc_B" description="Swap function testing."
   	    timed="true" cases="[1-50]">
   	<output identifier="B.out" folder="../tests/rational_mathematics"
-		file="swap_column_B.out{}" template="integer.xml" />
+		file="swap_column_B.out.{}" template="integer.xml" />
   	<target name="B" compareto="B.out" varfile="B.out"
 		when="each" />
       </test>
@@ -190,7 +190,7 @@
       <test identifier="swapc_M" description="Swap function testing."
   	    timed="true" cases="[1-50]">
   	<output identifier="M.out" folder="../tests/rational_mathematics"
-		file="swap_column_M.out{}" template="integer.xml" />
+		file="swap_column_M.out.{}" template="integer.xml" />
   	<target name="M" compareto="M.out" varfile="M.out"
 		when="each" />
       </test>

@@ -147,11 +147,11 @@
   </decorates>
 
   <decorates name="symmetry.get_transformations">
-    <group name="symmetry_tests" purpose="testingf?_dp8vsdp4?" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="get_transforms_ctp" description="Tests the get_transformations."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="cart_to_prim.out" folder="../tests/symmetry"
-		file="get_transformations_cart_to_prim.out.{}" template="float.xml" />
+		file="get_transformations_cart_to_prim.out.{}" template="realdp11.xml" />
 	<target name="cart_to_prim" compareto="cart_to_prim.out" varfile="cart_to_prim.out"
 		when="each" />
       </test>
