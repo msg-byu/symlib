@@ -179,11 +179,11 @@
   </decorates>
 
   <decorates name="symmetry.bring_into_cell">
-    <group name="symmetry_tests" purpose="testingf?_dp8vsdp4?" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="bring_into_cell" description="Tests the bring_into_cell."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="v.out" folder="../tests/symmetry"
-		file="bring_into_cell_v.out.{}" template="float.xml" />
+		file="bring_into_cell_v.out.{}" template="realdp11.xml" />
 	<target name="v" compareto="v.out" varfile="v.out"
 		when="each" />
       </test>
