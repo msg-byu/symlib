@@ -20,7 +20,7 @@ END INTERFACE
 CONTAINS
 
   !!<summary>Prints the subset mask to file for comparison.</summary>
-  !!<parameter name="filename" regular="true">The name of the file to be saved to.</parameter>t
+  !!<parameter name="filename" regular="true">The name of the file to be saved to.</parameter>
   !!<parameter name="mask" regular="true">The mask to be saved.</parameter>
   SUBROUTINE print_subset_mask(mask,filename)
     type(subset_mask), intent(in) :: mask

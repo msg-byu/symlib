@@ -184,7 +184,7 @@
       <test identifier="orthogonality_defect"
 	    description="Testing of finding of defects subroutine." timed="true" cases="[1-99]">
   	<output identifier="orthogonality_defect.out" folder="../tests/vector_matrix_utilities"
-  		file="orthogonality_defect.out.{}" template="float.xml" />
+  		file="orthogonality_defect.out.{}" template="realdp10.xml" />
   	<target name="[default]" compareto="orthogonality_defect.out"
   		varfile="orthogonality_defect.out" when="each" />
       </test>
@@ -272,7 +272,7 @@
       <test identifier="determinant_real" description="Testing of the determinant."
   	    timed="true" cases="[1-100]">
   	<output identifier="determinant_real.out" folder="../tests/vector_matrix_utilities"
-		file="determinant_real.out.{}" template="realdp11.xml" />
+		file="determinant_real.out.{}" template="realdp10.xml" />
   	<target name="[default]" compareto="determinant_real.out"
 		varfile="determinant_real.out" when="each" />
       </test>
@@ -304,7 +304,7 @@
       <test identifier="volume" description="Testing of the volume function."
   	    timed="true" cases="[1-100]">
   	<output identifier="volume.out" folder="../tests/vector_matrix_utilities"
-		file="volume.out.{}" template="realdp11.xml" />
+		file="volume.out.{}" template="realdp10.xml" />
   	<target name="[default]" compareto="volume.out" varfile="volume.out"
 		when="each" />
       </test>

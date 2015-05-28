@@ -58,7 +58,7 @@ CONTAINS
   !!<parameter name="sg_fract">Translations of the space group.</parameter>
   !!<parameter name="lattcoords" regular="true">If .true., atom positions are assumed to
   !!be in lattice coordinates. Otherwise, they are treated as cartesian</parameter>
-  !!<parameter name="eps_" regular="true""epsilon" for checking equivalence in 
+  !!<parameter name="eps_" regular="true">"epsilon" for checking equivalence in 
   !!floating point arithmetic ></parameter>
   subroutine get_spaceGroup(aVecs, atomType, input_pos,  sg_op, sg_fract, lattcoords, eps_)
 
@@ -235,10 +235,10 @@ CONTAINS
        do iD2=1,iD1-1
           digit1=digit(iD1) ! number of occupations on dvector 1
           digit2=digit(iD2) ! number of occupations on dvector 2
-          if (digit1==digit2 &    ! if dvector 1 and dvector 2 have the same number of
-               !possible occupations...
-               .and. all(uqLabel(:digit1,iD1)==uqLabel(:digit1,iD2))) then  ! ... and if they
-             !have the same possible occupations ...
+          if (digit1==digit2 .and. all(uqLabel(:digit1,iD1)==uqLabel(:digit1,iD2))) then
+             ! if dvector 1 and dvector 2 have the same number of
+             !possible occupations...     
+             ! ... and if they have the same possible occupations ...
              aTyp(iD1)=aTyp(iD2)    ! ... then the aTyp is identical.
              cycle iD1_loop ! found a type for iD1, go on with the next      
           else
@@ -255,7 +255,7 @@ CONTAINS
   !!<parameter name="aVecs" regular="true">Primitive real space lattice vectors.</parameter>
   !!<parameter name="sgrots"></parameter>
   !!<parameter name="sgshifts"></parameter>
-  !!<parameter name="eps" regular="true">epsilon" for checking equivalence in 
+  !!<parameter name="eps" regular="true">"epsilon" for checking equivalence in 
   !!floating point arithmetic</parameter>
   subroutine rm_3d_operations(aVecs,sgrots,sgshifts,eps)
     real(dp), intent(in):: aVecs(3,3)  
@@ -298,7 +298,7 @@ CONTAINS
   !!<parameter name="atom_pos">intent(inout): Positions of the basis atoms.</parameter>
   !!<parameter name="lattCoords" regular="true">True if positions are in lattice
   !!coordinates.</parameter>
-  !!<parameter name="eps_" regular="true">epsilon" for checking equivalence in 
+  !!<parameter name="eps_" regular="true">"epsilon" for checking equivalence in 
   !!floating point arithmetic</parameter>
   !!<parameter name="removed">the indices of the atoms that have been removed if the cell is not
   !!primitive. </parameter>
