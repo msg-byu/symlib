@@ -27,7 +27,7 @@
       <test identifier="reduce_C_in_ABC_C" description="Reducer testing"
   	    timed="true" cases="[1-100]">
   	<output identifier="reduce_C_in_ABC_C.out" folder="../tests/vector_matrix_utilities"
-		file="reduce_C_in_ABC_C.out.{}" template="realdp11.xml" />
+		file="reduce_C_in_ABC_C.out.{}" template="float.xml" />
   	<target name="C" compareto="reduce_C_in_ABC_C.out" varfile="reduc_C_in_ABC_C.out"
 		when="each" />
       </test>
@@ -55,7 +55,7 @@
       <test identifier="reduce_C_in_ABC_B" description="Reducer testing"
   	    timed="true" cases="[1-100]">
   	<output identifier="reduce_C_in_ABC_B.out" folder="../tests/vector_matrix_utilities"
-		file="reduce_C_in_ABC_B.out.{}" template="realdp11.xml" />
+		file="reduce_C_in_ABC_B.out.{}" template="float.xml" />
   	<target name="B" compareto="reduce_C_in_ABC_B.out" varfile="reduc_C_in_ABC_B.out"
 		when="each" />
       </test>
@@ -83,7 +83,7 @@
       <test identifier="reduce_C_in_ABC_A" description="Reducer testing"
   	    timed="true" cases="[1-100]">
   	<output identifier="reduce_C_in_ABC_A.out" folder="../tests/vector_matrix_utilities"
-		file="reduce_C_in_ABC_A.out.{}" template="realdp11.xml" />
+		file="reduce_C_in_ABC_A.out.{}" template="float.xml" />
   	<target name="A" compareto="reduce_C_in_ABC_A.out" varfile="reduc_C_in_ABC_A.out"
 		when="each" />
       </test>
@@ -113,7 +113,7 @@
 	    cases="[1-100]">
   	<output identifier="gaussian_reduce_two_vectors_U.out"
 		folder="../tests/vector_matrix_utilities"
-		file="gaussian_reduce_two_vectors_U.out.{}" template="realdp11.xml" />
+		file="gaussian_reduce_two_vectors_U.out.{}" template="float.xml" />
   	<target name="U" compareto="gaussian_reduce_two_vectors_U.out"
 		varfile="gaussian_reduce_two_vectors_U.out" when="each" />
       </test>
@@ -139,7 +139,7 @@
 	    cases="[1-100]">
   	<output identifier="gaussian_reduce_two_vectors_V.out"
 		folder="../tests/vector_matrix_utilities"
-		file="gaussian_reduce_two_vectors_V.out.{}" template="realdp11.xml" />
+		file="gaussian_reduce_two_vectors_V.out.{}" template="float.xml" />
   	<target name="V" compareto="gaussian_reduce_two_vectors_V.out"
 		varfile="gaussian_reduce_two_vectors_V.out" when="each" />
       </test>
@@ -164,7 +164,7 @@
   	    timed="true" cases="[1-1000]" >
   	<output identifier="minkowski_reduce_basis_OUT.out"
 		folder="../tests/vector_matrix_utilities"
-		file="minkowski_reduce_basis_OUT.out.{}" template="realdp11.xml" />
+		file="minkowski_reduce_basis_OUT.out.{}" template="float.xml" />
   	<target name="OUT" compareto="minkowski_reduce_basis_OUT.out"
 		varfile="minkowski_reduce_basis_OUT.out" when="each" />
       </test>
@@ -184,7 +184,7 @@
       <test identifier="orthogonality_defect"
 	    description="Testing of finding of defects subroutine." timed="true" cases="[1-99]">
   	<output identifier="orthogonality_defect.out" folder="../tests/vector_matrix_utilities"
-  		file="orthogonality_defect.out.{}" template="realdp10.xml" />
+  		file="orthogonality_defect.out.{}" template="float.xml" />
   	<target name="[default]" compareto="orthogonality_defect.out"
   		varfile="orthogonality_defect.out" when="each" />
       </test>
@@ -200,7 +200,7 @@
       <test identifier="matrix_inverse" description="Testing of matrix inversion."
   	    timed="true" cases="[1-100]">
   	<output identifier="matrix_inverse_b.out" folder="../tests/vector_matrix_utilities"
-		file="matrix_inverse_b.out.{}" template="realdp11.xml" />
+		file="matrix_inverse_b.out.{}" template="float.xml" />
   	<target name="b" compareto="matrix_inverse_b.out" varfile="matrix_inverse_b.out"
 		when="each" />
       </test>
@@ -220,7 +220,7 @@
       <test identifier="cross_product" description="Testing of the cross product."
   	    timed="true" cases="[1-100]">
   	<output identifier="cross_product.out" folder="../tests/vector_matrix_utilities"
-		file="cross_product.out.{}" template="realdp11.xml" />
+		file="cross_product.out.{}" template="float.xml" />
   	<target name="[default]" compareto="cross_product.out" varfile="cross_product.out"
 		when="each" />
       </test>
@@ -240,7 +240,7 @@
       <test identifier="norm_real_vector" description="Testing of the norm function."
 	    timed="true" cases="[1-1002]" >
   	<output identifier="norm_real_vector.out" folder="../tests/vector_matrix_utilities" 
-		file="norm_real_vector.out.{}" template="realdp11.xml" />
+		file="norm_real_vector.out.{}" template="float.xml" />
   	<target name="[default]" compareto="norm_real_vector.out" 
 		varfile="norm_real_vector.out" when="each" />
       </test>
@@ -272,7 +272,7 @@
       <test identifier="determinant_real" description="Testing of the determinant."
   	    timed="true" cases="[1-100]">
   	<output identifier="determinant_real.out" folder="../tests/vector_matrix_utilities"
-		file="determinant_real.out.{}" template="realdp10.xml" />
+		file="determinant_real.out.{}" template="float.xml" />
   	<target name="[default]" compareto="determinant_real.out"
 		varfile="determinant_real.out" when="each" />
       </test>
@@ -304,7 +304,7 @@
       <test identifier="volume" description="Testing of the volume function."
   	    timed="true" cases="[1-100]">
   	<output identifier="volume.out" folder="../tests/vector_matrix_utilities"
-		file="volume.out.{}" template="realdp10.xml" />
+		file="volume.out.{}" template="float.xml" />
   	<target name="[default]" compareto="volume.out" varfile="volume.out"
 		when="each" />
       </test>
