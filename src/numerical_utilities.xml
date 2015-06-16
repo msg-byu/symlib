@@ -217,9 +217,9 @@
   </decorates>
 
   <decorates name="numerical_utilities.equal_rank3">
-    <group name="equal_rank3" purpose="testingf?_uncle_bug?" staging="../unittests/">
-      <test identifier="original" description="Tests the equality of rank 2 floats." timed="true"
-	    cases="[46-50]">
+    <group name="equal_rank3" purpose="testing" staging="../unittests/">
+      <test identifier="equal_rank3" description="Tests the equality of rank 3 floats."
+	    timed="true" cases="[1-100]">
 	<output identifier="equal_rank3.out" folder="../tests/numerical_utilities"
 		file="equal_rank3.out.{}" template="string.xml" />
 	<target name="[default]" compareto="equal_rank3.out" varfile="equal_rank3.out"
@@ -227,15 +227,15 @@
       </test>
       <assignment name="a" value="ain" allocate="true"> 
 	<value identifier="ain" folder="../tests/numerical_utilities" file="equal_rank3_a.in.{}"
-	       rename="equal_rank3_a.in"/>
+	       rename="a.in"/>
       </assignment>
       <assignment name="b" value="bin" allocate="true"> 
 	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank3_b.in.{}"
-	       rename="equal_rank3_b.in"/>
+	       rename="b.in"/>
       </assignment>
       <assignment name="tolerance" value="tin"> 
 	<value identifier="tin" folder="../tests/numerical_utilities"
-	       file="equal_rank3_tol.in.{}" rename="equal_rank3_tol.in"/>
+	       file="equal_rank3_tolerance.in.{}" rename="tolerance.in"/>
       </assignment>
     </group>
   </decorates>
