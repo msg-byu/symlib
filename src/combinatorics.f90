@@ -33,7 +33,7 @@ CONTAINS
   
   !!<summary>Initialize a mask for the generate_next_subset routine.</summary>
   !!<parameter name="mask">The mask that has been initialized</parameter>
-  !!<parameter name="initial_mask" >The array of logicals to be converted to a 
+  !!<parameter name="initial_mask">The array of logicals to be converted to a 
   !!mask.</parameter>
   SUBROUTINE initialize_subset_mask(mask,initial_mask)
     type(subset_mask) mask

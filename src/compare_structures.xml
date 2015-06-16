@@ -2,17 +2,65 @@
 <fortpy mode="docstring">
 
   <decorates name="compare_structures.compare_arbitrary_structures">
-    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+    <group name="compare_structures" purpose="testing"
 	   staging="../unittests/">
-      <test identifier="compare_arbitrary_structures"
+      <test identifier="compare_arbitrary_structures_identical" cases="[1-999]"
 	    description="Test the comparison of arbitrary structures." timed="true" >
-	<output identifier="identical.out" folder="../tests/compare_structs"
-		file="compare_arbitrary_structures_identical.out.{}" template="equal.out.xml" />
-	<target name="identical" compareto="identical.out" varfile="identical.out" when="each" />
+	<output identifier="compare_arbitrary_structures_identical"
+		folder="../tests/compare_structs"
+		file="compare_arbitrary_structures_identical.out.{}" template="string.xml" />
+	<target name="identical" compareto="compare_arbitrary_structures_identical"
+		varfile="compare_arbitrary_structures_identical.out" when="each" />
       </test>
-      <assignment name="LVin" value="LVfil" allocate="true">
-	<value identifier="LVfil" file="compare_arbitrary_structures_LVin.in.{}"
-	       folder="../tests/compare_structs" rename="LVin.in"/>
+      <assignment name="LV1in" value="LVfil" allocate="true">
+	<value identifier="LVfil" file="compare_arbitrary_structures_LV1in.in.{}"
+	       folder="../tests/compare_structs" rename="LV1in.in"/>
+      </assignment>
+      <assignment name="LV2in" value="LV2fil" allocate="true">
+	<value identifier="LV2fil" file="compare_arbitrary_structures_LV2in.in.{}"
+	       folder="../tests/compare_structs" rename="LV2in.in"/>
+      </assignment>
+      <assignment name="aTyp1in" value="atp1in" allocate="true">
+	<value identifier="atp1in" file="compare_arbitrary_structures_aTyp1in.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp1in.in"/>
+      </assignment>
+      <assignment name="aTyp2in" value="atp2in" allocate="true">
+	<value identifier="atp2in" file="compare_arbitrary_structures_aTyp2in.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp2in.in"/>
+      </assignment>
+      <assignment name="aPos1in" value="aps1in" allocate="true">
+	<value identifier="aps1in" file="compare_arbitrary_structures_aPos1in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos1in.in"/>
+      </assignment>
+      <assignment name="aPos2in" value="aps2in" allocate="true">
+	<value identifier="aps2in" file="compare_arbitrary_structures_aPos2in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos2in.in"/>
+      </assignment>
+      <assignment name="aPos2in" value="aps2in" allocate="true">
+	<value identifier="aps2in" file="compare_arbitrary_structures_aPos2in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos2in.in"/>
+      </assignment>
+      <assignment name="eps" value="epsf">
+	<value identifier="epsf" file="compare_arbitrary_structures_eps.in.{}"
+	       folder="../tests/compare_structs" rename="eps.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.compare_arbitrary_structures">
+    <group name="compare_structures" purpose="testing"
+	   staging="../unittests/">
+      <test identifier="compare_arbitrary_structures_mapped" cases="[1-999]"
+	    description="Test the comparison of arbitrary structures." timed="true" >
+	<output identifier="compare_arbitrary_structures_mapped"
+		folder="../tests/compare_structs"
+		file="compare_arbitrary_structures_mapped.out.{}" template="string.xml" />
+	<target name="mapped" compareto="compare_arbitrary_structures_mapped"
+		varfile="compare_arbitrary_structures_mapped.out" when="each" />
+      </test>
+      <assignment name="LV1in" value="LVfil" allocate="true">
+	<value identifier="LVfil" file="compare_arbitrary_structures_LV1in.in.{}"
+	       folder="../tests/compare_structs" rename="LV1in.in"/>
       </assignment>
       <assignment name="LV2in" value="LV2fil" allocate="true">
 	<value identifier="LV2fil" file="compare_arbitrary_structures_LV2in.in.{}"
@@ -121,9 +169,9 @@
   </decorates>
 
   <decorates name="compare_structures.are_lattice_points">
-    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+    <group name="compare_structures" purpose="testing"
 	   staging="../unittests/">
-      <test identifier="are_lattice_points"
+      <test identifier="are_lattice_points" cases = "[1-213]"
 	    description="Test the comparison of equivalent lattices." timed="true" >
 	<output identifier="are_lattice_points.out" folder="../tests/compare_structs"
 		file="are_lattice_points.out.{}" template="string.xml" />
@@ -134,7 +182,7 @@
 	<value identifier="LVf" file="are_lattice_points_LV.in.{}"
 	       folder="../tests/compare_structs" rename="LV.in"/>
       </assignment>
-      <assignment name="pB" value="bpf" allocate="true">
+      <assignment name="pB" value="pbf" allocate="true">
 	<value identifier="pbf" file="are_lattice_points_LV.in.{}"
 	       folder="../tests/compare_structs" rename="pB.in"/>
       </assignment>
@@ -150,9 +198,9 @@
   </decorates>
 
   <decorates name="compare_structures.mapping_translation_exists">
-    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+    <group name="compare_structures" purpose="testing"
 	   staging="../unittests/">
-      <test identifier="are_lattice_points"
+      <test identifier="mapping_translation_exists" cases="[1-223]"
 	    description="Test the comparison of equivalent lattices." timed="true" >
 	<output identifier="mapping_translation_exists.out" folder="../tests/compare_structs"
 		file="mapping_translation_exists.out.{}" template="string.xml" />
@@ -163,17 +211,17 @@
 	<value identifier="LV2f" file="mapping_translation_exists_LV2.in.{}"
 	       folder="../tests/compare_structs" rename="LV2.in"/>
       </assignment>
-      <assignment name="aTyp1in" value="atp1in" allocate="true">
-	<value identifier="atp1in" file="mapping_translation_exists_aTyp1in.in.{}"
-	       folder="../tests/compare_structs" rename="aTyp1in.in"/>
+      <assignment name="aTyp1" value="atp1" allocate="true">
+	<value identifier="atp1" file="mapping_translation_exists_aTyp1.in.{}"
+	       folder="../tests/compare_structs" rename="aTyp1.in"/>
       </assignment>
       <assignment name="aTyp2" value="atp2" allocate="true">
 	<value identifier="atp2" file="mapping_translation_exists_aTyp2.in.{}"
 	       folder="../tests/compare_structs" rename="aTyp2.in"/>
       </assignment>
-      <assignment name="aPos1" value="aps1" allocate="true">
-	<value identifier="aps1" file="mapping_translation_exists_aPos1.in.{}"
-	       folder="../tests/compare_structs" rename="aPos1.in"/>
+      <assignment name="aPos1in" value="aps1" allocate="true">
+	<value identifier="aps1" file="mapping_translation_exists_aPos1in.in.{}"
+	       folder="../tests/compare_structs" rename="aPos1in.in"/>
       </assignment>
       <assignment name="aPos2" value="aps2" allocate="true">
 	<value identifier="aps2" file="mapping_translation_exists_aPos2.in.{}"
@@ -187,16 +235,16 @@
   </decorates>
 
   <decorates name="compare_structures.get_basis_permutations">
-    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
+    <group name="compare_structures" purpose="testing"
 	   staging="../unittests/">
-      <test identifier="get_basis_permutations"
+      <test identifier="get_basis_permutations" cases="[1-213]"
 	    description="Test the comparison of equivalent lattices." timed="true" >
 	<output identifier="get_basis_permutations.out" folder="../tests/compare_structs"
-		file="get_basis_permutations_perms.out.{}" template="" />
-	<target name="perms" compareto="get_basis_permutations.out"
+		file="get_basis_permutations_perm.out.{}" template="" />
+	<target name="perm" compareto="get_basis_permutations.out"
 		varfile="get_basis_permutations.out" when="each" />
       </test>
-      <global name="perms" type="integer" modifiers="pointer" dimensions=":,:"/>
+      <global name="perm" type="integer" modifiers="pointer" dimensions=":,:"/>
       <assignment name="uqlist" value="listf" allocate="true">
 	<value identifier="listf" file="get_basis_permutations_uqlist.in.{}"
 	       folder="../tests/compare_structs" rename="uqlist.in"/>
@@ -205,14 +253,31 @@
   </decorates>
 
   <decorates name="compare_structures.unique">
-    <group name="compare_structures" purpose="testingf_not_used_in_UNCLE"
-	   staging="../unittests/">
-      <test identifier="unique"
+    <group name="compare_structures" purpose="testing" staging="../unittests/">
+      <test identifier="unique_uqlist" cases = "[1-183]"
 	    description="Test the comparison of equivalent lattices." timed="true" >
-	<output identifier="unique.out" folder="../tests/compare_structs"
-		file="unique.out.{}" template="" />
-	<target name="uqlist" compareto="unique.out"
-		varfile="unique.out" when="each" />
+	<output identifier="unique_uqlist.out" folder="../tests/compare_structs"
+		file="unique_uqlist.out.{}" template="" />
+	<target name="uqlist" compareto="unique_uqlist.out"
+		varfile="unique_uqlist.out" when="each" />
+      </test>
+      <global name="uqlist" type="integer" modifiers="pointer" dimensions=":"/>
+      <global name="block" type="integer" modifiers="pointer" dimensions=":"/>
+      <assignment name="list" value="listf" allocate="true">
+	<value identifier="listf" file="unique_list.in.{}"
+	       folder="../tests/compare_structs" rename="list.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="compare_structures.unique">
+    <group name="compare_structures" purpose="testing" staging="../unittests/">
+      <test identifier="unique_block" cases = "[1-183]"
+	    description="Test the comparison of equivalent lattices." timed="true" >
+	<output identifier="unique_block.out" folder="../tests/compare_structs"
+		file="unique_block.out.{}" template="" />
+	<target name="block" compareto="unique_block.out"
+		varfile="unique_block.out" when="each" />
       </test>
       <global name="uqlist" type="integer" modifiers="pointer" dimensions=":"/>
       <global name="block" type="integer" modifiers="pointer" dimensions=":"/>

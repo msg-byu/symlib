@@ -105,7 +105,7 @@
   </decorates>
 
   <decorates name="combinatorics.m_partitions_of_n">
-    <group name="binomial_tests" purpose="testingf" staging="../unittests/">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
       <test identifier="original" description="Testing of the integer partitioning subroutine."
   	    timed="true" cases="[1-50]">
   	<output identifier="m_partitions_of_n.out" folder="../tests/combinatorics"
@@ -158,7 +158,7 @@
   </decorates>
 
   <decorates name="combinatorics.factorial_int_rank1">
-    <group name="binomial_tests" purpose="testing?_fortpy_bug" staging="../unittests/">
+    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
       <test identifier="factorial_int_rank1" 
 	    description="Testing of the array of integers factorial." timed="true" >
   	<output identifier="factorial_int_arry.out" folder="../tests/combinatorics" 
@@ -174,7 +174,7 @@
   </decorates>
 
   <decorates name="combinatorics.factorial_dp_rank1">
-    <group name="binomial_tests" purpose="testing?_fortpy_bug" staging="../unittests/">
+    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
       <test identifier="factorial_dp_rank1" description="Testing of the arry of reals factorial."
   	    timed="true" >
   	<output identifier="factorial_real_arry.out" folder="../tests/combinatorics"
@@ -223,7 +223,7 @@
   </decorates>
 
   <decorates name="combinatorics.initialize_subset_mask">
-    <group name="binomial_tests" purpose="testing?" staging="../unittests/">
+    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
       <test identifier="initialize_subset_mask" description="Testing of the mask initialization."
   	    timed="true" cases="[1-10]">
   	<output identifier="initialize_subset_mask.out" folder="../tests/combinatorics"
@@ -241,7 +241,7 @@
   </decorates>
 
   <decorates name="combinatorics.generate_next_subset">
-    <group name="binomial_tests" purpose="testing?_fortpy_bug" staging="../unittests/">
+    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
       <test identifier="generate_next_subset" description="Testing of the mask iteration
   							   over sets."
   	    timed="true" cases="[1-20]">

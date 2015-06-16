@@ -10,7 +10,7 @@ MODULE compare_structures
 use num_types 
 use vector_matrix_utilities, only: volume, determinant, matrix_inverse
 use numerical_utilities, only: equal 
-use symmetry_module 
+use symmetry 
 
 implicit none 
 private
@@ -310,8 +310,8 @@ CONTAINS
   !!<parameter name="eps" regular="true">The finite precision tolerance.</parameter>
   function mapping_translation_exists(LV2, aPos1in, aPos2, aTyp1, aTyp2, eps)
     real(dp), intent(in) :: LV2(3,3), aPos1in(:,:), aPos2(:,:), eps
-    logical mapping_translation_exists
-    integer aTyp1(:), aTyp2(:)
+    logical :: mapping_translation_exists
+    integer :: aTyp1(:), aTyp2(:)
 
     real(dp) :: transVec(3), conVec(3) ! The translation vector; connection vector
     integer N  ! Number of atoms in the basis (assumed same for both structures)
