@@ -36,7 +36,7 @@
   </decorates>
 
   <decorates name="symmetry.get_spaceGroup_atomTypes">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
       <test identifier="symmetry_aTypes" description="Tests the get_spaceGroup_atomTypes."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="aTyp.out" folder="../tests/symmetry"
@@ -147,7 +147,7 @@
   </decorates>
 
   <decorates name="symmetry.get_transformations">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
       <test identifier="get_transforms_ctp" description="Tests the get_transformations."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="cart_to_prim.out" folder="../tests/symmetry"
@@ -155,15 +155,6 @@
 	<target name="cart_to_prim" compareto="cart_to_prim.out" varfile="cart_to_prim.out"
 		when="each" />
       </test>
-      <assignment name="aVecs" value = "vec" >
-	<value identifier="vec" folder="../tests/symmetry"
-	       file="get_transformations_aVecs.in.{}" rename="aVecs.in" />
-      </assignment>
-    </group>
-  </decorates>
-
-  <decorates name="symmetry.get_transformations">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="get_transforms_ptc" description="Tests the get_transformations."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="prim_to_cart.out" folder="../tests/symmetry"
@@ -179,7 +170,7 @@
   </decorates>
 
   <decorates name="symmetry.bring_into_cell">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
       <test identifier="bring_into_cell" description="Tests the bring_into_cell."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="v.out" folder="../tests/symmetry"
@@ -207,7 +198,7 @@
   </decorates>
 
   <decorates name="symmetry.does_mapping_exist">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
       <test identifier="does_mapping_exist" description="Tests the does_mapping_exist."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="mapped.out" folder="../tests/symmetry"
@@ -239,6 +230,8 @@
   </decorates>
 
   <decorates name="symmetry.check_spaceGroup">
+    <skip reason="This routine is not presently used anywhere in the UNCLE code or any
+		  other routine." />
     <group name="symmetry_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
       <test identifier="check_spaceGroup" description="Tests the check_spaceGroup."
 	    timed="true" cases="[]"> 
@@ -265,7 +258,7 @@
   </decorates>
 
   <decorates name="symmetry.find_site_equivalencies">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
       <test identifier="find_site_equivalencies_nSites"
 	    description="Tests the find_site_equivalencies." timed="true" cases="[1-40]"> 
 	<output identifier="nSites.out" folder="../tests/symmetry"
@@ -273,30 +266,6 @@
 	<target name="nSites" compareto="nSites.out" varfile="nSites.out"
 		when="each" />
       </test>
-      <global name="BasEq" type="integer" modifiers="pointer" dimensions=":"/>
-      <global name="pBas" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
-      <global name="siteLabel" type="integer" modifiers="pointer" dimensions=":"/>
-      <assignment name="pBas" value = "pBasfile" allocate="true">
-	<value identifier="pBasfile" folder="../tests/symmetry"
-	       file="find_site_equivalencies_pBas.in.{}" rename="pBas.in" />
-      </assignment>
-      <assignment name="siteLabel" value = "slfile" allocate="true">
-	<value identifier="slfile" folder="../tests/symmetry"
-	       file="find_site_equivalencies_siteLabel.in.{}" rename="siteLabel.in" />
-      </assignment>
-      <assignment name="eps_" value = "ep">
-	<value identifier="ep" folder="../tests/symmetry"
-	       file="find_site_equivalencies_eps.in.{}" rename="eps.in" />
-      </assignment>
-      <assignment name="pLV" value = "pLVf" allocate="true">
-	<value identifier="pLVf" folder="../tests/symmetry"
-	       file="find_site_equivalencies_pLV.in.{}" rename="pLV.in" />
-      </assignment>
-    </group>
-  </decorates>
-
-  <decorates name="symmetry.find_site_equivalencies">
-    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_site_equivalencies_BasEq"
 	    description="Tests the find_site_equivalencies." timed="true" cases="[1-40]"> 
 	<output identifier="BasEq.out" folder="../tests/symmetry"
