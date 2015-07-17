@@ -116,6 +116,8 @@ CONTAINS
     integer LC(3) ! lattice coordinates of C, in the affine plane, using the A,B basis vectors
     integer idx(1) ! index of the smallest distance from T to a lattice point in A,B
     logical err
+    real(dp) :: corners(4,3)  ! Array to store 4 corners of the unit cell (in lattice coordinates)
+    integer i ! loop counter
 
     ABC = reshape((/A,B,C/),(/3,3/))
     oldABC = ABC
@@ -144,24 +146,34 @@ CONTAINS
     if(err)stop "A,B,C vectors in reduce_C_in_ABC are co-planar"
     LC = floor(matmul(ABCinv,T) + eps)
     
-    ! Compute the distance from T to each of the four points and pick
-    ! the one that is the closest.
-    dist(1) = norm(T-matmul(ABC,LC)) 
-    dist(2) = norm(T-matmul(ABC,(/LC(1)+1,LC(2),LC(3)/)))
-    dist(3) = norm(T-matmul(ABC,(/LC(1),LC(2)+1,LC(3)/)))
-    dist(4) = norm(T-matmul(ABC,(/LC(1)+1,LC(2)+1,LC(3)/)))
+!    dist(1) = norm(T-matmul(ABC,LC)) 
+!    dist(2) = norm(T-matmul(ABC,(/LC(1)+1,LC(2),LC(3)/)))
+!    dist(3) = norm(T-matmul(ABC,(/LC(1),LC(2)+1,LC(3)/)))
+!    dist(4) = norm(T-matmul(ABC,(/LC(1)+1,LC(2)+1,LC(3)/)))
+!
+! GLWH July 10 2015. This stupid do loop business is needed to circumvent a compiler bug in ifort
+    ! -O3 version  14.0.2 20140121. Old code is above.
 
+    ! Compute the distance from T to each of the four corners of the cell and pick
+    ! the one that is the closest.
+    corners(1,:) =(/0,0,0/)
+    corners(2,:) =(/1,0,0/)
+    corners(3,:) =(/0,1,0/)
+    corners(4,:) =(/1,1,0/)
+    do i = 1,4
+       dist(i) = norm(T-matmul(ABC,LC+corners(i,:))) 
+    enddo
     idx = minloc(dist)
 
     select case(idx(1))
     case(1)
-       C = C - matmul(ABC,LC)
+       C = C - matmul(ABC,LC+corners(1,:))
     case(2)
-       C = C - matmul(ABC,(/LC(1)+1,LC(2),LC(3)/))
+       C = C - matmul(ABC,LC+corners(2,:))
     case(3)
-       C = C - matmul(ABC,(/LC(1),LC(2)+1,LC(3)/))
+       C = C - matmul(ABC,LC+corners(3,:))
     case(4)
-       C = C - matmul(ABC,(/LC(1)+1,LC(2)+1,LC(3)/))
+       C = C - matmul(ABC,LC+corners(4,:))
     case default
        print *, "Case failed in reduce_C_in_ABC"
        write(*,'("Lattice coordinates in the A,B plane: ",2(i2,1x))') LC
