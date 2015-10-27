@@ -2,22 +2,23 @@
 <fortpy mode="docstring">
 
   <decorates name="utilities.ucase">
-    <group name="utility_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="utility_tests" purpose="testing" staging="../unittests/">
       <test identifier="ucase" description="Original ucase testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ucase.out" folder="../tests/utilities" file="ucase_string.out.{}" 
 		template="equal.out.xml" />
 	<target name="string" compareto="ucase.out" varfile="ucase.out" when="each" />
       </test>
+      <global name ="string" type="character" kind = "len=*"/>
       <assignment name="string" value="casef" >
 	<value identifier="casef" file="ucase_string.in.{}"
-	       folder="../tests/utilities" nename="string.in"/>
+	       folder="../tests/utilities" rename="string.in"/>
       </assignment>
     </group>
   </decorates>
 
   <decorates name="utilities.ralloc_real">
-    <group name="ralloc_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_r" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_r.out" folder="../tests/utilities" file="ralloc_real.out.{}" 
@@ -37,7 +38,7 @@
   </decorates>
 
   <decorates name="utilities.ralloc_integer">
-    <group name="ralloc_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_i" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_i.out" folder="../tests/utilities"
@@ -57,7 +58,7 @@
   </decorates>
 
   <decorates name="utilities.ralloc_integer_matrix_list">
-    <group name="ralloc_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_iml" description="Original ralloc testing"
 	    timed="true" cases="[1-100]">
 	<output identifier="ralloc_iml.out" folder="../tests/utilities"
@@ -78,7 +79,7 @@
   </decorates>
 
   <decorates name="utilities.ralloc_integer_table">
-    <group name="ralloc_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_it" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_it.out" folder="../tests/utilities"
@@ -103,7 +104,7 @@
   </decorates>
 
   <decorates name="utilities.ralloc_real_table">
-    <group name="ralloc_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_rt" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_rt.out" folder="../tests/utilities"

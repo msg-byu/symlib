@@ -2,12 +2,24 @@
 <fortpy mode="docstring">
 
   <decorates name="symmetry.get_spaceGroup">
-    <group name="symmetry_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
-      <test identifier="get_spaceGroup" description="Tests the get_spaceGroup."
-	    timed="true" cases="[]"> 
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+      <test identifier="get_spaceGroup_sg_op" description="Tests the get_spaceGroup."
+	    timed="true" cases="[1-15]"> 
 	<output identifier="sg_op.out" folder="../tests/symmetry"
 		file="get_spaceGroup_sg_op.out.{}" template="" />
 	<target name="sg_op" compareto="sg_op.out" varfile="sg_op.out" when="each" />
+      </test>
+      <test identifier="get_spaceGroup_sg_fract" description="Tests the get_spaceGroup."
+	    timed="true" cases="[1-15]"> 
+	<output identifier="sg_fract.out" folder="../tests/symmetry"
+		file="get_spaceGroup_sg_fract.out.{}" template="" />
+	<target name="sg_fract" compareto="sg_fract.out" varfile="sg_fract.out" when="each" />
+      </test>
+      <test identifier="get_spaceGroup_input_pos" description="Tests the get_spaceGroup."
+	    timed="true" cases="[1-15]"> 
+	<output identifier="input_pos.out" folder="../tests/symmetry"
+		file="get_spaceGroup_input_pos.out.{}" template="" />
+	<target name="input_pos" compareto="input_pos.out" varfile="input_pos.out" when="each" />
       </test>
       <global name="sg_op" type="real(dp)" modifiers="pointer" dimensions=":,:,:"/>
       <global name="sg_fract" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
@@ -36,7 +48,7 @@
   </decorates>
 
   <decorates name="symmetry.get_spaceGroup_atomTypes">
-    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="symmetry_aTypes" description="Tests the get_spaceGroup_atomTypes."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="aTyp.out" folder="../tests/symmetry"
@@ -60,12 +72,18 @@
   </decorates>
 
   <decorates name="symmetry.rm_3d_operations">
-    <group name="symmetry_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
-      <test identifier="rm_3d_operations" description="Tests the rm_3d_operations."
-	    timed="true" cases="[]"> 
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+      <test identifier="rm_3d_operations_sgrots" description="Tests the rm_3d_operations."
+	    timed="true" cases="[1-23]"> 
 	<output identifier="sgrots.out" folder="../tests/symmetry"
 		file="rm_3d_operations_sgrots.out.{}" template="" />
 	<target name="sgrots" compareto="sgrots.out" varfile="sgrots.out" when="each" />
+      </test>
+      <test identifier="rm_3d_operations_sgshifts" description="Tests the rm_3d_operations."
+	    timed="true" cases="[1-23]"> 
+	<output identifier="sgshifts.out" folder="../tests/symmetry"
+		file="rm_3d_operations_sgshifts.out.{}" template="" />
+	<target name="sgshifts" compareto="sgshifts.out" varfile="sgshifts.out" when="each" />
       </test>
       <global name="sgrots" type="real(dp)" modifiers="pointer" dimensions=":,:,:"/>
       <global name="sgshifts" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
@@ -89,16 +107,28 @@
   </decorates>
 
   <decorates name="symmetry.make_primitive">
-    <group name="symmetry_tests" purpose="testing?_fortpy_bug?" staging="../unittests/">
-      <test identifier="make_primitive" description="Tests the make_primitive."
-	    timed="true" cases="[1-10]"> 
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
+      <test identifier="make_primitive_atom_pos" description="Tests the make_primitive."
+	    timed="true" cases="[1-428]"> 
 	<output identifier="atom_pos.out" folder="../tests/symmetry"
 		file="make_primitive_atom_pos.out.{}" template="float.xml" />
 	<target name="atom_pos" compareto="atom_pos.out" varfile="atom_pos.out" when="each" />
       </test>
-      <global name="atomType" type="real(dp)" modifiers="pointer" dimensions=":"/>
+      <test identifier="make_primitive_atomType" description="Tests the make_primitive."
+	    timed="true" cases="[1-428]"> 
+	<output identifier="atomType.out" folder="../tests/symmetry"
+		file="make_primitive_atomType.out.{}" template="integer.xml" />
+	<target name="atomType" compareto="atomType.out" varfile="atomType.out" when="each" />
+      </test>
+      <test identifier="make_primitive_aVecs" description="Tests the make_primitive."
+	    timed="true" cases="[1-428]"> 
+	<output identifier="aVecs.out" folder="../tests/symmetry"
+		file="make_primitive_aVecs.out.{}" template="float.xml" />
+	<target name="aVecs" compareto="aVecs.out" varfile="aVecs.out" when="each" />
+      </test>
+      <global name="atomType" type="integer" modifiers="pointer" dimensions=":"/>
       <global name="atom_pos" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
-      <global name="removed_" type="real(dp)" modifiers="pointer" dimensions=":"/>
+      <global name="removed_" type="integer" modifiers="pointer" dimensions=":"/>
       <assignment name="aVecs" value = "vec">
 	<value identifier="vec" folder="../tests/symmetry"
 	       file="make_primitive_aVecs.in.{}" rename="aVecs.in" />
@@ -111,25 +141,21 @@
 	<value identifier="atps" folder="../tests/symmetry"
 	       file="make_primitive_atom_pos.in.{}" rename="atom_pos.in" />
       </assignment>
-      <assignment name="lattCoors" value="ltc">
+      <assignment name="lattCoords" value="ltc">
 	<value identifier="ltc" folder="../tests/symmetry"
-	       file="make_primitive_lattCoors.{}" rename="lattCoors.in" />
+	       file="make_primitive_lattCoords.in.{}" rename="lattCoords.in" />
       </assignment>
       <assignment name="eps_" value="ep">
 	<value identifier="ep" folder="../tests/symmetry"
 	       file="make_primitive_eps.in.{}" rename="eps.in" />
       </assignment>
-      <assignment name="removed_" value="rem" allocate="true">
-	<value identifier="rem" folder="../tests/symmetry"
-	       file="make_primitive_removed.in.{}" rename="removed.in" />
-      </assignment>
     </group>
   </decorates>
 
   <decorates name="symmetry.get_lattice_pointGroup">
-    <group name="symmetry_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="get_lattice_pointGroup" description="Tests the get_lattice_pointGroup."
-	    timed="true" cases="[]"> 
+	    timed="true" cases="[1-87]"> 
 	<output identifier="lattpg_op.out" folder="../tests/symmetry"
 		file="get_lattice_pointGroup_lattpg_op.out.{}" template="" />
 	<target name="lattpg_op" compareto="lattpg_op.out" varfile="lattpg_op.out" when="each" />
@@ -147,7 +173,7 @@
   </decorates>
 
   <decorates name="symmetry.get_transformations">
-    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="get_transforms_ctp" description="Tests the get_transformations."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="cart_to_prim.out" folder="../tests/symmetry"
@@ -170,7 +196,7 @@
   </decorates>
 
   <decorates name="symmetry.bring_into_cell">
-    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="bring_into_cell" description="Tests the bring_into_cell."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="v.out" folder="../tests/symmetry"
@@ -198,7 +224,7 @@
   </decorates>
 
   <decorates name="symmetry.does_mapping_exist">
-    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="does_mapping_exist" description="Tests the does_mapping_exist."
 	    timed="true" cases="[1-50]"> 
 	<output identifier="mapped.out" folder="../tests/symmetry"
@@ -232,7 +258,7 @@
   <decorates name="symmetry.check_spaceGroup">
     <skip reason="This routine is not presently used anywhere in the UNCLE code or any
 		  other routine." />
-    <group name="symmetry_tests" purpose="testing?_fortpy_rank3" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing_skip" staging="../unittests/">
       <test identifier="check_spaceGroup" description="Tests the check_spaceGroup."
 	    timed="true" cases="[]"> 
 	<output identifier="sym_check.out" folder="../tests/symmetry"
@@ -258,7 +284,7 @@
   </decorates>
 
   <decorates name="symmetry.find_site_equivalencies">
-    <group name="symmetry_tests" purpose="testingp" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_site_equivalencies_nSites"
 	    description="Tests the find_site_equivalencies." timed="true" cases="[1-40]"> 
 	<output identifier="nSites.out" folder="../tests/symmetry"

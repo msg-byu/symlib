@@ -50,7 +50,9 @@
   </decorates>
 
   <decorates name="combinatorics.find_unique">
-    <group name="binomial_tests" purpose="testingf_too_deep" staging="../unittests/">
+    <skip reason = "This routine is imbedded and so is tested implicitly by the subroutine
+		    that contains it."/>
+    <group name="binomial_tests" purpose="testing_too_deep" staging="../unittests/">
       <test identifier="find_unique" description="Find unique subroutine testing"
   	    timed="true" cases="[1-50]">
   	<output identifier="find_unique.out" folder="../tests/combinatorics"
@@ -158,33 +160,37 @@
   </decorates>
 
   <decorates name="combinatorics.factorial_int_rank1">
-    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
-      <test identifier="factorial_int_rank1" 
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
+      <test identifier="factorial_int_rank1" cases="[1-100]" 
 	    description="Testing of the array of integers factorial." timed="true" >
   	<output identifier="factorial_int_arry.out" folder="../tests/combinatorics" 
-		file="factorial_int_arry.out" template="integer.xml" />
+		file="factorial_int_rank1.out.{}" template="integer.xml" />
   	<target name="[default]" compareto="factorial_int_arry.out" 
-		varfile="factorial_int_arry.out" when="each" />
+		varfile="factorial_int_rank1.out" when="each" />
       </test>
+      <global name="[default]" type="integer" modifiers="allocatable" dimensions=":" />
+      <assignment name="[default]" constant="0" allocate="size(N)" />
       <assignment name="N" value="mfile2" allocat="true">
   	<value identifier="mfile2" folder="../tests/combinatorics"
-  	       file="factorial_array.in"/>
+  	       file="factorial_int_rank1_N.in.{}" rename="N.in"/>
       </assignment>     
     </group>
   </decorates>
 
   <decorates name="combinatorics.factorial_dp_rank1">
-    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <group name="binomial_tests" purpose="testing" staging="../unittests/">
       <test identifier="factorial_dp_rank1" description="Testing of the arry of reals factorial."
-  	    timed="true" >
-  	<output identifier="factorial_real_arry.out" folder="../tests/combinatorics"
-		file="factorial_real_arry.out" template="float.xml" />
-  	<target name="[default]" compareto="factorial_real_arry.out"
-		varfile="factorial_real_arry.out" when="each" />
+  	    timed="true" cases="[1-100]">
+  	<output identifier="factorial_dp_rank1.out" folder="../tests/combinatorics"
+		file="factorial_dp_rank1.out.{}" template="float.xml" />
+  	<target name="[default]" compareto="factorial_dp_rank1.out"
+		varfile="factorial_dp_rank1.out" when="each" />
       </test>
+      <global name="[default]" type="integer" modifiers="allocatable" dimensions=":" />
+      <assignment name="[default]" constant="0" allocate="size(N)" />
       <assignment name="N" value="mfile2" allocate="true">
   	<value identifier="mfile2" folder="../tests/combinatorics"
-  	       file="factorial_array.in"/>
+  	       file="factorial_dp_rank1_N.in.{}" rename="N.in"/>
       </assignment>     
     </group>
   </decorates>
@@ -223,7 +229,8 @@
   </decorates>
 
   <decorates name="combinatorics.initialize_subset_mask">
-    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <skip reason = "Not used in any part of the code at this time"/>
+    <group name="binomial_tests" purpose="testing_skip" staging="../unittests/">
       <test identifier="initialize_subset_mask" description="Testing of the mask initialization."
   	    timed="true" cases="[1-10]">
   	<output identifier="initialize_subset_mask.out" folder="../tests/combinatorics"
@@ -241,7 +248,9 @@
   </decorates>
 
   <decorates name="combinatorics.generate_next_subset">
-    <group name="binomial_tests" purpose="testing_fortpy_bug" staging="../unittests/">
+    <skip reason = "Not used in any part of the code at this time, also looks like
+		    code wasn't finished."/>
+    <group name="binomial_tests" purpose="testing_skip" staging="../unittests/">
       <test identifier="generate_next_subset" description="Testing of the mask iteration
   							   over sets."
   	    timed="true" cases="[1-20]">
@@ -257,5 +266,9 @@
       <prereq method="combinatorics.initialize_subset_mask" terminate="true"/>
       <global name="initial_mask" type="logical" allocate="true"/>
     </group>
+  </decorates>
+
+  <decorates name="combinatorics.print_subset_mask">
+    <skip reason = "Not used in any part of the code at this time"/>
   </decorates>
 </fortpy>

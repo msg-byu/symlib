@@ -1,22 +1,21 @@
 MODULE combinatorics
-use num_types
-use rational_mathematics, only: gcd
-implicit none
-private
-public get_permutations, m_partitions_of_n, factorial, nchoosek, k_ary_counter, subset_mask, &
-       generate_next_subset, initialize_subset_mask, print_subset_mask, multinomial, binomial, &
-       permutation_parity
+  use num_types
+  use rational_mathematics, only: gcd
+  implicit none
+  private
+  public get_permutations, m_partitions_of_n, factorial, nchoosek, k_ary_counter, &
+       multinomial, binomial, permutation_parity
 
-type subset_mask
-   private
-   logical          :: init, done
-   logical, pointer :: mask(:)
-end type subset_mask
+  type subset_mask
+     private
+     logical          :: init, done
+     logical, pointer :: mask(:) => null() 
+  end type subset_mask
 
-INTERFACE factorial
-   MODULE PROCEDURE factorial_int_scalar, factorial_int_rank1, &
-   factorial_dp_rank1, factorial_dp_scalar, factorial_long_int
-END INTERFACE
+  INTERFACE factorial
+     MODULE PROCEDURE factorial_int_scalar, factorial_int_rank1, &
+          factorial_dp_rank1, factorial_dp_scalar, factorial_long_int
+  END INTERFACE factorial
 CONTAINS
 
   !!<summary>Prints the subset mask to file for comparison.</summary>
@@ -24,7 +23,8 @@ CONTAINS
   !!<parameter name="mask" regular="true">The mask to be saved.</parameter>
   SUBROUTINE print_subset_mask(mask,filename)
     type(subset_mask), intent(in) :: mask
-    character(100), intent(in) :: filename
+    ! character(100), intent(in) :: filename
+    character(len=*), intent(in) :: filename
     if (.not. mask%init) stop "ERROR: mask was not initialized in print_subset_mask"
     open(unit=10, file=trim(filename), action="write", status="new")
     write(10,*) mask%mask
@@ -36,7 +36,7 @@ CONTAINS
   !!<parameter name="initial_mask">The array of logicals to be converted to a 
   !!mask.</parameter>
   SUBROUTINE initialize_subset_mask(mask,initial_mask)
-    type(subset_mask) mask
+    type(subset_mask) :: mask
     logical, pointer :: initial_mask(:)
     if(.not. associated(initial_mask)) stop "ERROR: initial_mask is not initialized in initialize_subset_mask"
     allocate(mask%mask(size(initial_mask)))
@@ -49,7 +49,7 @@ CONTAINS
   !!a binary number.This routine generates the next number (mask) in numerical order as if 
   !!the logical array was a binary number.</summary>
   !!<parameter name="mask" regular="true">The mask that needs to be iterated.</parameter>
-  !!<parameter name="outputmask">The next mask in the iterable mask.</parameter>
+  !!<parameter name="outputmask" regular="true">The next mask in the iterable mask.</parameter>
   SUBROUTINE generate_next_subset(mask,outputmask)
     type(subset_mask) :: mask
     logical :: outputmask(:)
@@ -68,15 +68,15 @@ CONTAINS
     outputmask = mask%mask
   END SUBROUTINE generate_next_subset
 
-  !!<summary>Binomial coefficient. Computes the number of permutations of n things, taken k at a
-  !!time</summary> 
-  !!<comments>! This implementation was taken from "Binomial Coefﬁcient Computation: Recursion or
-  !!Iteration?" by  Yannis Manolopoulos, ACM SIGCSE Bulletin InRoads, Vol.34, No.4, December
-  !!2002. http://delab.csd.auth.gr/papers/SBI02m.pdf 
-  !! It is supposed to be robust against large, intermediate values and to have optimal
-  !! complexity. This replaces the original function that was used until revision 125
-  !! GLWH June 2014
-  !!</comments>
+  !!<summary>Binomial coefficient. Computes the number of permutations
+  !!of n things, taken k at a time</summary>
+  !!<comments>! This implementation was taken from "Binomial
+  !!Coefﬁcient Computation: Recursion or Iteration?" by Yannis
+  !!Manolopoulos, ACM SIGCSE Bulletin InRoads, Vol.34, No.4, December
+  !!2002. http://delab.csd.auth.gr/papers/SBI02m.pdf It is supposed to
+  !!be robust against large, intermediate values and to have optimal
+  !!complexity. This replaces the original function that was used
+  !!until revision 125 GLWH June 2014 </comments>
   FUNCTION nchoosek(n,k)
     integer(li) :: nchoosek
     integer, intent(in) :: n,k
@@ -424,7 +424,5 @@ CONTAINS
     end do
     
     permutation_parity = -(mod(p,2)*2-1)
-    
   end function permutation_parity
-
 END MODULE combinatorics
