@@ -18,7 +18,7 @@ MODULE symmetry
   implicit none
   private
   public get_spaceGroup, get_spaceGroup_atomTypes, rm_3d_operations, make_primitive, &
-       get_lattice_pointGroup, does_mapping_exist, get_transformations,&
+       get_lattice_pointGroup, does_mapping_exist, get_transformations, check_spaceGroup,&
        bring_into_cell, find_site_equivalencies
 
 CONTAINS
