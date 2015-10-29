@@ -12,44 +12,6 @@
 	<target name="identical" compareto="compare_arbitrary_structures_identical"
 		varfile="compare_arbitrary_structures_identical.out" when="each" />
       </test>
-      <assignment name="LV1in" value="LVfil" allocate="true">
-	<value identifier="LVfil" file="compare_arbitrary_structures_LV1in.in.{}"
-	       folder="../tests/compare_structs" rename="LV1in.in"/>
-      </assignment>
-      <assignment name="LV2in" value="LV2fil" allocate="true">
-	<value identifier="LV2fil" file="compare_arbitrary_structures_LV2in.in.{}"
-	       folder="../tests/compare_structs" rename="LV2in.in"/>
-      </assignment>
-      <assignment name="aTyp1in" value="atp1in" allocate="true">
-	<value identifier="atp1in" file="compare_arbitrary_structures_aTyp1in.in.{}"
-	       folder="../tests/compare_structs" rename="aTyp1in.in"/>
-      </assignment>
-      <assignment name="aTyp2in" value="atp2in" allocate="true">
-	<value identifier="atp2in" file="compare_arbitrary_structures_aTyp2in.in.{}"
-	       folder="../tests/compare_structs" rename="aTyp2in.in"/>
-      </assignment>
-      <assignment name="aPos1in" value="aps1in" allocate="true">
-	<value identifier="aps1in" file="compare_arbitrary_structures_aPos1in.in.{}"
-	       folder="../tests/compare_structs" rename="aPos1in.in"/>
-      </assignment>
-      <assignment name="aPos2in" value="aps2in" allocate="true">
-	<value identifier="aps2in" file="compare_arbitrary_structures_aPos2in.in.{}"
-	       folder="../tests/compare_structs" rename="aPos2in.in"/>
-      </assignment>
-      <assignment name="aPos2in" value="aps2in" allocate="true">
-	<value identifier="aps2in" file="compare_arbitrary_structures_aPos2in.in.{}"
-	       folder="../tests/compare_structs" rename="aPos2in.in"/>
-      </assignment>
-      <assignment name="eps" value="epsf">
-	<value identifier="epsf" file="compare_arbitrary_structures_eps.in.{}"
-	       folder="../tests/compare_structs" rename="eps.in"/>
-      </assignment>
-    </group>
-  </decorates>
-
-  <decorates name="compare_structures.compare_arbitrary_structures">
-    <group name="compare_structures" purpose="testing"
-	   staging="../unittests/">
       <test identifier="compare_arbitrary_structures_mapped" cases="[1-999]"
 	    description="Test the comparison of arbitrary structures." timed="true" >
 	<output identifier="compare_arbitrary_structures_mapped"
@@ -261,17 +223,6 @@
 	<target name="uqlist" compareto="unique_uqlist.out"
 		varfile="unique_uqlist.out" when="each" />
       </test>
-      <global name="uqlist" type="integer" modifiers="pointer" dimensions=":"/>
-      <global name="block" type="integer" modifiers="pointer" dimensions=":"/>
-      <assignment name="list" value="listf" allocate="true">
-	<value identifier="listf" file="unique_list.in.{}"
-	       folder="../tests/compare_structs" rename="list.in"/>
-      </assignment>
-    </group>
-  </decorates>
-
-  <decorates name="compare_structures.unique">
-    <group name="compare_structures" purpose="testing" staging="../unittests/">
       <test identifier="unique_block" cases = "[1-183]"
 	    description="Test the comparison of equivalent lattices." timed="true" >
 	<output identifier="unique_block.out" folder="../tests/compare_structs"

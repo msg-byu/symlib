@@ -5,6 +5,7 @@
 
 # Unit Testing
 staging/
+unittests/
 
 # Compiled Object files
 src/compile.log

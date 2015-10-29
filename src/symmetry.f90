@@ -1,6 +1,6 @@
 !!<summary>This module calculates the spacegroup of a crystal, the
-!! pointgroup of a bravais lattice, and 
-!! checks whether or not a given unit cell is primitive
+!! pointgroup of a bravais lattice, and checks whether or not a given
+!! unit cell is primitive
 !! Gus Hart
 !! UC Davis
 !! Started 10/98
@@ -8,8 +8,8 @@
 !! Started using the module again for the UNCLE code
 !! GLWH BYU Dec. 2006
 !! Added error flag passback on get_transformations
-!! Modified SG routine to include fractional shifts for non-primitive lattices
-!! (10/26/2009)</summary>
+!! Modified SG routine to include fractional shifts for non-primitive
+!! lattices (10/26/2009)</summary>
 MODULE symmetry
   use num_types
   use numerical_utilities, only: equal
@@ -17,26 +17,27 @@ MODULE symmetry
 
   implicit none
   private
-  public get_spaceGroup, get_spaceGroup_atomTypes, rm_3d_operations, make_primitive, get_lattice_pointGroup,&
-      check_spaceGroup, does_mapping_exist, get_transformations,&
-      bring_into_cell, find_site_equivalencies
+  public get_spaceGroup, get_spaceGroup_atomTypes, rm_3d_operations, make_primitive, &
+       get_lattice_pointGroup, does_mapping_exist, get_transformations, check_spaceGroup,&
+       bring_into_cell, find_site_equivalencies
 
 CONTAINS
-  !!<summary>This routine takes a crystal structure (basis vectors and basis atoms &
-  !! positions) and returns the point operators and fractional translations of the
-  !! space group. The routine assumes that the given crystal structure is already
-  !! primitive. To reduce a  non-primitive structure to a primitive one, use the
-  !! function "make_primitive" in this same module.
+  !!<summary>This routine takes a crystal structure (basis vectors and
+  !! basis atoms and positions) and returns the point operators and
+  !! fractional translations of the space group. The routine assumes
+  !! that the given crystal structure is already primitive. To reduce
+  !! a non-primitive structure to a primitive one, use the function
+  !! "make_primitive" in this same module.
   !!
-  !! No assumptions are made about the orientation of the input vectors. The
-  !! positions of the basis atoms may be given in lattice coordinates or in
-  !! cartesian coordinates. 
+  !! No assumptions are made about the orientation of the input
+  !! vectors. The positions of the basis atoms may be given in lattice
+  !! coordinates or in cartesian coordinates.
   !!
   !! The main steps are:
   !!
-  !! (1) Check inputs and generate matrices for converting vectors (atom positions
-  !! an lattice points) from (to) lattice coordinates to (from) Cartesian
-  !! coordinates 
+  !! (1) Check inputs and generate matrices for converting vectors
+  !! (atom positions an lattice points) from (to) lattice coordinates
+  !! to (from) Cartesian coordinates
   !!
   !! (2) Convert atom positions from lattice coordinates, if necessary
   !! (3) Translate all atoms into primitive unit cell
@@ -50,16 +51,19 @@ CONTAINS
   !!        point group of the lattice.          
   !! (5) Find which of the point operators are part of the space group and compute
   !!     the corresponding fractional translations.</summary>
-  !!<parameter name="aVecs" regular="true">Real space primitive lattice vectors.</parameter>
-  !!<parameter name="atomTpye" regular="true">Integers representing type of each basis atom.
-  !!</parameter>
+  !!<parameter name="aVecs" regular="true">Real space primitive
+  !!lattice vectors.</parameter>
+  !!<parameter name="atomType" regular="true">Integers representing
+  !!type of each basis atom.  </parameter>
   !!<parameter name="input_pos">Positions of the basis atoms.</parameter>
   !!<parameter name="sg_op">Rotations in the space group.</parameter>
-  !!<parameter name="sg_fract">Translations of the space group.</parameter>
-  !!<parameter name="lattcoords" regular="true">If .true., atom positions are assumed to
-  !!be in lattice coordinates. Otherwise, they are treated as cartesian</parameter>
-  !!<parameter name="eps_" regular="true">"epsilon" for checking equivalence in 
-  !!floating point arithmetic ></parameter>
+  !!<parameter name="sg_fract">Translations of the space
+  !!group.</parameter>
+  !!<parameter name="lattcoords" regular="true">If .true., atom
+  !!positions are assumed to be in lattice coordinates. Otherwise,
+  !!they are treated as cartesian</parameter>
+  !!<parameter name="eps_" regular="true">"epsilon" for checking
+  !!equivalence in floating point arithmetic ></parameter>
   subroutine get_spaceGroup(aVecs, atomType, input_pos,  sg_op, sg_fract, lattcoords, eps_)
 
     real(dp), intent(in):: aVecs(3,3)       
@@ -67,7 +71,7 @@ CONTAINS
     real(dp), pointer:: input_pos(:,:)      
     real(dp), pointer:: sg_op(:,:,:)        
     real(dp), pointer:: sg_fract(:,:)       
-    logical lattcoords    
+    logical :: lattcoords    
     real(dp), intent(in), optional:: eps_   
     
     real(dp) atom_pos(3,size(input_pos,2)) ! Copy of input_pos
@@ -78,15 +82,19 @@ CONTAINS
     !operations 
     real(dp) temp_sgfracts(3,48*size(atomType)) ! Temporary matrix to store fractional
     ! translations
-    ! NB: the previous two allocations originally read 48*4, where *4 was a rough estimate by GH.
-    ! We probably should have something like 48*nD (nD=number of d-vectors in the parent), but
-    ! right now I (tk) don't see nD passed into this routine. Because I don't want to change all
-    ! interfaces, I resort to size(atomType) which yields the number of "atoms" or "lattice
-    ! sites" within a structure. This number is probably far too high, but certainly not too low.
+    ! NB: the previous two allocations originally read 48*4, where *4
+    ! was a rough estimate by GH.  We probably should have something
+    ! like 48*nD (nD=number of d-vectors in the parent), but right now
+    ! I (tk) don't see nD passed into this routine. Because I don't
+    ! want to change all interfaces, I resort to size(atomType) which
+    ! yields the number of "atoms" or "lattice sites" within a
+    ! structure. This number is probably far too high, but certainly
+    ! not too low.
     real(dp) fract(3)           ! A fractional translation to check
     real(dp) v(3)               ! A translated vector to check mapping for
     real(dp) v2(3)              ! A second translated vector check
-    real(dp) eps                ! "epsilon" for checking equivalence in floating point arithmetic
+    real(dp) eps                ! "epsilon" for checking equivalence
+    ! in floating point arithmetic
 
     integer i                   ! Generic loop counter
     integer iop                 ! Loop counter for loops over point group operations
@@ -98,9 +106,6 @@ CONTAINS
     logical err                 ! Used to check for coplanar vectors in the basis
     logical mapped              ! True when an operation has mapped an atom to another
 
-    
-
-    
     if(.not. present(eps_)) then
        eps = 1e-10_dp
     else
@@ -116,9 +121,9 @@ CONTAINS
     ! A vector can be represented as either a set of cartesian coordi-
     ! nates or as a linear combination of primitive lattice vectors
     ! Get transformation matrices to take us back and forth
-    !!err=.false.
+    !err=.false.
     call get_transformations(aVecs, latt_to_cart, cart_to_latt,err)
-    !!write(*,*) err
+    !write(*,*) err
     if(err) stop "ERROR in get_spaceGroup: primitive vectors appear to be coplanar"  
 
     ! Convert the position of the basis atoms from lattice coordinates, if necessary
@@ -171,8 +176,9 @@ CONTAINS
        enddo
     enddo
 
-    ! Now that we know how many space group operations there are, store them in a matrix of
-    ! the appropriate size as well as the fractional translations
+    ! Now that we know how many space group operations there are,
+    ! store them in a matrix of the appropriate size as well as the
+    ! fractional translations
     allocate(sg_op(3,3,sgop_count),sg_fract(3,sgop_count))
     sg_op = temp_sgops(:,:,1:sgop_count)
     sg_fract = temp_sgfracts(:,1:sgop_count)
@@ -185,12 +191,13 @@ CONTAINS
   !!             digit  : the number of possible labels (e.g.  2,     3)
   !! &lt;-- OUT:
   !!              aTyp  : the atom "types"</summary>
-  !!<parameter name="label" regular="true">{ digit#, dvector# }, possible labels (occupations)
-  !!for each dvector.</parameter>
-  !!<parameter name="digit" regular="true">{ dvector# }, number of labels for each dvector.
-  !!</parameter>
-  !!<parameter name="ce" regular="true">{ dvector# }, to which CE does a dvector belong to?
-  !!(refers to CE couplings)</parameter>
+
+  !!<parameter name="label" regular="true">{ digit#, dvector# },
+  !!possible labels (occupations) for each dvector.</parameter>
+  !!<parameter name="digit" regular="true">{ dvector# }, number of
+  !!labels for each dvector.</parameter>
+  !!<parameter name="ce" regular="true">{ dvector# }, to which CE does
+  !!a dvector belong to?  (refers to CE couplings)</parameter>
   !!<parameter name="aTyp">{ dvector# } intent(out).</parameter>
   subroutine get_spaceGroup_atomTypes(label,digit,ce,aTyp)
     integer, intent(in)  :: label(:,:)  
@@ -200,17 +207,18 @@ CONTAINS
     
     integer iD1, iD2, nD, maxTyp
     integer digit1, digit2
-    integer, pointer :: uqLabel(:,:) ! { digit#, dvector# }: unique labels for each d-vector (see
-    !comments below)
+    integer, pointer :: uqLabel(:,:) ! { digit#, dvector# }: unique
+    !labels for each d-vector (see comments below)
     integer :: maxLabel
 
-    ! "label" holds the possible occupations of the dvectors. If there are coupled lattice
-    !systems
+    ! "label" holds the possible occupations of the dvectors. If there
+    !are coupled lattice systems
     !Lattice = Lattice1 (x) Lattice2
-    ! the dvectors of Lattice1 and Lattice2 are to be treated separately.
-    ! "label", however, is not unique since the occupations on both Lattice1 and Lattice2 are
-    ! denoted by, say, 0/1. On Lattice1, "0" may represent A, "1" B, while on lattice2, "0" may 
-    ! represent C, and "1" D.
+    ! the dvectors of Lattice1 and Lattice2 are to be treated
+    ! separately.  "label", however, is not unique since the
+    ! occupations on both Lattice1 and Lattice2 are denoted by, say,
+    ! 0/1. On Lattice1, "0" may represent A, "1" B, while on lattice2,
+    ! "0" may represent C, and "1" D.
     ! --> we have to make "label" unique.
     nD = size(digit)
     maxLabel=maxval(label) 
@@ -221,14 +229,13 @@ CONTAINS
        end do
     end do
 
-
     nD=size(digit)
     if (associated(aTyp)) then; aTyp => null(); endif  ! Need strange construction here to make
     if (.not. associated(aTyp)) allocate(aTyp(nD))     ! sure that an associated pointer is
     !handled correctly
 
-    ! now assign each dvector a type called "aTyp". All dvectors that have the same possible
-    !occupations are assigned the same aTyp. 
+    ! now assign each dvector a type called "aTyp". All dvectors that
+    !have the same possible occupations are assigned the same aTyp.
 
     iD1_loop: do iD1=1,nD
        maxTyp=0
@@ -252,11 +259,12 @@ CONTAINS
   end subroutine get_spaceGroup_atomTypes
 
   !!<summary>This subroutine removes operations.</summary>
-  !!<parameter name="aVecs" regular="true">Primitive real space lattice vectors.</parameter>
+  !!<parameter name="aVecs" regular="true">Primitive real space
+  !!lattice vectors.</parameter>
   !!<parameter name="sgrots"></parameter>
   !!<parameter name="sgshifts"></parameter>
-  !!<parameter name="eps" regular="true">"epsilon" for checking equivalence in 
-  !!floating point arithmetic</parameter>
+  !!<parameter name="eps" regular="true">"epsilon" for checking
+  !!equivalence in floating point arithmetic</parameter>
   subroutine rm_3d_operations(aVecs,sgrots,sgshifts,eps)
     real(dp), intent(in):: aVecs(3,3)  
     real(dp), pointer:: sgrots(:,:,:), sgshifts(:,:)  ! intent(inout)
@@ -290,18 +298,23 @@ CONTAINS
     sgshifts=tSGshifts(:,1:nRot)
   end subroutine rm_3d_operations
   
-  !!<summary>If the given lattice vectors and basis do not form a primitive unit cell, reduce
-  !!the vectors to a set of primitive vectors and reduce the number of basis atoms, if
-  !!necessary. Also, all the atom positions are moved inside the new unit cell</summary>
-  !!<parameter name="aVecs" regular="true">Primitive real space lattice vectors.</parameter>
-  !!<parameter name="atomType">intent(inout): Atom types represented as integers.</parameter>
-  !!<parameter name="atom_pos">intent(inout): Positions of the basis atoms.</parameter>
-  !!<parameter name="lattCoords" regular="true">True if positions are in lattice
-  !!coordinates.</parameter>
-  !!<parameter name="eps_" regular="true">"epsilon" for checking equivalence in 
-  !!floating point arithmetic</parameter>
-  !!<parameter name="removed">the indices of the atoms that have been removed if the cell is not
-  !!primitive. </parameter>
+  !!<summary>If the given lattice vectors and basis do not form a
+  !!primitive unit cell, reduce the vectors to a set of primitive
+  !!vectors and reduce the number of basis atoms, if necessary. Also,
+  !!all the atom positions are moved inside the new unit
+  !!cell</summary>
+  !!<parameter name="aVecs" regular="true">Primitive real space
+  !!lattice vectors.</parameter>
+  !!<parameter name="atomType">intent(inout): Atom types represented
+  !!as integers.</parameter>
+  !!<parameter name="atom_pos">intent(inout): Positions of the basis
+  !!atoms.</parameter>
+  !!<parameter name="lattCoords" regular="true">True if positions are
+  !!in lattice coordinates.</parameter>
+  !!<parameter name="eps_" regular="true">"epsilon" for checking
+  !!equivalence in floating point arithmetic</parameter>
+  !!<parameter name="removed">the indices of the atoms that have been
+  !!removed if the cell is not primitive. </parameter>
   subroutine make_primitive(aVecs, atomType, atom_pos, lattCoords, eps_, removed_)
     real(dp), intent(inout) :: aVecs(3,3)   
     integer, pointer :: atomType(:)         
@@ -337,7 +350,6 @@ CONTAINS
     else; eps = eps_
     endif
 
-
     call get_transformations(aVecs, latt_to_cart, cart_to_latt)
     
     ! Convert the position of the basis atoms from lattice coordinates, if necessary
@@ -352,8 +364,9 @@ CONTAINS
        call bring_into_cell(atom_pos(:,i), cart_to_latt, latt_to_cart, eps)
     enddo
     
-    ! Number of possible fractional translations can be no larger than the number of
-    ! translations that exist between atom 1 and all other atoms of the same type
+    ! Number of possible fractional translations can be no larger than
+    ! the number of translations that exist between atom 1 and all
+    ! other atoms of the same type
     nFracts = count(atomType == atomType(1)) - 1
     !write (*,'("nFracts:",i3)') nFracts
     allocate(fracts(3,nFracts),lattice_point(3,3 + nFracts))
@@ -478,12 +491,13 @@ CONTAINS
     deallocate(fracts,lattice_point) 
   end subroutine make_primitive
 
-  !!<summary>This routine returns only the point group of the lattice rather than the space group
-  !! of the given crystal structure</summary>
+  !!<summary>This routine returns only the point group of the lattice
+  !! rather than the space group of the given crystal
+  !! structure</summary>
   !!<parameter name="aVecs" regular="true"></parameter>
   !!<parameter name="lattpg_op"></parameter>
-  !!<parameter name="eps_" regular="true">"epsilon" for checking equivalence in floating point
-  !!arithmetic</parameter>
+  !!<parameter name="eps_" regular="true">"epsilon" for checking
+  !!equivalence in floating point arithmetic</parameter>
   subroutine get_lattice_pointGroup(aVecs, lattpg_op, eps_)
     real(dp), intent(in):: aVecs(3,3)
     real(dp), pointer:: lattpg_op(:,:,:)
@@ -553,11 +567,13 @@ CONTAINS
     ! Try all R vector triplets in the sphere and see which ones are valid 
     ! rotations of the original basis vectors.
     ! 
-    ! The length of all vectors must be preserved under a unitary transformation so skip any
-    ! trial vectors that aren't the same length as the original. We also skip any set of 
-    ! vectors that have the right lengths but do not form a parallelpiped that has the same
-    ! volume as the original set. Also, note that the we skip sets of vectors that contain 
-    ! the same vector more than once (i.e. the indices i, j, k must be unique).
+    ! The length of all vectors must be preserved under a unitary
+    ! transformation so skip any trial vectors that aren't the same
+    ! length as the original. We also skip any set of vectors that
+    ! have the right lengths but do not form a parallelpiped that has
+    ! the same volume as the original set. Also, note that the we skip
+    ! sets of vectors that contain the same vector more than once
+    ! (i.e. the indices i, j, k must be unique).
     num_ops = 0
     do i = 1, num_Rs
        if(abs(Rlengths(i) - norm_avecs(1)) > eps) cycle
@@ -592,8 +608,9 @@ CONTAINS
     deallocate(Rvecs, Rlengths)
   end subroutine get_lattice_pointGroup
 
-  !!<summary>This routine generates the matrices for converting vectors from lattice coordinates
-  !!to cartesion coordinates and vice versa</summary>
+  !!<summary>This routine generates the matrices for converting
+  !!vectors from lattice coordinates to cartesion coordinates and vice
+  !!versa</summary>
   !!<parameter name="aVecs" regular="true"></parameter>
   !!<parameter name="prim_to_cart" regular="true"></parameter>
   !!<parameter name="cart_to_prim" regular="true"></parameter>
@@ -621,7 +638,6 @@ CONTAINS
     real(dp), intent(in)    ::  cart_to_latt(3,3), latt_to_cart(3,3), eps
     integer c, maxc
     
-
     ! Put the representation of the point into lattice coordinates
     v = matmul(cart_to_latt, v)
     
@@ -646,12 +662,18 @@ CONTAINS
   !! the position of any of the atoms of type "this_type".
   !! If a mapping exists, then the logical "mapped" is 
   !! returned .true., otherwise .false.</summary>
-  !!<parameter name="v" regular="true">Position to check mapping for.</parameter>
-  !!<parameter name="this_type" regular="true">Type of atom that is being checked.</parameter>
-  !!<parameter name="atom_pos" regular="true" >Positions of basis atoms.</parameter>
-  !!<parameter name="atomType" regular="true">Types of atoms in the basis.</parameter>
-  !!<parameter name="mapped" regular="true">Set to .true. if a mapping exists.</parameter>
-  !!<parameter name="eps" regular="true">Epsilon for checking equivalence.</parameter>
+  !!<parameter name="v" regular="true">Position to check mapping
+  !!for.</parameter>
+  !!<parameter name="this_type" regular="true">Type of atom that is
+  !!being checked.</parameter>
+  !!<parameter name="atom_pos" regular="true" >Positions of basis
+  !!atoms.</parameter>
+  !!<parameter name="atomType" regular="true">Types of atoms in the
+  !!basis.</parameter>
+  !!<parameter name="mapped" regular="true">Set to .true. if a mapping
+  !!exists.</parameter>
+  !!<parameter name="eps" regular="true">Epsilon for checking
+  !!equivalence.</parameter>
   subroutine does_mapping_exist(v, this_type, atom_pos, atomType, mapped, eps)
 
     real(dp), intent(in) :: v(3)            
@@ -772,6 +794,7 @@ CONTAINS
     BasEq = 0
     BasEq(1) = 1  !independent of basis size, the first always corresponds to itself
     nSites = 1
+
     call get_spaceGroup(pLV, sitelabel, tBas,  sg_rot, sg_fract, .false.,eps)
     nOps = size(sg_rot,3)
     
@@ -798,7 +821,5 @@ CONTAINS
        endif
     end do
     if (any(BasEq==0)) stop "There was a bug in find_site_equivalencies"
-
   ENDSUBROUTINE find_site_equivalencies
-
 END MODULE symmetry

@@ -8,13 +8,10 @@ module utilities
   private
   public ucase, ralloc
 
-  interface ralloc
-     module procedure ralloc_real
-     module procedure ralloc_integer
-     module procedure ralloc_integer_matrix_list
-     module procedure ralloc_integer_table
-     module procedure ralloc_real_table
-  end interface ralloc
+  INTERFACE ralloc
+     MODULE PROCEDURE ralloc_real, ralloc_integer, ralloc_integer_matrix_list, &
+          ralloc_integer_table, ralloc_real_table
+  END INTERFACE ralloc
 
 contains
        
@@ -76,7 +73,7 @@ contains
   !!<parameter name="p">Array to be extended</parameter>
   !!<parameter name="n" regular="true">Length of new array</parameter>
   FUNCTION ralloc_integer_matrix_list(p, n)          
-
+    
     integer, POINTER, DIMENSION(:,:,:) :: p, ralloc_integer_matrix_list
     INTEGER, intent(in) :: n
     INTEGER :: nold, ierr, r, c

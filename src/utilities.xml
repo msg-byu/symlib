@@ -2,27 +2,28 @@
 <fortpy mode="docstring">
 
   <decorates name="utilities.ucase">
-    <group name="utility_tests" purpose="testing?_fortpy_bug?" staging="../unittests/">
+    <group name="utility_tests" purpose="testing" staging="../unittests/">
       <test identifier="ucase" description="Original ucase testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ucase.out" folder="../tests/utilities" file="ucase_string.out.{}" 
 		template="equal.out.xml" />
 	<target name="string" compareto="ucase.out" varfile="ucase.out" when="each" />
       </test>
+      <global name ="string" type="character" kind = "len=*"/>
       <assignment name="string" value="casef" >
 	<value identifier="casef" file="ucase_string.in.{}"
-	       folder="../tests/utilities" nename="string.in"/>
+	       folder="../tests/utilities" rename="string.in"/>
       </assignment>
     </group>
   </decorates>
 
   <decorates name="utilities.ralloc_real">
-    <group name="ralloc_tests" purpose="testingf?_fortpy_bug?" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_r" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_r.out" folder="../tests/utilities" file="ralloc_real.out.{}" 
 		template="float.xml" />
-	<target name="p" compareto="ralloc_r.out" varfile="ralloc_r.out" when="each" />
+	<target name="[default]" compareto="ralloc_r.out" varfile="ralloc_r.out" when="each" />
       </test>
       <global name="p" type="real(dp)" modifiers="pointer" dimensions=":"/>
       <assignment name="p" value="pf" allocate="true">
@@ -37,12 +38,12 @@
   </decorates>
 
   <decorates name="utilities.ralloc_integer">
-    <group name="ralloc_tests" purpose="testingf?_fortpy_bug?" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_i" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_i.out" folder="../tests/utilities"
 		file="ralloc_integer.out.{}" template="integer.xml" />
-	<target name="p" compareto="ralloc_i.out" varfile="ralloc_i.out" when="each" />
+	<target name="[default]" compareto="ralloc_i.out" varfile="ralloc_i.out" when="each" />
       </test>
       <global name="p" type="integer" modifiers="pointer" dimensions=":"/>
       <assignment name="p" value="pf" allocate="true">
@@ -57,12 +58,12 @@
   </decorates>
 
   <decorates name="utilities.ralloc_integer_matrix_list">
-    <group name="ralloc_tests" purpose="testingf?_fortpy_rank3" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_iml" description="Original ralloc testing"
-	    timed="true" cases="[]">
+	    timed="true" cases="[1-100]">
 	<output identifier="ralloc_iml.out" folder="../tests/utilities"
 		file="ralloc_integer_matrix_list.out.{}" template="integer.xml" />
-	<target name="p" compareto="ralloc_iml.out" varfile="ralloc_iml.out"
+	<target name="[default]" compareto="ralloc_iml.out" varfile="ralloc_iml.out"
 		when="each" />
       </test>
       <global name="p" type="integer" modifiers="pointer" dimensions=":,:,:"/>
@@ -78,12 +79,12 @@
   </decorates>
 
   <decorates name="utilities.ralloc_integer_table">
-    <group name="ralloc_tests" purpose="testingf?_fortpy_bug?" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_it" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_it.out" folder="../tests/utilities"
 		file="ralloc_integer_table.out.{}" template="integer.xml" />
-	<target name="p" compareto="ralloc_it.out" varfile="ralloc_it.out"
+	<target name="[default]" compareto="ralloc_it.out" varfile="ralloc_it.out"
 		when="each" />
       </test>
       <global name="p" type="integer" modifiers="pointer" dimensions=":,:"/>
@@ -102,14 +103,13 @@
     </group>
   </decorates>
 
-
   <decorates name="utilities.ralloc_real_table">
-    <group name="ralloc_tests" purpose="testingf?_fortpy_bug?" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
       <test identifier="ralloc_rt" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_rt.out" folder="../tests/utilities"
 		file="ralloc_real_table.out.{}" template="float.xml" />
-	<target name="p" compareto="ralloc_rt.out" varfile="ralloc_rt.out"
+	<target name="[default]" compareto="ralloc_rt.out" varfile="ralloc_rt.out"
 		when="each" />
       </test>
       <global name="p" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
@@ -127,5 +127,4 @@
       </assignment>
     </group>
   </decorates>
-
 </fortpy>
