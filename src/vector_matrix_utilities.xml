@@ -267,7 +267,7 @@
   </decorates>
 
   <decorates name="vector_matrix_utilities.find_lvalue_in_larray1">
-    <group name="minkowski_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_lvalue_in_larray1"
 	    description="Testing of find a value in an array." timed="true"
 	    cases="[1-100]">
@@ -300,7 +300,7 @@
   </decorates>
 
   <decorates name="vector_matrix_utilities.find_intvalue_in_intarray3">
-    <group name="minkowski_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_intvalue_in_intarray3"
 	    description="Testing of find a value in an array." timed="true"
 	    cases="[1-100]">
@@ -333,7 +333,7 @@
   </decorates>
 
   <decorates name="vector_matrix_utilities.find_sintvalue_in_sintarray3">
-    <group name="minkowski_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_sintvalue_in_sintarray3"
 	    description="Testing of find a value in an array." timed="true"
 	    cases="[1-100]">
@@ -366,7 +366,7 @@
   </decorates>
 
   <decorates name="vector_matrix_utilities.find_intvalue_in_intarray4">
-    <group name="minkowski_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_intvalue_in_intarray4"
 	    description="Testing of find a value in an array." timed="true"
 	    cases="[1-100]">
@@ -394,12 +394,12 @@
   	<value identifier="valsfile" file="find_intvalue_in_intarray4_vals.in.{}"
   	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
       </assignment>
-      <assignment name="loc" constant="0" allocate="3,size(array,1)*size(array,2)*size(array,3)*size(array,4)"/>
+      <assignment name="loc" constant="0" allocate="4,size(array,1)*size(array,2)*size(array,3)*size(array,4)"/>
     </group>
   </decorates>
 
   <decorates name="vector_matrix_utilities.find_sintvalue_in_sintarray4">
-    <group name="minkowski_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="minkowski_tests" purpose="testing" staging="../unittests/">
       <test identifier="find_sintvalue_in_sintarray4"
 	    description="Testing of find a value in an array." timed="true"
 	    cases="[1-100]">
@@ -427,7 +427,7 @@
   	<value identifier="valsfile" file="find_sintvalue_in_sintarray4_vals.in.{}"
   	       folder="../tests/vector_matrix_utilities" rename="vals.in"/>
       </assignment>
-      <assignment name="loc" constant="0" allocate="3,size(array,1)*size(array,2)*size(array,3)*size(array,4)"/>
+      <assignment name="loc" constant="0" allocate="4,size(array,1)*size(array,2)*size(array,3)*size(array,4)"/>
     </group>
   </decorates>
 </fortpy>

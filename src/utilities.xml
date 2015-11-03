@@ -18,7 +18,7 @@
   </decorates>
 
   <decorates name="utilities.ralloc_real">
-    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing" staging="../unittests/">
       <test identifier="ralloc_r" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_r.out" folder="../tests/utilities" file="ralloc_real.out.{}" 
@@ -28,17 +28,17 @@
       <global name="p" type="real(dp)" modifiers="pointer" dimensions=":"/>
       <assignment name="p" value="pf" allocate="true">
 	<value identifier="pf" file="ralloc_real_p.in.{}"
-	       folder="../tests/utilities" nename="p.in"/>
+	       folder="../tests/utilities" rename="p.in"/>
       </assignment>
       <assignment name="n" value="nf">
 	<value identifier="nf" file="ralloc_real_n.in.{}"
-	       folder="../tests/utilities" nename="n.in"/>
+	       folder="../tests/utilities" rename="n.in"/>
       </assignment>
     </group>
   </decorates>
 
   <decorates name="utilities.ralloc_integer">
-    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing" staging="../unittests/">
       <test identifier="ralloc_i" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_i.out" folder="../tests/utilities"
@@ -48,17 +48,17 @@
       <global name="p" type="integer" modifiers="pointer" dimensions=":"/>
       <assignment name="p" value="pf" allocate="true">
 	<value identifier="pf" file="ralloc_integer_p.in.{}"
-	       folder="../tests/utilities" nename="p.in"/>
+	       folder="../tests/utilities" rename="p.in"/>
       </assignment>
       <assignment name="n" value="nf">
 	<value identifier="nf" file="ralloc_integer_n.in.{}"
-	       folder="../tests/utilities" nename="n.in"/>
+	       folder="../tests/utilities" rename="n.in"/>
       </assignment>
     </group>
   </decorates>
 
   <decorates name="utilities.ralloc_integer_matrix_list">
-    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing" staging="../unittests/">
       <test identifier="ralloc_iml" description="Original ralloc testing"
 	    timed="true" cases="[1-100]">
 	<output identifier="ralloc_iml.out" folder="../tests/utilities"
@@ -69,17 +69,17 @@
       <global name="p" type="integer" modifiers="pointer" dimensions=":,:,:"/>
       <assignment name="p" value="pf" allocate="true">
 	<value identifier="pf" file="ralloc_integer_matrix_list_p.in.{}"
-	       folder="../tests/utilities" nename="p.in"/>
+	       folder="../tests/utilities" rename="p.in"/>
       </assignment>
       <assignment name="n" value="nf">
 	<value identifier="nf" file="ralloc_integer_matrix_list_n.in.{}"
-	       folder="../tests/utilities" nename="n.in"/>
+	       folder="../tests/utilities" rename="n.in"/>
       </assignment>
     </group>
   </decorates>
 
   <decorates name="utilities.ralloc_integer_table">
-    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing" staging="../unittests/">
       <test identifier="ralloc_it" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_it.out" folder="../tests/utilities"
@@ -90,21 +90,21 @@
       <global name="p" type="integer" modifiers="pointer" dimensions=":,:"/>
       <assignment name="p" value="pf" allocate="true">
 	<value identifier="pf" file="ralloc_integer_table_p.in.{}"
-	       folder="../tests/utilities" nename="p.in"/>
+	       folder="../tests/utilities" rename="p.in"/>
       </assignment>
       <assignment name="n" value="nf">
 	<value identifier="nf" file="ralloc_integer_table_n.in.{}"
-	       folder="../tests/utilities" nename="n.in"/>
+	       folder="../tests/utilities" rename="n.in"/>
       </assignment>
       <assignment name="m" value="mf">
 	<value identifier="mf" file="ralloc_integer_table_m.in.{}"
-	       folder="../tests/utilities" nename="m.in"/>
+	       folder="../tests/utilities" rename="m.in"/>
       </assignment>
     </group>
   </decorates>
 
   <decorates name="utilities.ralloc_real_table">
-    <group name="ralloc_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="ralloc_tests" purpose="testing" staging="../unittests/">
       <test identifier="ralloc_rt" description="Original ralloc testing"
 	    timed="true" cases="[1-10]">
 	<output identifier="ralloc_rt.out" folder="../tests/utilities"
@@ -115,15 +115,15 @@
       <global name="p" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
       <assignment name="p" value="pf" allocate="true">
 	<value identifier="pf" file="ralloc_real_table_p.in.{}"
-	       folder="../tests/utilities" nename="p.in"/>
+	       folder="../tests/utilities" rename="p.in"/>
       </assignment>
       <assignment name="n" value="nf">
 	<value identifier="nf" file="ralloc_real_table_n.in.{}"
-	       folder="../tests/utilities" nename="n.in"/>
+	       folder="../tests/utilities" rename="n.in"/>
       </assignment>
       <assignment name="m" value="mf">
 	<value identifier="mf" file="ralloc_real_table_m.in.{}"
-	       folder="../tests/utilities" nename="m.in"/>
+	       folder="../tests/utilities" rename="m.in"/>
       </assignment>
     </group>
   </decorates>

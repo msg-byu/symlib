@@ -153,7 +153,7 @@
   </decorates>
 
   <decorates name="symmetry.get_lattice_pointGroup">
-    <group name="symmetry_tests" purpose="testing_bug" staging="../unittests/">
+    <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="get_lattice_pointGroup" description="Tests the get_lattice_pointGroup."
 	    timed="true" cases="[1-87]"> 
 	<output identifier="lattpg_op.out" folder="../tests/symmetry"
