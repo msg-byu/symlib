@@ -308,7 +308,7 @@ CONTAINS
   !!<summary>This function finds the greatest common denominator of
   !!several integers.This case works on a list of integers (a rank-1
   !!array). </summary>
-  !!<parameter name="x" ></parameter>
+  !!<parameter name="x" regular="true"></parameter>
   function gcd_rank1(x) result(divisor)
     integer, intent(in) :: x(:)
     integer :: divisor

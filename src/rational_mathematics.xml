@@ -201,7 +201,7 @@
   	<target name="[default]" compareto="gcd_rank1.out" varfile="gcd_rank1.out"
 		when="each" />
       </test>
-      <assignment name="x" value="xf">
+      <assignment name="x" value="xf" allocate="true">
   	<value identifier="xf" file="gcd_rank1.in.{}"
   	       folder="../tests/rational_mathematics" rename="x.in"/>
       </assignment>
