@@ -280,7 +280,6 @@ CONTAINS
   !!separate arguments</summary>
   !!<parameter name="x1" ></parameter>
   !!<parameter name="x2" ></parameter>
-  !!<parameter name="divisor"></parameter>
   function gcd_2ints(x1, x2) result(divisor)
     integer, intent(in) :: x1, x2
     integer :: divisor

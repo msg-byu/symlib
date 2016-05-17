@@ -313,7 +313,7 @@ CONTAINS
   !!in lattice coordinates.</parameter>
   !!<parameter name="eps_" regular="true">"epsilon" for checking
   !!equivalence in floating point arithmetic</parameter>
-  !!<parameter name="removed">the indices of the atoms that have been
+  !!<parameter name="removed_">the indices of the atoms that have been
   !!removed if the cell is not primitive. </parameter>
   subroutine make_primitive(aVecs, atomType, atom_pos, lattCoords, eps_, removed_)
     real(dp), intent(inout) :: aVecs(3,3)   
