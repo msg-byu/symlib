@@ -164,34 +164,6 @@
     </group>
   </decorates>
 
-  <!-- <decorates name="rational_mathematics.swap"> -->
-  <!--   <skip reason="Too deep for current testing software"/> -->
-  <!--   <group name="gcd_tests" purpose="testing_too_deep" staging="../unittests/"> -->
-  <!--     <test identifier="swap_x" description="Testing of greatest common denominator routine." -->
-  <!-- 	    timed="true" > -->
-  <!-- 	<output identifier="swap_x.out" folder="../tests/rational_mathematics" -->
-  <!-- 		file="swap_x.out.{}" template="integer.xml" /> -->
-  <!-- 	<target name="x" compareto="swap_x.out" varfile="swap_x.out" -->
-  <!-- 		when="each" /> -->
-  <!--     </test> -->
-  <!--     <test identifier="swap_y" description="Testing of greatest common denominator routine." -->
-  <!-- 	    timed="true" > -->
-  <!-- 	<output identifier="swap_y.out" folder="../tests/rational_mathematics" -->
-  <!-- 		file="swap_y.out.{}" template="integer.xml" /> -->
-  <!-- 	<target name="y" compareto="swap_y.out" varfile="swap_y.out" -->
-  <!-- 		when="each" /> -->
-  <!--     </test> -->
-  <!--     <assignment name="x" value="xf"> -->
-  <!-- 	<value identifier="xf" file="swap_x.in.{}" -->
-  <!-- 	       folder="../tests/rational_mathematics" rename="x.in"/> -->
-  <!--     </assignment> -->
-  <!--     <assignment name="y" value="yf"> -->
-  <!-- 	<value identifier="yf" file="swap_y.in.{}" -->
-  <!-- 	       folder="../tests/rational_mathematics" rename="y.in"/> -->
-  <!--     </assignment> -->
-  <!--   </group> -->
-  <!-- </decorates> -->
-
   <decorates name="rational_mathematics.gcd_rank1">
     <group name="gcd_tests" purpose="testing" staging="../unittests/">
       <test identifier="gcd_rank1" description="Testing of greatest common denominator routine."
