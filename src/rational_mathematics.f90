@@ -280,7 +280,6 @@ CONTAINS
   !!separate arguments</summary>
   !!<parameter name="x1" ></parameter>
   !!<parameter name="x2" ></parameter>
-  !!<parameter name="divisor"></parameter>
   function gcd_2ints(x1, x2) result(divisor)
     integer, intent(in) :: x1, x2
     integer :: divisor
@@ -309,7 +308,7 @@ CONTAINS
   !!<summary>This function finds the greatest common denominator of
   !!several integers.This case works on a list of integers (a rank-1
   !!array). </summary>
-  !!<parameter name="x" ></parameter>
+  !!<parameter name="x" regular="true"></parameter>
   function gcd_rank1(x) result(divisor)
     integer, intent(in) :: x(:)
     integer :: divisor

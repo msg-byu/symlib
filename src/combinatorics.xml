@@ -49,25 +49,6 @@
     </group>
   </decorates>
 
-  <decorates name="combinatorics.find_unique">
-    <skip reason = "This routine is imbedded and so is tested implicitly by the subroutine
-		    that contains it."/>
-    <group name="binomial_tests" purpose="testing_too_deep" staging="../unittests/">
-      <test identifier="find_unique" description="Find unique subroutine testing"
-  	    timed="true" cases="[1-50]">
-  	<output identifier="find_unique.out" folder="../tests/combinatorics"
-		file="find_unique.out.{}" template="integer.xml" />
-  	<target name="uqlist" compareto="find_unique.out" varfile="find_unique.out"
-		when="each" />
-      </test>
-      <assignment name="list" value="lfile" allocate="true">
-  	<value identifier="lfile" file="find_unique.in.{}"
-  	       folder="../tests/combinatorics" rename="find_unique.in"/>
-      </assignment>
-      <assignment name="uqlist" allocate="size(list)"/>
-    </group>
-  </decorates>
-
   <decorates name="combinatorics.get_permutations">
     <group name="binomial_tests" purpose="testing" staging="../unittests/">
       <test identifier="original" description="Testing of the get_permutations subroutine."
@@ -169,11 +150,11 @@
 		varfile="factorial_int_rank1.out" when="each" />
       </test>
       <global name="[default]" type="integer" modifiers="allocatable" dimensions=":" />
-      <assignment name="[default]" constant="0" allocate="size(N)" />
-      <assignment name="N" value="mfile2" allocat="true">
+      <assignment name="N" value="mfile2" allocate="true">
   	<value identifier="mfile2" folder="../tests/combinatorics"
   	       file="factorial_int_rank1_N.in.{}" rename="N.in"/>
       </assignment>     
+      <assignment name="[default]" constant="0" allocate="size(N)" />
     </group>
   </decorates>
 
@@ -187,11 +168,11 @@
 		varfile="factorial_dp_rank1.out" when="each" />
       </test>
       <global name="[default]" type="integer" modifiers="allocatable" dimensions=":" />
-      <assignment name="[default]" constant="0" allocate="size(N)" />
       <assignment name="N" value="mfile2" allocate="true">
   	<value identifier="mfile2" folder="../tests/combinatorics"
   	       file="factorial_dp_rank1_N.in.{}" rename="N.in"/>
       </assignment>     
+      <assignment name="[default]" constant="0" allocate="size(N)" />
     </group>
   </decorates>
 
