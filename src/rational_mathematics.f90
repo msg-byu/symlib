@@ -17,8 +17,8 @@ CONTAINS
   !!<summary>This routine takes an integer 3x3 matrix and computes its
   !!Smith Normal Form.</summary>
   !!<parameter name="H" regular="True">Input matrix.</parameter>
-  !!<parameter name="A" regular="True">Smith Normal Form.</parameter>
-  !!<parameter name="M" regular="true">Left Transform.</parameter>
+  !!<parameter name="A" regular="True">Left Transform.</parameter>
+  !!<parameter name="M" regular="true">Smith Normal Form matrix.</parameter>
   !!<parameter name="B" regular="True">Right Transform.</parameter>
   subroutine SmithNormalForm(H,A,M,B)
     integer, intent(in) :: H(3,3) 

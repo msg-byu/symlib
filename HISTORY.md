@@ -1,5 +1,12 @@
 # Revision History for `symlib`
 
+## Revision 1.0.0
+
+In rational_mathematics.f90, changed the comment for the SNF routine. The comments
+on the calling interface were incorrect (A and M had been backwards).
+
+In symmetry.f90, added some "regular = true" flags in the xml comments.
+
 ## Revision 0.0.1
 
 Added unit tests for combinatorics.f90, it now has working unit tests for 66% of it's subroutines,

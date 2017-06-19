@@ -831,15 +831,15 @@ CONTAINS
   !!<summary>Takes point group operators in Cartesian coordinates and returns them
   !!in lattice coordinates, which are integer matrices instead of floating point matrices.
   !!</summary>
-  !!<parameter name="pgOps">Point group operators of Cartesian basis.</parameter>
-  !!<parameter name="A">Basis vectors (columns) of the lattice.</parameter>
-  !!<parameter name="latticePtGrp_Ops">Returned point group operators in direct
+  !!<parameter name="pgOps" regular="true">Point group operators of Cartesian basis.</parameter>
+  !!<parameter name="A" regular="true">Basis vectors (columns) of the lattice.</parameter>
+  !!<parameter name="latticePtGrp_Ops" regular="true">Returned point group operators in direct
   !!coordinates (integer entries).</parameter>
-  !!<parameter name="eps">Finite precision parameter</parameter>
+  !!<parameter name="eps" regular="true">Finite precision parameter</parameter>
   subroutine put_pointGroup_in_latticeCoords(pgOps, A, latticePtGrp_Ops, eps_)
     real(dp), intent(in) :: pgOps(:,:,:), A(3,3)
-    integer, pointer    :: latticePtGrp_Ops(:,:,:)
-    real(dp), optional :: eps_ 
+    integer,  pointer    :: latticePtGrp_Ops(:,:,:)
+    real(dp), optional   :: eps_ 
 
     real(dp) :: eps ! Local finite precision parameter
     real(dp) :: InvA(3,3) ! Inverse of aBas matrix
@@ -854,13 +854,14 @@ CONTAINS
        eps =  eps_
     endif
 
+    allocate(latticePtGrp_Ops(3,3,size(pgOps,3)))
     call matrix_inverse(A,InvA,err,eps)
     if (err) then
        write(*,*) "ERROR: (put_pointGroup_in_latticeCoords in symmetry.f90)"
        do i=1,3
           write(*,'("Basis vector #: ",i2,3x,3(f7.3))') i,A(:,i)
        enddo
-       stop "Basis vectors of lattice were not linearly independent"
+       stop "Basis vectors of lattice were not linearly independent."
     endif
 
     do iOp = 1, size(pgOps,1)
