@@ -48,7 +48,8 @@ endif
 
 SRC = num_types.f90 utilities.f90 numerical_utilities.f90	\
 vector_matrix_utilities.f90 symmetry.f90 compare_structures.f90 \
-combinatorics.f90 rational_mathematics.f90 group_theory.f90
+combinatorics.f90 rational_mathematics.f90 group_theory.f90 itertools.f90 \
+classes.f90
 OBJS = ${SRC:.f90=.o}
 
 
@@ -69,7 +70,7 @@ libutils.so:  num_types.o utilities.o numerical_utilities.o \
 #	ar ru $@ $?
 #	ranlib  $@
 
-libsym.a: symmetry.o group_theory.o
+libsym.a: symmetry.o group_theory.o itertools.o classes.o
 	ar ru $@ $?
 	ranlib $@
 
