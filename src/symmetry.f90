@@ -19,7 +19,7 @@ MODULE symmetry
   private
   public get_spaceGroup, get_spaceGroup_atomTypes, rm_3d_operations, make_primitive, &
        get_lattice_pointGroup, does_mapping_exist, get_transformations, check_spaceGroup,&
-       bring_into_cell, find_site_equivalencies
+       bring_into_cell, find_site_equivalencies, put_pointGroup_in_latticeCoords
 
 CONTAINS
   !!<summary>This routine takes a crystal structure (basis vectors and
@@ -90,6 +90,11 @@ CONTAINS
     ! yields the number of "atoms" or "lattice sites" within a
     ! structure. This number is probably far too high, but certainly
     ! not too low.
+
+    ! GH: I'm not fond of the fact that we have need non-primitive
+    ! cells for UNCLE. Could have been designed better and we wouldn't
+    ! have had to dirty up this symmetry routine...
+    
     real(dp) fract(3)           ! A fractional translation to check
     real(dp) v(3)               ! A translated vector to check mapping for
     real(dp) v2(3)              ! A second translated vector check
@@ -822,4 +827,51 @@ CONTAINS
     end do
     if (any(BasEq==0)) stop "There was a bug in find_site_equivalencies"
   ENDSUBROUTINE find_site_equivalencies
+
+  !!<summary>Takes point group operators in Cartesian coordinates and returns them
+  !!in lattice coordinates, which are integer matrices instead of floating point matrices.
+  !!</summary>
+  !!<parameter name="pgOps" regular="true">Point group operators of Cartesian basis.</parameter>
+  !!<parameter name="A" regular="true">Basis vectors (columns) of the lattice.</parameter>
+  !!<parameter name="latticePtGrp_Ops" regular="true">Returned point group operators in direct
+  !!coordinates (integer entries).</parameter>
+  !!<parameter name="eps" regular="true">Finite precision parameter</parameter>
+  subroutine put_pointGroup_in_latticeCoords(pgOps, A, latticePtGrp_Ops, eps_)
+    real(dp), intent(in) :: pgOps(:,:,:), A(3,3)
+    integer,  pointer    :: latticePtGrp_Ops(:,:,:)
+    real(dp), optional   :: eps_ 
+
+    real(dp) :: eps ! Local finite precision parameter
+    real(dp) :: InvA(3,3) ! Inverse of aBas matrix
+    integer  :: iOp ! loop counter over point group operators
+    logical  :: err ! Error flag
+    integer  :: i ! general loop counter
+    real(dp) :: tempMat(3,3) ! Temporary matrix
+    
+    if(.not. present(eps_)) then
+       eps = 1e-10_dp
+    else
+       eps =  eps_
+    endif
+
+    allocate(latticePtGrp_Ops(3,3,size(pgOps,3)))
+    call matrix_inverse(A,InvA,err,eps)
+    if (err) then
+       write(*,*) "ERROR: (put_pointGroup_in_latticeCoords in symmetry.f90)"
+       do i=1,3
+          write(*,'("Basis vector #: ",i2,3x,3(f7.3))') i,A(:,i)
+       enddo
+       stop "Basis vectors of lattice were not linearly independent."
+    endif
+
+    do iOp = 1, size(pgOps,1)
+       tempMat = matmul(InvA,(matmul(pgOps(:,:,iOp),A)))
+       if (any(tempMat - nint(tempMat) > eps)) then
+           write(*,*) "ERROR: (put_pointGroup_in_latticeCoords in symmetry.f90)"
+           stop "Conversion to lattice coordinates failed to yield integer matrix."
+        endif
+        latticePtGrp_Ops(:,:,iOp) = nint(tempMat)
+    enddo
+  endsubroutine put_pointGroup_in_latticeCoords
+  
 END MODULE symmetry
