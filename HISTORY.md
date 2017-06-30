@@ -1,5 +1,11 @@
 # Revision History for `symlib`
 
+## Revision 1.1.0
+
+- Added classes.f90 and intertolls.f90 to symlib from the polya repo
+  (https://github.com/rosenbrockc/polya). Added them to the libsym.a
+  compiled object.
+
 ## Revision 1.0.0
 
 In rational_mathematics.f90, changed the comment for the SNF routine. The comments

@@ -3,7 +3,6 @@ use num_types
 implicit none
 private
 public equal
-
 ! Overloaded procedure for comparing real types
    INTERFACE equal
       MODULE PROCEDURE equal_scalar , &
