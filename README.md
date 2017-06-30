@@ -38,3 +38,7 @@ errors or warnings generated will be redirected to `stdout`.
 ## Troubleshooting
 
 So far, no one has *ever* had any problems installing and using this code :D.
+
+## Code sources
+
+The files src/classes.f90 and src/itertools.f90 were taken from the [Polya](https://github.com/rosenbrockc/polya) respository.
