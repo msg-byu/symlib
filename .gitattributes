@@ -1,4 +1,4 @@
-/tests
-/support
-/.gitignore
-/.gitattributes
+/tests		export-ignore
+/support	export-ignore
+/.gitignore	export-ignore
+/.gitattributes	export-ignore
