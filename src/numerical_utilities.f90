@@ -29,10 +29,12 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="tolerance" regular="true">The tolerance for their
   !!comparison.</parameter>
-  function equal_rank1(a, b, tolerance)
+  function equal_rank1(a, b, rtolerance, atolerance)
     logical :: equal_rank1
-    real(dp) :: a(:), b(:), tolerance
-
+    real(dp) :: a(:), b(:), rtolerance_
+    real(dp) OPTIONAL :: atolerance
+    if(present(atolerance)) then; atolerance_ = atolerance; else; atolerance_ = 1E-8; endif
+   
     equal_rank1 = .false.
     if(all(abs(a-b) == 0.0)) then
        equal_rank1 = .true. !This line was added so that if a user did
@@ -40,7 +42,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < tolerance)) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(b)))) then
        equal_rank1 = .true.
     end if
   end function equal_rank1
