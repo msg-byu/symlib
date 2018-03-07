@@ -17,9 +17,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank1_b.in.{}"
 	       rename="equal_rank1_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
-	       file="equal_rank1_tol.in.{}" rename="equal_rank1_tol.in"/>
+      <assignment name="rtolerance" value="rtol">
+	<value identifier="rtol" folder="../tests/numerical_utilities"
+	       file="equal_rank1_tol.in.{}" rename="equal_rank1_tol.in"/> 
+      </assignment>
+      <assignment name="atolerance_" constant="0"> 
       </assignment>
     </group>
   </decorates>
@@ -41,9 +43,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank2_b.in.{}"
 	       rename="equal_rank2_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities" file="equal_rank2_tol.in.{}"
-	       rename="equal_rank2_tol.in"/>
+      <assignment name="rtolerance" value="rtol">
+	<value identifier="rtol" folder="../tests/numerical_utilities"
+	       file="equal_rank2_tol.in.{}" rename="equal_rank2_tol.in"/> 
+      </assignment>
+      <assignment name="atolerance_" constant="0"> 
       </assignment>
     </group>
   </decorates>
@@ -65,9 +69,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_scalar_b.in.{}"
 	       rename="equal_scalar_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_scalar_tol.in.{}" rename="equal_scalar_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -89,9 +95,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities"
 	       file="equal_scalar_real_int_b.in.{}" rename="equal_scalar_real_int_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_scalar_real_int_tol.in.{}" rename="equal_scalar_real_int_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -113,9 +121,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities"
 	       file="equal_scalar_int_int_b.in.{}" rename="equal_scalar_int_int_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_scalar_int_int_tol.in.{}" rename="equal_scalar_int_int_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -137,9 +147,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities"
 	       file="equal_rank1_rank0_b.in.{}" rename="equal_rank1_rank0_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank1_rank0_tol.in.{}" rename="equal_rank1_rank0_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -161,9 +173,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities"
 	       file="equal_rank2_rank0_b.in.{}" rename="equal_rank2_rank0_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank2_rank0_tol.in.{}" rename="equal_rank2_rank0_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -185,9 +199,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities"
 	       file="equal_rank2_real_int_b.in.{}" rename="equal_rank2_real_int_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank2_real_int_tol.in.{}" rename="equal_rank2_real_int_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -209,9 +225,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities"
 	       file="equal_rank1_real_int_b.in.{}" rename="equal_rank1_real_int_b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
+      <assignment name="rtolerance" value="rtol"> 
+	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank1_real_int_tol.in.{}" rename="equal_rank1_real_int_tol.in"/>
+      </assignment>
+      <assignment name="atolerance_" constant="0">
       </assignment>
     </group>
   </decorates>
@@ -233,9 +251,11 @@
 	<value identifier="bin" folder="../tests/numerical_utilities" file="equal_rank3_b.in.{}"
 	       rename="b.in"/>
       </assignment>
-      <assignment name="tolerance" value="tin"> 
-	<value identifier="tin" folder="../tests/numerical_utilities"
-	       file="equal_rank3_tolerance.in.{}" rename="tolerance.in"/>
+      <assignment name="rtolerance" value="rtol">
+	<value identifier="rtol" folder="../tests/numerical_utilities"
+	       file="equal_rank3_tol.in.{}" rename="equal_rank3_tol.in"/> 
+      </assignment>
+      <assignment name="atolerance_" constant="0"> 
       </assignment>
     </group>
   </decorates>
