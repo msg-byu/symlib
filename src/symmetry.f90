@@ -344,7 +344,6 @@ CONTAINS
     real(dp) eps            ! "epsilon" for checking equivalence in floating point arithmetic
     logical mapped          ! Set to true by "does_mapping_exist" if the atom is mapped
     logical err             ! Used in matrix_inverse to check for coplanar vectors
-
     real(dp), allocatable:: fracts(:,:) ! Array of possible fractional translations
     real(dp), allocatable:: lattice_point(:,:) ! Stores extra lattice points
 
@@ -428,7 +427,7 @@ CONTAINS
        ! of points that constitutes a new set of primitive basis vectors
        ! will have the property that the coefficients of ALL the lattice 
        ! points will be integer values when the coefficients are given
-       ! in (the new) lattice coordintates
+       ! in (the new) lattice coordinates
        l1:do i = 1, nFracts - 2
           do j = i + 1, nFracts - 1
              do k = j + 1, nFracts
@@ -439,16 +438,16 @@ CONTAINS
                 ! If the points are coplanar, inverse will be singular.
                 ! If so, try the next triplet
                 call matrix_inverse(aVecs, cart_to_latt, err, eps)
-                if(err) cycle        
+                if(err) cycle
                 do iFract = 1, nFracts
                    ! put points in lattice coordinates using the new basis vectors
                    v = matmul(cart_to_latt, lattice_point(:,iFract))
                    ! Are all components integers? If so, new vectors found so exit all
                    ! loops. If not try the next triplet of points
                    mapped = .true.
-                   if(.not. equal(v, anint((v),dp), eps)) &
+                   if(.not. equal(v, anint((v),dp), eps, eps)) &
                         then; mapped = .false.; exit; endif
-                enddo
+                enddo 
                 if(mapped) exit l1 ! found new vectors so exit
              enddo
           enddo
@@ -465,7 +464,7 @@ CONTAINS
           this_type = atomType(iAtom)
           mapped = .false.
           do j = iAtom + 1, size(atomType)
-             if(atomType(j) == this_type .and. equal(v, atom_pos(:,j), eps)) then
+             if(atomType(j) == this_type .and. equal(v, atom_pos(:,j), eps, eps)) then
                 mapped = .true.
                 removed(iAtom)=iAtom  ! store which atom we remove
              endif
@@ -598,7 +597,7 @@ CONTAINS
              rotation_matrix = matmul(new_vectors,inverse_aVecs)
              ! Check orthogonality of rotation matrix by [R][R]^T = [1]
              test_matrix = matmul(rotation_matrix,transpose(rotation_matrix))
-             if(equal(test_matrix, Identity, eps)) then ! Found valid rotation
+             if(equal(test_matrix, Identity, eps, eps)) then ! Found valid rotation
                 num_ops = num_ops + 1 ! Count number of rotations
                 temp_op(:,:,num_ops) = rotation_matrix
                 !write(10,'(i5,3i4)') num_ops, i, j, k

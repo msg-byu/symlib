@@ -3,7 +3,7 @@
   <decorates name="numerical_utilities.equal_rank1">
     <group name="equal_rank1" purpose="testing" staging="../unittests/">
       <test identifier="original" description="Tests the equality of rank 1 floats." timed="true"
-	    cases="[1-50]">
+	    cases="[1-51]">
 	<output identifier="equal_rank1.out" folder="../tests/numerical_utilities"
 		file="equal_rank1.out.{}" template="string.xml" />
 	<target name="[default]" compareto="equal_rank1.out" varfile="equal_rank1.out"
@@ -21,7 +21,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank1_tol.in.{}" rename="equal_rank1_tol.in"/> 
       </assignment>
-      <assignment name="atolerance_" constant="0"> 
+      <assignment name="atolerance_" constant="1E-8"> 
       </assignment>
     </group>
   </decorates>
@@ -47,7 +47,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank2_tol.in.{}" rename="equal_rank2_tol.in"/> 
       </assignment>
-      <assignment name="atolerance_" constant="0"> 
+      <assignment name="atolerance_" constant="1E-8"> 
       </assignment>
     </group>
   </decorates>
@@ -73,7 +73,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_scalar_tol.in.{}" rename="equal_scalar_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -99,7 +99,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_scalar_real_int_tol.in.{}" rename="equal_scalar_real_int_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -125,7 +125,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_scalar_int_int_tol.in.{}" rename="equal_scalar_int_int_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -151,7 +151,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank1_rank0_tol.in.{}" rename="equal_rank1_rank0_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -177,7 +177,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank2_rank0_tol.in.{}" rename="equal_rank2_rank0_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -203,7 +203,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank2_real_int_tol.in.{}" rename="equal_rank2_real_int_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -229,7 +229,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank1_real_int_tol.in.{}" rename="equal_rank1_real_int_tol.in"/>
       </assignment>
-      <assignment name="atolerance_" constant="0">
+      <assignment name="atolerance_" constant="1E-8">
       </assignment>
     </group>
   </decorates>
@@ -255,7 +255,7 @@
 	<value identifier="rtol" folder="../tests/numerical_utilities"
 	       file="equal_rank3_tol.in.{}" rename="equal_rank3_tol.in"/> 
       </assignment>
-      <assignment name="atolerance_" constant="0"> 
+      <assignment name="atolerance_" constant="1E-8"> 
       </assignment>
     </group>
   </decorates>
