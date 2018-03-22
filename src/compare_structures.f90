@@ -228,12 +228,14 @@ CONTAINS
     logical :: is_equiv_lattice, err
     real(dp)  :: lat1inv(3,3), S(3,3)
     integer i
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
+    atol = 1E-6
     is_equiv_lattice = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_equiv_lattice'"
     S = matmul(lat1inv,lat2)
-    if (equal(abs(determinant(S)),1._dp,eps) .and. &
-         equal(S,nint(S),eps)) is_equiv_lattice = .true.
+    if (equal(abs(determinant(S)),1._dp,eps,atol) .and. &
+         equal(S,nint(S),eps,atol)) is_equiv_lattice = .true.
   endfunction is_equiv_lattice
 
   !!<summary>Same as "is_equiv_lattice" except without the volume check. That is, the
@@ -246,12 +248,14 @@ CONTAINS
 
     logical :: is_derivative, err
     real(dp)  :: lat1inv(3,3), S(3,3)
-
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
+    
+    atol = 1E-6
     is_derivative = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_derivative'"
     S = matmul(lat1inv,lat2)
-    if (equal(S,nint(S),eps)) is_derivative = .true.
+    if (equal(S,nint(S),eps,atol)) is_derivative = .true.
 
   endfunction is_derivative
 
@@ -263,11 +267,13 @@ CONTAINS
     real(dp) :: LV(3,3), pt(3), LVinv(3,3),eps
     real(dp) :: lattcoords(3)
     logical :: is_lattice_point, err
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
+    atol = 1E-6
     is_lattice_point = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'is_lattice_point'"
     lattcoords = matmul(LVinv,pt)
-    if (equal(lattcoords,nint(lattcoords),eps)) is_lattice_point = .true.
+    if (equal(lattcoords,nint(lattcoords),eps,atol)) is_lattice_point = .true.
 
   END FUNCTION is_lattice_point
 
@@ -283,7 +289,9 @@ CONTAINS
     real(dp) :: lattcoords(size(pt,1),size(pt,2))
     logical :: flag(size(pt,2)), are_lattice_points, err
     integer :: iB, nB, nPt, iPt
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
 
+    atol = 1E-6
     are_lattice_points = .false.; flag = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'are_lattice_points'"
@@ -291,7 +299,7 @@ CONTAINS
     do iB = 1, nB
        lattcoords = matmul(LVinv,pt-spread(pB(:,iB),2,nPt))
        do iPt = 1, nPt
-          flag(iPt) = flag(iPt) .or. equal(lattcoords(:,iPt),nint(lattcoords(:,iPt)),eps)
+          flag(iPt) = flag(iPt) .or. equal(lattcoords(:,iPt),nint(lattcoords(:,iPt)),eps,atol)
        enddo
     enddo
     if (all(flag)) are_lattice_points = .true.

@@ -4,6 +4,7 @@
 !! Gus Hart
 !! UC Davis
 !! Started 10/98
+
 !!     Finite precision error fixed 8/99
 !! Started using the module again for the UNCLE code
 !! GLWH BYU Dec. 2006
@@ -276,9 +277,12 @@ CONTAINS
     real(dp), intent(in) :: eps
     real(dp), allocatable :: tSGrots(:,:,:),tSGshifts(:,:)
     integer :: nRot, iRot, status, i
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
+
+    atol = 1E-6
     
-    if (.not.equal(aVecs(2:3,1),0._dp,eps) .or. &
-         .not.equal(aVecs(1,2:3),0._dp,eps) )    &
+    if (.not.equal(aVecs(2:3,1),0._dp,eps,atol) .or. &
+         .not.equal(aVecs(1,2:3),0._dp,eps,atol) )    &
          stop "Error in rm_3d_operations: only allowed for primitive vectors x00,0xx,0xx"
     
     nRot = size(sgrots,3)
@@ -287,8 +291,8 @@ CONTAINS
     
     irot = 0
     do i = 1, nRot
-       if (equal(sgrots(2:3,1,i),0._dp,eps) .and. equal(sgrots(1,2:3,i),0._dp,eps) .and.&
-            & equal(abs(sgrots(1,1,i)),1._dp,eps)) then ! this operation is "2D"         
+       if (equal(sgrots(2:3,1,i),0._dp,eps, atol) .and. equal(sgrots(1,2:3,i),0._dp,eps,atol) .and.&
+            & equal(abs(sgrots(1,1,i)),1._dp,eps,atol)) then ! this operation is "2D"         
           irot = irot + 1
           tSGrots(:,:,irot) = sgrots(:,:,i)
           tSGshifts(:,irot) = sgshifts(:,i)
@@ -346,6 +350,7 @@ CONTAINS
     logical err             ! Used in matrix_inverse to check for coplanar vectors
     real(dp), allocatable:: fracts(:,:) ! Array of possible fractional translations
     real(dp), allocatable:: lattice_point(:,:) ! Stores extra lattice points
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
 
     nAtoms = size(atomType)
 
@@ -353,6 +358,7 @@ CONTAINS
     if(.not. present(eps_)) then; eps = 1e-10_dp
     else; eps = eps_
     endif
+    atol = 1E-6
 
     call get_transformations(aVecs, latt_to_cart, cart_to_latt)
     
@@ -445,7 +451,7 @@ CONTAINS
                    ! Are all components integers? If so, new vectors found so exit all
                    ! loops. If not try the next triplet of points
                    mapped = .true.
-                   if(.not. equal(v, anint((v),dp), eps, eps)) &
+                   if(.not. equal(v, anint((v),dp), eps, atol)) &
                         then; mapped = .false.; exit; endif
                 enddo 
                 if(mapped) exit l1 ! found new vectors so exit
@@ -464,7 +470,7 @@ CONTAINS
           this_type = atomType(iAtom)
           mapped = .false.
           do j = iAtom + 1, size(atomType)
-             if(atomType(j) == this_type .and. equal(v, atom_pos(:,j), eps, eps)) then
+             if(atomType(j) == this_type .and. equal(v, atom_pos(:,j), eps, atol)) then
                 mapped = .true.
                 removed(iAtom)=iAtom  ! store which atom we remove
              endif
@@ -518,8 +524,8 @@ CONTAINS
     real(dp) norm_avecs(3)           ! Norms of the given lattice vectors
     real(dp) length                  ! Length of currenct vector being checked
     real(dp), parameter:: Identity(3,3) = reshape((/1,0,0, 0,1,0, 0,0,1/),(/3,3/))
-    real(dp) eps                     ! "epsilon" for checking equivalence in floating point
-    !arithmetic
+    real(dp) eps                     ! "epsilon" for checking equivalence in floating point arithmetic
+    real(dp) atol
 
     integer n1, n2, n3              ! Upper limit for loops over R vectors
     integer i, j, k      ! Loop variables
@@ -527,6 +533,7 @@ CONTAINS
     integer num_ops      ! Used to count the number of point operations found
     
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
+    atol = 1E-6
     call matrix_inverse(aVecs, inverse_aVecs)
     ! Store the norms of the three lattice vectors
     do i = 1, 3;norm_avecs(i) = norm(aVecs(:,i));enddo
@@ -597,7 +604,7 @@ CONTAINS
              rotation_matrix = matmul(new_vectors,inverse_aVecs)
              ! Check orthogonality of rotation matrix by [R][R]^T = [1]
              test_matrix = matmul(rotation_matrix,transpose(rotation_matrix))
-             if(equal(test_matrix, Identity, eps, eps)) then ! Found valid rotation
+             if(equal(test_matrix, Identity, eps, atol)) then ! Found valid rotation
                 num_ops = num_ops + 1 ! Count number of rotations
                 temp_op(:,:,num_ops) = rotation_matrix
                 !write(10,'(i5,3i4)') num_ops, i, j, k
@@ -685,18 +692,20 @@ CONTAINS
     real(dp), intent(in) :: atom_pos(:,:)   
     integer, intent(in) :: atomType(:)      
     logical, intent(out) :: mapped          
-    real(dp), intent(in) :: eps             
+    real(dp), intent(in) :: eps
+    real(dp) :: atol ! An absolute tolerance of 1E-6 for the "equal" function
 
     integer i   ! Loop over atoms
     real(dp) :: this_position(3) ! Position of atom to be checked
 
+    atol = 1E-6
     mapped = .false.
     do i = 1, size(atomType)
        if(atomType(i) == this_type) then
           ! if the coordinates are the same, 
           ! their difference will be zero for every component
           this_position = atom_pos(:,i)
-          if(equal(v, this_position, eps)) &
+          if(equal(v, this_position, eps, atol)) &
           then; mapped = .true.; exit; endif
        endif
     enddo
@@ -715,15 +724,16 @@ CONTAINS
     real(dp) eps
     real(dp) :: testop(3,3)
     logical exists
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
 
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
-
+    atol = 1E-6
     open(11, file="sym_check.out", status="unknown")
     ! Are the operations unique? (Necessary but *insufficient* condition)
     Nops = size(SGop,3)
     do i = 1,Nops
        do j = i+1, Nops
-          if (equal(SGop(:,:,i),SGop(:,:,j),eps)) then
+          if (equal(SGop(:,:,i),SGop(:,:,j),eps, atol)) then
              write(11,*) "Error: SG Operations that were found are not unique"
              stop
           endif
@@ -743,7 +753,7 @@ CONTAINS
           ! Is the product of SG_i x SG_j in the set?
           testop = matmul(SGop(:,:,i),SGop(:,:,j))
           do k = 1, Nops
-             if (equal(testop,SGop(:,:,k),eps)) then
+             if (equal(testop,SGop(:,:,k),eps, atol)) then
                 exists = .true.
                 write(11,'(i3)',advance="no") k
                 exit
@@ -782,12 +792,14 @@ CONTAINS
     integer :: nOps, nBas
     logical :: equivalent
     real(dp) :: eps
+    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
 
     if(.not. present(eps_)) then
        eps = 1e-10_dp
     else
        eps =  eps_
     endif
+    atol = 1E-6
 
     allocate(tBas(size(pBas,1), size(pBas,2)))
     tBas = pBas
@@ -809,7 +821,7 @@ CONTAINS
           do iOps = 1,nOps
              v = matmul(sg_rot(:,:,iOps),tBas(:,jBas))+sg_fract(:,iOps)
              call bring_into_cell(v,invLV,pLV,eps)
-             if (equal(v,tBas(:,iBas),eps)) then
+             if (equal(v,tBas(:,iBas),eps, atol)) then
                 equivalent = .true.
                 exit
              endif
