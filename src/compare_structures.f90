@@ -89,14 +89,16 @@ CONTAINS
     integer,pointer    ::  block1(:), block2(:), perms(:,:),uqlist1(:),uqlist2(:)
     integer :: il, lab ! loop counter over label types in str1, temporary label
     integer :: SMskip ! counts number of lattices skipped because they don't match in the
-                      ! Santoro and Mighell sense.
+    ! Santoro and Mighell sense.
+    
     if(present(status)) status = 0
     N1 = size(aTyp1) ! Number of atoms in str1
     N2 = size(aTyp2) ! Number of atoms in str2
     mapped = .false. ! Flag indicating whether structures are equivalent
     SMskip = 0       ! Number of times a rotation was skipped because, for
                      ! this particular orientation, the cells of str1 and str2
-                     ! aren't derivative lattices
+    ! aren't derivative lattices
+    identical = .false. 
     LV1 = LV1in; aPos1 = aPos1in; aTyp1 = aTyp1in
     LV2 = LV2in; aPos2 = aPos2in; aTyp2 = aTyp2in
     ! Check that structures have the same # atoms/cell
@@ -104,7 +106,6 @@ CONTAINS
        if (present(status)) status=4
        return
     endif
-
     ! Get inverse of LV1 for use later
     call matrix_inverse(LV1,LV1inv,err)
     if (err) stop "Lattice vectors of first input structure are co-planar"
@@ -143,6 +144,7 @@ CONTAINS
        deallocate(pTyp,pPos)
        return; 
     endif
+    
     ! Are the atoms of str2 on lattice sites of str1's underlying lattice?
     if (.not. are_lattice_points(pVecs,aPos2,pPos,eps)) then
        if (present(status)) status=3; 
@@ -157,6 +159,7 @@ CONTAINS
        deallocate(pTyp,pPos)
        return; 
     endif
+    
     ! Get a list of permutations here   
     call get_basis_permutations(uqlist2,perms)
     ! Loop over all possible operations of the spacegroup
@@ -172,6 +175,7 @@ CONTAINS
           !write(*,*) "## Santoro-Mighell skip ##"
           cycle
        endif
+       
        ! If we get to here then the lattice vectors are equivalent
        ! (derivative lattices). So now check atomic configuration.
        ! I think it makes sense that the rotated atomic basis vectors 
