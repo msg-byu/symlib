@@ -4,7 +4,6 @@
 !! Gus Hart
 !! UC Davis
 !! Started 10/98
-
 !!     Finite precision error fixed 8/99
 !! Started using the module again for the UNCLE code
 !! GLWH BYU Dec. 2006
@@ -29,17 +28,13 @@ CONTAINS
   !! that the given crystal structure is already primitive. To reduce
   !! a non-primitive structure to a primitive one, use the function
   !! "make_primitive" in this same module.
-  !!
   !! No assumptions are made about the orientation of the input
   !! vectors. The positions of the basis atoms may be given in lattice
   !! coordinates or in cartesian coordinates.
-  !!
   !! The main steps are:
-  !!
   !! (1) Check inputs and generate matrices for converting vectors
   !! (atom positions an lattice points) from (to) lattice coordinates
   !! to (from) Cartesian coordinates
-  !!
   !! (2) Convert atom positions from lattice coordinates, if necessary
   !! (3) Translate all atoms into primitive unit cell
   !! (4) Find the point operators of the given lattice
@@ -118,6 +113,8 @@ CONTAINS
        eps =  eps_
     endif
 
+    print *, "THIS WILL ONLY PRINT IF I CAN DEBUG SPACEGROUP"
+
     ! Get number of atoms in the basis
     nAtoms = size(atomType)
 
@@ -139,6 +136,8 @@ CONTAINS
        enddo
     endif
 
+    print *, "cartesion atom_pos: ", atom_pos
+
     ! Bring all the basis atoms into the unit cell
     do i = 1, nAtoms
        call bring_into_cell(atom_pos(:,i), cart_to_latt, latt_to_cart, eps)
@@ -146,6 +145,8 @@ CONTAINS
 
     ! Now, find the point group for the given lattice
     call get_lattice_pointGroup(aVecs, lattpg_op, eps)
+
+    print *, "point group length: ", size(lattpg_op,3)
     
     ! **** Find the elements of the space group ****
     ! Count the elements
@@ -533,7 +534,7 @@ CONTAINS
     integer num_ops      ! Used to count the number of point operations found
     
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
-    atol = 1E-6
+    atol = 1E-3
     call matrix_inverse(aVecs, inverse_aVecs)
     ! Store the norms of the three lattice vectors
     do i = 1, 3;norm_avecs(i) = norm(aVecs(:,i));enddo
@@ -799,7 +800,7 @@ CONTAINS
     else
        eps =  eps_
     endif
-    atol = 1E-6
+    atol = 1e-3_dp
 
     allocate(tBas(size(pBas,1), size(pBas,2)))
     tBas = pBas
@@ -820,22 +821,28 @@ CONTAINS
        do jBas=1, iBas-1
           do iOps = 1,nOps
              v = matmul(sg_rot(:,:,iOps),tBas(:,jBas))+sg_fract(:,iOps)
+             print *, "v: ", v
+             print *, "tBas: ", tBas(:,iBas)
+             print *, "iOps / nOps", iOps, " / ", nOps
              call bring_into_cell(v,invLV,pLV,eps)
-             if (equal(v,tBas(:,iBas),eps, atol)) then
+             if (equal(v,tBas(:,iBas),eps,atol)) then
                 equivalent = .true.
                 exit
              endif
           end do
           if (equivalent) then
              BasEq(iBas) = BasEq(jBas)
+           print *, "Equivalent! jBas: ", BasEq(jBas)
              exit
           endif
        end do
        if (.not.equivalent) then
           nSites = nSites + 1
           BasEq(iBas) = nSites
+          print *, "not equivalent. nSites: ", nSites
        endif
     end do
+    print *, BasEq
     if (any(BasEq==0)) stop "There was a bug in find_site_equivalencies"
   ENDSUBROUTINE find_site_equivalencies
 
