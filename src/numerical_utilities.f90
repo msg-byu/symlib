@@ -27,7 +27,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second array to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -37,7 +37,7 @@ CONTAINS
     real(dp) :: a(:), b(:), rtolerance
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
    
     equal_rank1 = .false.
     if(all(abs(a-b) == 0.0)) then
@@ -59,7 +59,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second array to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -69,7 +69,7 @@ CONTAINS
     real(dp) :: a(:,:), b(:,:), rtolerance
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_rank2 = .false.
     if(all(abs(a-b) == 0.0)) then
@@ -91,7 +91,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second array to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -101,7 +101,7 @@ CONTAINS
     real(dp) :: a(:,:,:), b(:,:,:), rtolerance
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_rank3 = .false.
     if(all(abs(a-b) == 0.0)) then
@@ -123,7 +123,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second real scalar to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -133,7 +133,7 @@ CONTAINS
     real(dp) :: a, b, rtolerance
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_scalar = .false.
     if(abs(a-b) == 0.0) then
@@ -155,7 +155,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second real to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -166,7 +166,7 @@ CONTAINS
     real(dp) :: a, rtolerance
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_scalar_real_int = .false.
     if(abs(a-b) == 0.0) then
@@ -188,7 +188,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second integer to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -198,7 +198,7 @@ CONTAINS
     real(dp) ::  rtolerance, atolerance
     real(dp), OPTIONAL :: atolerance_
     integer :: a, b
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_scalar_int_int = .false.
     if(abs(a-b) == 0) then
@@ -220,7 +220,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second real scalar to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -229,7 +229,7 @@ CONTAINS
     logical :: equal_rank1_rank0
     real(dp) :: a(:), b, rtolerance, atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     
     equal_rank1_rank0 = .false.
@@ -252,7 +252,7 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second real scalar to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
   !! which is multiplied to the larger of a and b.</parameter>
   !!<parameter name="atolerance_" regular="true">The optional absolute
   !!tolerance for their comparison. Is added to the relative tolerance.
@@ -261,7 +261,7 @@ CONTAINS
     logical :: equal_rank2_rank0
     real(dp) :: a(:,:), b, rtolerance, atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_rank2_rank0 = .false.
     if(all(abs(a-b) == 0.0)) then
@@ -283,16 +283,17 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second integer 2D array to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance for their
-  !!comparison.</parameter>
-  !!<parameter name="atolerance_" regular="true">An optional absolute tolerance
-  !!other than the default of 10^-8</parameter>
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
+  !! which is multiplied to the larger of a and b.</parameter>
+  !!<parameter name="atolerance_" regular="true">The optional absolute
+  !!tolerance for their comparison. Is added to the relative tolerance.
+  !!Default value is 1E-8</parameter>
   function equal_rank2_real_int(a, b, rtolerance, atolerance_)
     logical :: equal_rank2_real_int
     real(dp) :: a(:,:), rtolerance, atolerance
     real(dp), OPTIONAL :: atolerance_
     integer :: b(:,:)
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
 
     equal_rank2_real_int = .false.
@@ -315,16 +316,17 @@ CONTAINS
   !!compared.</parameter>
   !!<parameter name="b" regular="true">The second 1D integer array to be
   !!compared.</parameter>
-  !!<parameter name="rtolerance" regular="true">The relative tolerance for their
-  !!comparison.</parameter>
-  !!<parameter name="atolerance_" regular="true">An optional absolute tolerance
-  !!other than the default of 10^-8</parameter>
+  !!<parameter name="rtolerance" regular="true">The relative tolerance for their comparison
+  !! which is multiplied to the larger of a and b.</parameter>
+  !!<parameter name="atolerance_" regular="true">The optional absolute
+  !!tolerance for their comparison. Is added to the relative tolerance.
+  !!Default value is 1E-8</parameter>
   function equal_rank1_real_int(a, b, rtolerance, atolerance_)
     logical :: equal_rank1_real_int
     real(dp) :: a(:), rtolerance, atolerance
     real(dp), OPTIONAL :: atolerance_
     integer :: b(:)
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 1E-8_dp; endif
 
     equal_rank1_real_int = .false.
     if(all(abs(a-b) == 0.0)) then

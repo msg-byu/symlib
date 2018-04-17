@@ -88,8 +88,8 @@ CONTAINS
     logical            :: err
     integer,pointer    ::  block1(:), block2(:), perms(:,:),uqlist1(:),uqlist2(:)
     integer :: il, lab ! loop counter over label types in str1, temporary label
-    integer :: SMskip ! counts number of lattices skipped because they don't match in the
-    ! Santoro and Mighell sense.
+    integer :: SMskip  ! counts number of lattices skipped because they don't match in the
+                       ! Santoro and Mighell sense.
     
     if(present(status)) status = 0
     N1 = size(aTyp1) ! Number of atoms in str1
@@ -97,7 +97,7 @@ CONTAINS
     mapped = .false. ! Flag indicating whether structures are equivalent
     SMskip = 0       ! Number of times a rotation was skipped because, for
                      ! this particular orientation, the cells of str1 and str2
-    ! aren't derivative lattices
+                     ! aren't derivative lattices
     identical = .false. 
     LV1 = LV1in; aPos1 = aPos1in; aTyp1 = aTyp1in
     LV2 = LV2in; aPos2 = aPos2in; aTyp2 = aTyp2in
@@ -106,6 +106,7 @@ CONTAINS
        if (present(status)) status=4
        return
     endif
+    
     ! Get inverse of LV1 for use later
     call matrix_inverse(LV1,LV1inv,err)
     if (err) stop "Lattice vectors of first input structure are co-planar"
@@ -232,8 +233,8 @@ CONTAINS
     logical :: is_equiv_lattice, err
     real(dp)  :: lat1inv(3,3), S(3,3)
     integer i
-    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
-    atol = 1E-6
+    real(dp) :: atol  ! An absolute tolerance for the "equal" function
+    atol = 1E-6_dp
     is_equiv_lattice = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_equiv_lattice'"
@@ -252,9 +253,9 @@ CONTAINS
 
     logical :: is_derivative, err
     real(dp)  :: lat1inv(3,3), S(3,3)
-    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
+    real(dp) :: atol  ! An absolute tolerance for the "equal" function
     
-    atol = 1E-6
+    atol = 1E-6_dp
     is_derivative = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_derivative'"
@@ -271,8 +272,9 @@ CONTAINS
     real(dp) :: LV(3,3), pt(3), LVinv(3,3),eps
     real(dp) :: lattcoords(3)
     logical :: is_lattice_point, err
-    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
-    atol = 1E-6
+    real(dp) :: atol  ! An absolute tolerance for the "equal" function
+    
+    atol = 1E-6_dp
     is_lattice_point = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'is_lattice_point'"
@@ -293,9 +295,9 @@ CONTAINS
     real(dp) :: lattcoords(size(pt,1),size(pt,2))
     logical :: flag(size(pt,2)), are_lattice_points, err
     integer :: iB, nB, nPt, iPt
-    real(dp) :: atol  ! An absolute tolerance of 1E-6 for the "equal" function
+    real(dp) :: atol  ! An absolute tolerance for the "equal" function
 
-    atol = 1E-6
+    atol = 1E-6_dp
     are_lattice_points = .false.; flag = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'are_lattice_points'"
