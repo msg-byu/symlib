@@ -25,7 +25,7 @@
 	       folder="../tests/compare_structs" rename="LV1in.in"/>
       </assignment>
       <assignment name="LV2in" value="LV2fil" allocate="true">
-	<value identifier="LV2fil" file="compare_arbitrary_structures_LV2in.in.{}"
+	<value identifier="LV2fil" file="compare_arbitrary_structures_Lv2in.in.{}"
 	       folder="../tests/compare_structs" rename="LV2in.in"/>
       </assignment>
       <assignment name="aTyp1in" value="atp1in" allocate="true">
