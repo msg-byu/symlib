@@ -226,7 +226,7 @@
   <decorates name="symmetry.does_mapping_exist">
     <group name="symmetry_tests" purpose="testing" staging="../unittests/">
       <test identifier="does_mapping_exist" description="Tests the does_mapping_exist."
-	    timed="true" cases="[1-50]"> 
+	    timed="true" cases="[1-52]"> 
 	<output identifier="mapped.out" folder="../tests/symmetry"
 		file="does_mapping_exist_mapped.out.{}" template="string.xml" />
 	<target name="mapped" compareto="mapped.out" varfile="mapped.out"
