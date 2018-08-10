@@ -1,7 +1,7 @@
 # Revision History for `symlib`
 
 ## Revision 1.1.1
-- Fixed bug (reported in #19) where `max` and not `maxval` was being used when comparing arrays.
+- Fixed bug (reported in [#19](https://github.com/msg-byu/symlib/issues/19)) where `max` and not `maxval` was being used when comparing arrays.
 
 ## Revision 1.1.0
 
