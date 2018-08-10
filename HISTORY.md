@@ -1,5 +1,8 @@
 # Revision History for `symlib`
 
+## Revision 1.1.1
+- Fixed bug (reported in #19) where `max` and not `maxval` was being used when comparing arrays.
+
 ## Revision 1.1.0
 
 - Added classes.f90 and intertolls.f90 to symlib from the polya repo
