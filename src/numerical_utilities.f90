@@ -46,7 +46,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(b)))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),maxval(abs(b))))) then
        equal_rank1 = .true.
     end if
   end function equal_rank1
@@ -78,7 +78,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(b)))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),maxval(abs(b))))) then
        equal_rank2 = .true.
     end if
   end function equal_rank2
@@ -110,7 +110,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(b)))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),maxval(abs(b))))) then
        equal_rank3 = .true.
     end if
   end function equal_rank3
@@ -239,7 +239,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(b)))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),abs(b)))) then
        equal_rank1_rank0 = .true.
     end if
   end function equal_rank1_rank0
@@ -270,7 +270,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(b)))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),abs(b)))) then
        equal_rank2_rank0 = .true.
     end if
   end function equal_rank2_rank0
@@ -303,7 +303,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(real(b,dp))))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),maxval(abs(real(b,dp)))))) then
        equal_rank2_real_int = .true.
     end if
   end function equal_rank2_real_int
@@ -335,7 +335,7 @@ CONTAINS
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
     !original functionallity would be unaltered.
-    else if(all(abs(a - b) < atolerance + rtolerance * max(abs(a),abs(real(b,dp))))) then
+    else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),maxval(abs(real(b,dp)))))) then
        equal_rank1_real_int = .true.
     end if
   end function equal_rank1_real_int
