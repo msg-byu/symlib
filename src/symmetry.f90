@@ -642,23 +642,26 @@ CONTAINS
   subroutine bring_into_cell(v, cart_to_latt, latt_to_cart, eps)
     real(dp), intent(inout) ::  v(3)
     real(dp), intent(in)    ::  cart_to_latt(3,3), latt_to_cart(3,3), eps
-    integer c, maxc
+    ! integer c, maxc
     
     ! Put the representation of the point into lattice coordinates
     v = matmul(cart_to_latt, v)
     
     ! counter to catch compiler bug
-    c = 0
-    maxc = max(ceiling(abs(maxval(v))),ceiling(abs(minval(v)))) *2
+    ! c = 0
+    ! maxc = max(ceiling(abs(maxval(v))),ceiling(abs(minval(v)))) *2
 
+    v = MOD(v, 1.0_dp)
     ! If a component >= 1, translate by subtracting a lattice vector
     ! If a component < 0, translate by adding a lattice vector
-    do while(any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) 
-       c = c +1
+    ! do while(any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) ih
+    if (any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) then
+       ! c = c +1
        v = merge(v, v - 1.0_dp, v <  1.0_dp - eps) 
        v = merge(v, v + 1.0_dp, v >= 0.0_dp - eps)
-       if (c>maxc) stop "ERROR: loop does not end in bring_into_cell. Probably compiler bug."
-    enddo
+    !    if (c>maxc) stop "ERROR: loop does not end in bring_into_cell. Probably compiler bug."
+    ! enddo
+    end if
     
     ! Put the point back into cartesion coordinate representation
     v = matmul(latt_to_cart, v)

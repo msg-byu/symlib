@@ -1,5 +1,8 @@
 # Revision History for `symlib`
 
+## Revision 1.1.2
+- Changed the `bing_into_cell` subroutine to use `MOD` instead of a `do while` loop so improve runtimes.
+
 ## Revision 1.1.1
 - Fixed bug (reported in [#19](https://github.com/msg-byu/symlib/issues/19)) where `max` and not `maxval` was being used when comparing arrays.
 
