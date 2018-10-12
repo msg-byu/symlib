@@ -842,7 +842,7 @@ CONTAINS
   !!<parameter name="A" regular="true">Basis vectors (columns) of the lattice.</parameter>
   !!<parameter name="latticePtGrp_Ops" regular="true">Returned point group operators in direct
   !!coordinates (integer entries).</parameter>
-  !!<parameter name="eps" regular="true">Finite precision parameter</parameter>
+  !!<parameter name="eps_" regular="true">Finite precision parameter</parameter>
   subroutine put_pointGroup_in_latticeCoords(pgOps, A, latticePtGrp_Ops, eps_)
     real(dp), intent(in) :: pgOps(:,:,:), A(3,3)
     integer,  pointer    :: latticePtGrp_Ops(:,:,:)
