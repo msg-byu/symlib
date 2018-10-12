@@ -323,7 +323,7 @@ CONTAINS
        if (all(a == a(indx(1)))) then ! check if all numbers are the same
           big2 = a(indx(1))
        else   ! The "real" around 'a' is a workaround for a problem in the Absoft compiler
-          big2 = maxval(real(a),mask=a < a(indx(1))) ! Find the size of the 2nd biggest number
+          big2 = int(maxval(real(a),mask=a < a(indx(1)))) ! Find the size of the 2nd biggest number
        endif
        if (big2 == 0) exit
        a(indx(1)) = mod(a(indx(1)),big2)
