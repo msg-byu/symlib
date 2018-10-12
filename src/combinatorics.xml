@@ -208,48 +208,4 @@
       </assignment>
     </group>
   </decorates>
-
-  <decorates name="combinatorics.initialize_subset_mask">
-    <skip reason = "Not used in any part of the code at this time"/>
-    <group name="binomial_tests" purpose="testing_skip" staging="../unittests/">
-      <test identifier="initialize_subset_mask" description="Testing of the mask initialization."
-  	    timed="true" cases="[1-10]">
-  	<output identifier="initialize_subset_mask.out" folder="../tests/combinatorics"
-  		file="initialize_subset_mask.out.{}" template="logical.xml" />
-  	<target name="mask" generator="print_subset_mask" compareto="initialize_subset_mask.out"
-  		varfile="initialize_subset_mask.out" when="each" />
-      </test>
-      <global name="initial_mask" type="logical" modifiers="pointer" dimensions=":"/>
-      <assignment name="initial_mask" value="mask_in" allocate="true">
-	<value identifier="mask_in" file="initialize_subset_mask.in.{}"
-	       folder="../tests/combinatorics" rename="initialize_subset_mask.in"/>
-      </assignment>
-      <global name="mask" type="type" kind="subset_mask"/>
-    </group>
-  </decorates>
-
-  <decorates name="combinatorics.generate_next_subset">
-    <skip reason = "Not used in any part of the code at this time, also looks like
-		    code wasn't finished."/>
-    <group name="binomial_tests" purpose="testing_skip" staging="../unittests/">
-      <test identifier="generate_next_subset" description="Testing of the mask iteration
-  							   over sets."
-  	    timed="true" cases="[1-20]">
-  	<input folder="../tests/combinatorics" file="generate_next_subset.in.{}"
-  	       rename="generate_next_subset.in">
-  	  <line id="N" type="logical" values="*" names="initial_mask" />
-  	</input>
-  	<output identifier="generate_subset_mask.out" folder="../tests/combinatorics"
-  		file="generate_subset_mask.out.{}" template="logical.xml" />
-  	<target name="outputmask" compareto="generate_subset_mask.out"
-  		varfile="generate_subset_mask.out" when="each" />
-      </test>
-      <prereq method="combinatorics.initialize_subset_mask" terminate="true"/>
-      <global name="initial_mask" type="logical" allocate="true"/>
-    </group>
-  </decorates>
-
-  <decorates name="combinatorics.print_subset_mask">
-    <skip reason = "Not used in any part of the code at this time"/>
-  </decorates>
 </fortpy>
