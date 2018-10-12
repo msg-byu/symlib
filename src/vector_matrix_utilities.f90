@@ -420,7 +420,7 @@ CONTAINS
 
     integer, parameter :: dim=1
     
-    integer :: i,j,k,l
+    integer :: l
     integer :: count
    
     count = 0
@@ -435,8 +435,6 @@ CONTAINS
 
   end subroutine find_lvalue_in_larray1
 
-
-
   !!<summary>Find a int value inside a 3-dim array</summary>
   !!<parameter name="array" regular="true"></parameter>
   !!<parameter name="vals" regular="true"></parameter>
@@ -450,7 +448,7 @@ CONTAINS
     
     integer, parameter :: dim=3
     
-    integer :: i,j,k,l
+    integer :: j, k, l
     integer :: count
     
     count = 0
@@ -482,7 +480,7 @@ CONTAINS
     
     integer, parameter :: dim=3
     
-    integer :: i,j,k,l
+    integer :: j, k, l
     integer :: count
 
     count = 0
