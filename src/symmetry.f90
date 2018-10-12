@@ -711,11 +711,9 @@ CONTAINS
 
   !!<summary>This subroutine checks the space group.</summary>
   !!<parameter name="SGop"></parameter>
-  !!<parameter name="SGfrac"></parameter>
   !!<parameter name="eps_" regular="true"></parameter>
-  subroutine check_spaceGroup(SGop, SGfrac, eps_)
+  subroutine check_spaceGroup(SGop, eps_)
     real(dp), pointer :: SGop(:,:,:)
-    real(dp), pointer :: SGfrac(:,:)
     real(dp), optional, intent(in):: eps_
 
     integer i, j, k, Nops
