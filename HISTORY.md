@@ -1,5 +1,11 @@
 # Revision History for `symlib`
 
+## Revision 1.1.3
+- Rewrote the `SmithNormalForm` algorithm to use a different pivoting
+  strategy.
+- Added an optional output err_ flag to the `SmithNormalForm`
+  alforithm to report an error but not stop if the code overflows.
+
 ## Revision 1.1.2
 - Changed the `bing_into_cell` subroutine to use `MOD` instead of a `do while` loop so improve runtimes.
 
