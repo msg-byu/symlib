@@ -1,5 +1,8 @@
 # Revision History for `symlib`
 
+## Revision 1.1.4
+- Added a long int version of the `SmithNormalForm` algorithm.
+
 ## Revision 1.1.3
 - Rewrote the `SmithNormalForm` algorithm to use a different pivoting
   strategy.

@@ -6,7 +6,7 @@ MODULE rational_mathematics
 implicit none
 private
 public gcd, SmithNormalForm, HermiteNormalForm, is_a_rational_in_range,&
-       get_rationals_in_range
+       SmithNormalForm_li, get_rationals_in_range
 
 ! Overloaded procedure for computing the greatest common denominator
 INTERFACE gcd
@@ -14,6 +14,108 @@ INTERFACE gcd
 END INTERFACE
 
 CONTAINS
+  
+  !!<summary>This routine takes an integer 3x3 matrix and computes its
+  !!Smith Normal Form.</summary>
+  !!<parameter name="H" regular="True">Input matrix.</parameter>
+  !!<parameter name="A" regular="True">Left Transform.</parameter>
+  !!<parameter name="M" regular="true">Smith Normal Form matrix.</parameter>
+  !!<parameter name="B" regular="True">Right Transform.</parameter>
+  subroutine SmithNormalForm_li(H,A,M,B,err_)
+    integer, intent(in) :: H(3,3)
+    integer, intent(out) :: M(3,3)
+    integer(li), intent(out), dimension(3,3) :: A, B
+    integer, optional, intent(out) :: err_
+
+    integer :: i, row, col, min_val, j, check(9)
+    integer :: multiple, tmpVec(3)
+    integer(li) :: tmpVec_li(3)
+    logical :: is_snf, new_pivot, OverFlowCheck
+    integer :: itCnt, min_row
+
+    OverFlowCheck = .False.
+    if (present(err_)) OverFlowCheck = .True.
+    
+    if(determinant(H)<1) stop "SmithNormalForm routine failed because the input matrix had a negative determinant"
+    A = 0; B = 0; M = H ! M starts out as H, the input matrix
+    forall(i=1:3); A(i,i) = 1; B(i,i) = 1; end forall ! A & B = identity
+
+    j=1
+    itCnt = 0
+    is_snf = .False.
+    new_pivot = .True.
+    do while (is_snf .eqv. .False. .and. j<4)
+       itCnt = itCnt + 1
+       if (itCnt>=100) stop "ERROR bad programming in SmithNormalForm"
+       
+       if (new_pivot) then
+          call get_min_val(M, j, min_val, row, col)
+       end if
+
+       do i=1,3
+          if (i==col) cycle
+          multiple = nint(real(M(row,i),dp)/real(min_val,dp))
+          if (multiple==0) cycle
+          M(:,i) = M(:,i)-multiple*M(:,col)
+          B(:,i) = B(:,i)-multiple*B(:,col)
+       end do
+
+       do i=1,3
+          if (i==row) cycle
+          multiple = nint(real(M(i,col),dp)/real(min_val,dp))
+          if (multiple==0) cycle
+          M(i,:) = M(i,:)-multiple*M(row,:)
+          A(i,:) = A(i,:)-multiple*A(row,:)
+       end do
+
+       new_pivot = .True.
+       if ((count(M(:,col)==0)==2) .and. (count(M(row,:)==0)==2)) then
+          if (all(mod(M(j:,j:),min_val)==0)) then
+             if (j < col) then
+                tmpVec_li = B(:,j); B(:,j) = B(:,col); B(:,col) = tmpVec_li
+                tmpVec = M(:,j); M(:,j) = M(:,col); M(:,col) = tmpVec
+             end if
+             if (j < row) then
+                tmpVec_li = A(j,:); A(j,:) = A(row,:); A(row,:) = tmpVec_li
+                tmpVec = M(j,:); M(j,:) = M(row,:); M(row,:) = tmpVec
+             end if
+             j = j + 1
+          else
+             new_pivot = .False.
+             call get_min_loc(M, min_val, j, min_row)
+             M(row,:) = M(row,:) + M(min_row,:)
+             A(row,:) = A(row,:) + A(min_row,:)             
+          end if
+       end if
+       
+       check = reshape(M,(/9/))
+       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
+            mod(M(3,3),M(2,2))==0) then
+          is_snf = .True.
+       end if
+    end do
+    
+    do i=1,3
+       if (M(i,i) < 0) then
+          M(i,:) = -M(i,:)
+          A(i,:) = -A(i,:)
+       end if
+    end do
+    if (any(matmul(matmul(A,H),B)/=M)) stop "END: Transformation matrices didn't work"
+    check = reshape(M,(/9/))
+    if (any(check((/2,3,4,6,7,8/))/=0)) stop "Not diagonal"
+    if (mod(M(2,2),M(1,1))/=0 .or. mod(M(3,3),M(2,2))/=0) stop "SNF conditions not met"
+    if (OverFlowCheck) then
+       if ((any(abs(real(A,dp)) > 1E18)) .or. (any(abs(real(B,dp)) > 1E18))) then
+          write(*,*) "Warning Values in SmithNormalForm overflowing standard ints."
+          err_ = 1
+       else
+          err_ = 0
+       end if
+    else 
+       if ((any(abs(real(A,dp)) > 1E18)) .or. (any(abs(real(B,dp)) > 1E18))) stop "Warning Values in SmithNormalForm overflowing standard ints."
+    end if
+  ENDSUBROUTINE SmithNormalForm_Li
   
   !!<summary>Finds the minimal value in the matrix A that's not in an
   !!empty row or column.</summary>
