@@ -1,10 +1,27 @@
 # symlib
-Symmetry-related routines for cluster expansion and other codes that rely on symmetries of lattices
-and crystals. This code was started by GLWH in 1999 with help from Harold Stokes (Mr. Isotropy, see
-[iso.byu.edu](http://iso.byu.edu/iso/isodistort.php)). It now includes a number of numerical and
-combinatorial routines that have been useful in developing UNCLE (the Unversal CLuster Expansion code). The [enum
-project](https://github.com/glwhart/enum4) also relies on this library.  
+Symmetry-related routines for cluster expansion and other codes that
+rely on symmetries of lattices and crystals. This code was started by
+GLWH in 1999 with help from Harold Stokes (Mr. Isotropy, see
+[iso.byu.edu](http://iso.byu.edu/iso/isodistort.php)). It now includes
+a number of numerical and combinatorial routines that have been useful
+in developing UNCLE (the Unversal CLuster Expansion code). The [enum
+project](https://github.com/glwhart/enum4) also relies on this
+library.
 
+Some key algorithms found in `symlib` include:
+
+- `HermiteNormalForm` algorithm that finds the Hermite Normal Form of a
+3x3 integer matrix.
+
+- `SmithNormalForm` algorithm that finds the Smith Normal Form of a
+3x3 integer matrix.
+
+- `get_spaceGroup` which finds the space group of a given crystal.
+
+- `get_lattice_pointGroup` which finds the point group of a lattice.
+
+- `minkowski_reduce_basis` which performs minkowski reduction on a
+  lattice to minimize the lengths of each vectors in the basis.
 
 ## Compiling `symlib`
 
