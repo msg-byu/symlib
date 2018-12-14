@@ -176,7 +176,8 @@ CONTAINS
           endif
        enddo
     enddo
-
+    deallocate(lattpg_op)
+    
     ! Now that we know how many space group operations there are,
     ! store them in a matrix of the appropriate size as well as the
     ! fractional translations
