@@ -21,6 +21,7 @@ CONTAINS
   !!<parameter name="A" regular="True">Left Transform.</parameter>
   !!<parameter name="M" regular="true">Smith Normal Form matrix.</parameter>
   !!<parameter name="B" regular="True">Right Transform.</parameter>
+  !!<parameter name="err_" regular="True">Returns 1 if overflow occures.</parameter>
   subroutine SmithNormalForm_li(H,A,M,B,err_)
     integer, intent(in) :: H(3,3)
     integer, intent(out) :: M(3,3)
@@ -192,6 +193,7 @@ CONTAINS
   !!<parameter name="A" regular="True">Left Transform.</parameter>
   !!<parameter name="M" regular="true">Smith Normal Form matrix.</parameter>
   !!<parameter name="B" regular="True">Right Transform.</parameter>
+  !!<parameter name="err_" regular="True">Returns 1 if overflow occures.</parameter>
   subroutine SmithNormalForm(H,A,M,B,err_)
     integer, intent(in) :: H(3,3) 
     integer, intent(out), dimension(3,3) :: M, A, B

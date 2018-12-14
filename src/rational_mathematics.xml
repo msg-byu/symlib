@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fortpy mode="docstring">
 
+  <decorates name="rational_mathematics.SmithNormalForm_li">
+    <group name="SNF_li_tests" purpose="testing" staging="../unittests/">
+      <test identifier="SNF_A" description="Original SNF testing"
+	    timed="true"  cases="[1-20]">
+	<output identifier="A.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_A.out.{}" template="integer.xml" />
+	<target name="A" compareto="A.out" varfile="A.out" when="each" />
+      </test>
+      <test identifier="SNF_M" description="Original SNF testing"
+	    timed="true"  cases="[1-20]">
+	<output identifier="M.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_M.out.{}" template="integer.xml" />
+	<target name="M" compareto="M.out" varfile="M.out" when="each" />
+      </test>
+      <test identifier="SNF_B" description="Original SNF testing"
+	    timed="true"  cases="[1-20]">
+	<output identifier="B.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_B.out.{}" template="integer.xml" />
+	<target name="B" compareto="B.out" varfile="B.out" when="each" />
+      </test>
+      <assignment name="H" value="hin">
+	<value identifier="hin" folder="../tests/rational_mathematics"
+	       file="SmithNormalForm_H.in.{}" rename="H.in"/>
+      </assignment>
+      <assignment name="M" value="min">
+	<value identifier="min" constant="0"/>
+      </assignment>
+      <assignment name="A" constant="0" />
+      <assignment name="B" value="bin">
+	<value identifier="bin" constant="0"/>
+      </assignment>
+    </group>
+  </decorates>
+  
   <decorates name="rational_mathematics.SmithNormalForm">
     <group name="SNF_tests" purpose="testing" staging="../unittests/">
       <test identifier="SNF_A" description="Original SNF testing"
@@ -8,6 +42,12 @@
 	<output identifier="A.out" folder="../tests/rational_mathematics"
 		file="SmithNormalForm_A.out.{}" template="integer.xml" />
 	<target name="A" compareto="A.out" varfile="A.out" when="each" />
+      </test>
+      <test identifier="SNF_err" description="Original SNF testing"
+	    timed="true"  cases="18,19">
+	<output identifier="err.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_err.out.{}" template="integer.xml" />
+	<target name="err_" compareto="err.out" varfile="err.out" when="each" />
       </test>
       <test identifier="SNF_M" description="Original SNF testing"
 	    timed="true"  cases="[1-20]">
