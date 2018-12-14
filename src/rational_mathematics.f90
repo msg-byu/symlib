@@ -118,8 +118,9 @@ CONTAINS
     end if
   ENDSUBROUTINE SmithNormalForm_Li
   
-  !!<summary>Finds the minimal value in the matrix A that's not in an
-  !!empty row or column.</summary>
+  !!<summary>Finds the minimal value in the sub matrix of A where the
+  !!sub matrix consits of every row and colum greater than or equal to
+  !!diag.</summary>
   !!<parameter name="A" regular="true">The input matrix.</parameter>
   !!<parameter name="diag" regular="true">The row/column number we
   !!want to be below.</parameter>
@@ -154,8 +155,9 @@ CONTAINS
     if (found .eqv. .False.) stop "Failed to find minimal value in get_min_val."
   end subroutine get_min_val
 
-  !!<summary>Finds the row of the smallest value not
-  !!divisible by a pivot..</summary>
+  !!<summary>Finds the row of the smallest value not divisible by a
+  !!pivot within the sub matrix of A consisting of the row and column
+  !!numbers greater than or equal to diag.</summary>  
   !!<parameter name="A" regular="true">The input matrix.</parameter>
   !!<parameter name="pivot" regular="true">The pivot.</parameter>  
   !!<parameter name="diag" regular="true">The row/column number we
