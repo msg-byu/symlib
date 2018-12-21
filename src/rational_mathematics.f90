@@ -107,14 +107,14 @@ CONTAINS
     if (any(check((/2,3,4,6,7,8/))/=0)) stop "Not diagonal"
     if (mod(M(2,2),M(1,1))/=0 .or. mod(M(3,3),M(2,2))/=0) stop "SNF conditions not met"
     if (OverFlowCheck) then
-       if ((any(abs(real(A,dp)) > 1E18)) .or. (any(abs(real(B,dp)) > 1E18))) then
+       if ((any(abs(real(A,dp)) > 1E17)) .or. (any(abs(real(B,dp)) > 1E17))) then
           write(*,*) "Warning Values in SmithNormalForm overflowing standard ints."
           err_ = 1
        else
           err_ = 0
        end if
     else 
-       if ((any(abs(real(A,dp)) > 1E18)) .or. (any(abs(real(B,dp)) > 1E18))) stop "Warning Values in SmithNormalForm overflowing standard ints."
+       if ((any(abs(real(A,dp)) > 1E17)) .or. (any(abs(real(B,dp)) > 1E17))) stop "Warning Values in SmithNormalForm overflowing standard ints."
     end if
   ENDSUBROUTINE SmithNormalForm_Li
   
