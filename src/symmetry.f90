@@ -1,4 +1,4 @@
-!!<summary>This module calculates the spacegroup of a crystal, the
+!! <summary>This module calculates the spacegroup of a crystal, the
 !! pointgroup of a bravais lattice, and checks whether or not a given
 !! unit cell is primitive
 !! Gus Hart
@@ -44,7 +44,7 @@ CONTAINS
   !!   iii) Compute the transformation that takes the original lattice vectors to
   !!        the new triplet of points.
   !!    iv) Check that the transformation is orthogonal. If so, it is part of the
-  !!        point group of the lattice.          
+  !!        point group of the lattice.
   !! (5) Find which of the point operators are part of the space group and compute
   !!     the corresponding fractional translations.</summary>
   !!<parameter name="aVecs" regular="true">Real space primitive
@@ -62,20 +62,20 @@ CONTAINS
   !!equivalence in floating point arithmetic ></parameter>
   subroutine get_spaceGroup(aVecs, atomType, input_pos,  sg_op, sg_fract, lattcoords, eps_)
 
-    real(dp), intent(in):: aVecs(3,3)       
-    integer, intent(inout):: atomType(:)     
-    real(dp), pointer:: input_pos(:,:)      
-    real(dp), pointer:: sg_op(:,:,:)        
-    real(dp), pointer:: sg_fract(:,:)       
-    logical :: lattcoords    
-    real(dp), intent(in), optional:: eps_   
-    
+    real(dp), intent(in):: aVecs(3,3)
+    integer, intent(inout):: atomType(:)
+    real(dp), allocatable:: input_pos(:,:)
+    real(dp), allocatable:: sg_op(:,:,:)
+    real(dp), allocatable:: sg_fract(:,:)
+    logical :: lattcoords
+    real(dp), intent(in), optional:: eps_
+
     real(dp) atom_pos(3,size(input_pos,2)) ! Copy of input_pos
     real(dp) latt_to_cart(3,3) ! Transformation for lattice coords to cartesian coords
     real(dp) cart_to_latt(3,3) ! Transformation for cartesian coords to lattice coords
     real(dp), pointer:: lattpg_op(:,:,:) ! The lattice point group operations
     real(dp) temp_sgops (3,3,48*size(atomType)) ! Temporary matrix to store space group
-    !operations 
+    !operations
     real(dp) temp_sgfracts(3,48*size(atomType)) ! Temporary matrix to store fractional
     ! translations
     ! NB: the previous two allocations originally read 48*4, where *4
@@ -90,7 +90,7 @@ CONTAINS
     ! GH: I'm not fond of the fact that we have need non-primitive
     ! cells for UNCLE. Could have been designed better and we wouldn't
     ! have had to dirty up this symmetry routine...
-    
+
     real(dp) fract(3)           ! A fractional translation to check
     real(dp) v(3)               ! A translated vector to check mapping for
     real(dp) v2(3)              ! A second translated vector check
@@ -99,11 +99,11 @@ CONTAINS
 
     integer i                   ! Generic loop counter
     integer iop                 ! Loop counter for loops over point group operations
-    integer jAtom, kAtom        ! Loop counters for loops over atoms 
+    integer jAtom, kAtom        ! Loop counters for loops over atoms
     integer this_type           ! Type of current atom being checked
     integer sgop_count          ! Counter for number of space group operations
     integer nAtoms              ! Number of atoms in the basis
-    
+
     logical err                 ! Used to check for coplanar vectors in the basis
     logical mapped              ! True when an operation has mapped an atom to another
 
@@ -125,7 +125,7 @@ CONTAINS
     !err=.false.
     call get_transformations(aVecs, latt_to_cart, cart_to_latt,err)
     !write(*,*) err
-    if(err) stop "ERROR in get_spaceGroup: primitive vectors appear to be coplanar"  
+    if(err) stop "ERROR in get_spaceGroup: primitive vectors appear to be coplanar"
 
     ! Convert the position of the basis atoms from lattice coordinates, if necessary
     if(lattcoords .eqv. .true.) then
@@ -141,7 +141,7 @@ CONTAINS
 
     ! Now, find the point group for the given lattice
     call get_lattice_pointGroup(aVecs, lattpg_op, eps)
-    
+
     ! **** Find the elements of the space group ****
     ! Count the elements
     sgop_count = 0
@@ -157,7 +157,7 @@ CONTAINS
           ! Is each atom of every type mapped by this rotation + translation?
           do kAtom = 1, nAtoms
              this_type = atomType(kAtom)
-             ! Rotate and translate each atom        
+             ! Rotate and translate each atom
              v2 = matmul(lattpg_op(:,:,iop),atom_pos(:,kAtom))
              v2 = v2 + fract
              call bring_into_cell(v2, cart_to_latt, latt_to_cart, eps)
@@ -172,7 +172,7 @@ CONTAINS
              temp_sgops(:,:,sgop_count) = lattpg_op(:,:,iop) ! Store the rotational part
              !exit !exit loop over fractional translations and try next op
              ! By removing the preceding exit, we include fractional translations
-             ! for non-primitive lattices. (GLWH 10/26/2009) 
+             ! for non-primitive lattices. (GLWH 10/26/2009)
           endif
        enddo
     enddo
@@ -184,7 +184,7 @@ CONTAINS
     allocate(sg_op(3,3,sgop_count),sg_fract(3,sgop_count))
     sg_op = temp_sgops(:,:,1:sgop_count)
     sg_fract = temp_sgfracts(:,1:sgop_count)
-    
+
   end subroutine get_spaceGroup
 
   !!<summary>Determine the atom types "aTyp" used for get_spaceGroup.
@@ -202,11 +202,11 @@ CONTAINS
   !!a dvector belong to?  (refers to CE couplings)</parameter>
   !!<parameter name="aTyp">{ dvector# } intent(out).</parameter>
   subroutine get_spaceGroup_atomTypes(label,digit,ce,aTyp)
-    integer, intent(in)  :: label(:,:)  
-    integer, intent(in)  :: digit(:) 
-    integer, intent(in)  :: ce(:)    
+    integer, intent(in)  :: label(:,:)
+    integer, intent(in)  :: digit(:)
+    integer, intent(in)  :: ce(:)
     integer, pointer     :: aTyp(:)
-    
+
     integer iD1, iD2, nD, maxTyp
     integer digit1, digit2
     integer, pointer :: uqLabel(:,:) ! { digit#, dvector# }: unique
@@ -223,7 +223,7 @@ CONTAINS
     ! "0" may represent C, and "1" D.
     ! --> we have to make "label" unique.
     nD = size(digit)
-    maxLabel=maxval(label) 
+    maxLabel=maxval(label)
     allocate(uqLabel(size(label,1),size(label,2)))
     do iD1=1,nD
        do digit1=1,digit(iD1)
@@ -246,15 +246,15 @@ CONTAINS
           digit2=digit(iD2) ! number of occupations on dvector 2
           if (digit1==digit2 .and. all(uqLabel(:digit1,iD1)==uqLabel(:digit1,iD2))) then
              ! if dvector 1 and dvector 2 have the same number of
-             !possible occupations...     
+             !possible occupations...
              ! ... and if they have the same possible occupations ...
              aTyp(iD1)=aTyp(iD2)    ! ... then the aTyp is identical.
-             cycle iD1_loop ! found a type for iD1, go on with the next      
+             cycle iD1_loop ! found a type for iD1, go on with the next
           else
              maxTyp = max(maxTyp,aTyp(iD2)) ! generate a new type for iD1
           endif
        enddo
-       ! here: iD2=iD1-1                                     
+       ! here: iD2=iD1-1
        maxTyp = maxTyp+1
        aTyp(iD1) = maxTyp
     enddo iD1_loop
@@ -268,27 +268,38 @@ CONTAINS
   !!<parameter name="eps" regular="true">"epsilon" for checking
   !!equivalence in floating point arithmetic</parameter>
   subroutine rm_3d_operations(aVecs,sgrots,sgshifts,eps)
-    real(dp), intent(in):: aVecs(3,3)  
-    real(dp), pointer:: sgrots(:,:,:), sgshifts(:,:)  ! intent(inout)
+    real(dp), intent(in):: aVecs(3,3)
+    real(dp), allocatable:: sgrots(:,:,:), sgshifts(:,:)  ! intent(inout)
     real(dp), intent(in) :: eps
     real(dp), allocatable :: tSGrots(:,:,:),tSGshifts(:,:)
     integer :: nRot, iRot, status, i
+<<<<<<< HEAD
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
     atol = 1E-6_dp
     
     if (.not.equal(aVecs(2:3,1),0._dp,eps,atol) .or. &
          .not.equal(aVecs(1,2:3),0._dp,eps,atol) )    &
+=======
+
+    if (.not.equal(aVecs(2:3,1),0._dp,eps) .or. &
+         .not.equal(aVecs(1,2:3),0._dp,eps) )    &
+>>>>>>> temp-branch
          stop "Error in rm_3d_operations: only allowed for primitive vectors x00,0xx,0xx"
-    
+
     nRot = size(sgrots,3)
     allocate(tSGrots(3,3,nRot),tSGshifts(3,nRot),STAT=status)
     if(status/=0) stop "Failed to allocate memory in rm_3d_opertions: tSGrots"
-    
+
     irot = 0
     do i = 1, nRot
+<<<<<<< HEAD
        if (equal(sgrots(2:3,1,i),0._dp,eps,atol) .and. equal(sgrots(1,2:3,i),0._dp,eps,atol) .and.&
             & equal(abs(sgrots(1,1,i)),1._dp,eps,atol)) then ! this operation is "2D"         
+=======
+       if (equal(sgrots(2:3,1,i),0._dp,eps) .and. equal(sgrots(1,2:3,i),0._dp,eps) .and.&
+            & equal(abs(sgrots(1,1,i)),1._dp,eps)) then ! this operation is "2D"
+>>>>>>> temp-branch
           irot = irot + 1
           tSGrots(:,:,irot) = sgrots(:,:,i)
           tSGshifts(:,irot) = sgshifts(:,i)
@@ -298,11 +309,11 @@ CONTAINS
     deallocate(sgrots,sgshifts)
     allocate(sgrots(3,3,nRot),sgshifts(3,nRot),STAT=status)
     if(status/=0) stop "Allocation of sgrots failed in rm_3d_operations"
-    
+
     sgrots=tSGrots(:,:,1:nRot)
     sgshifts=tSGshifts(:,1:nRot)
   end subroutine rm_3d_operations
-  
+
   !!<summary>If the given lattice vectors and basis do not form a
   !!primitive unit cell, reduce the vectors to a set of primitive
   !!vectors and reduce the number of basis atoms, if necessary. Also,
@@ -321,12 +332,12 @@ CONTAINS
   !!<parameter name="removed_">the indices of the atoms that have been
   !!removed if the cell is not primitive. </parameter>
   subroutine make_primitive(aVecs, atomType, atom_pos, lattCoords, eps_, removed_)
-    real(dp), intent(inout) :: aVecs(3,3)   
-    integer, pointer :: atomType(:)         
-    real(dp), pointer :: atom_pos(:,:)      
-    logical, intent(in) :: lattCoords       
-    real(dp), intent(in), optional   :: eps_        
-    integer, pointer, optional       :: removed_(:) 
+    real(dp), intent(inout) :: aVecs(3,3)
+    integer, pointer :: atomType(:)
+    real(dp), allocatable :: atom_pos(:,:)
+    logical, intent(in) :: lattCoords
+    real(dp), intent(in), optional   :: eps_
+    integer, pointer, optional       :: removed_(:)
 
     integer nFracts         ! Number of possible fractional translations for this structure
     integer iAtom, jAtom    ! Loop counters for looping over atoms
@@ -357,32 +368,32 @@ CONTAINS
     atol = 1E-6_dp
 
     call get_transformations(aVecs, latt_to_cart, cart_to_latt)
-    
+
     ! Convert the position of the basis atoms from lattice coordinates, if necessary
     if(lattcoords .eqv. .true.) then
        do i = 1, nAtoms
           atom_pos(:,i) = matmul(latt_to_cart, atom_pos(:,i))
        enddo
     endif
-    
+
     ! Bring all the basis atoms into the unit cell
     do i = 1, nAtoms
        call bring_into_cell(atom_pos(:,i), cart_to_latt, latt_to_cart, eps)
     enddo
-    
+
     ! Number of possible fractional translations can be no larger than
     ! the number of translations that exist between atom 1 and all
     ! other atoms of the same type
     nFracts = count(atomType == atomType(1)) - 1
     !write (*,'("nFracts:",i3)') nFracts
     allocate(fracts(3,nFracts),lattice_point(3,3 + nFracts))
-    
-    ! Count the number of fractional translations that bring the crystal 
+
+    ! Count the number of fractional translations that bring the crystal
     ! back onto itself. In other words, find any lattice points that are
     ! inside the cell
     nFracts = 0 !counter for the number of fractional translations found
 
-    ! If there is a lattice vector inside the unit cell, it will bring 
+    ! If there is a lattice vector inside the unit cell, it will bring
     ! any atom of any type in the basis back onto itself. Such a fract-
     ! ional translation must exist for EACH type of atom, so it is suf-
     ! ficient to check that all of the possible translations for a single
@@ -393,7 +404,7 @@ CONTAINS
        ! Get fractional translation and bring it into cell (if necessary)
        fract = atom_pos(:,iAtom) - atom_pos(:,1)
        call bring_into_cell(fract, cart_to_latt, latt_to_cart, eps)
-       ! Try this fractional translation on ALL atoms 
+       ! Try this fractional translation on ALL atoms
        do jAtom = 1, nAtoms
           this_type = atomType(jAtom)
           ! v contains the coordinates of the atom after the translation
@@ -427,7 +438,7 @@ CONTAINS
        ! Take all the possible triplets of points and check to see if one
        ! of the triplets forms a set of primitive basis vectors. A triplet
        ! of points that constitutes a new set of primitive basis vectors
-       ! will have the property that the coefficients of ALL the lattice 
+       ! will have the property that the coefficients of ALL the lattice
        ! points will be integer values when the coefficients are given
        ! in (the new) lattice coordinates
        l1:do i = 1, nFracts - 2
@@ -480,8 +491,8 @@ CONTAINS
        deallocate(atomType, atom_pos)
        allocate(atomType(nAtoms), atom_pos(3,nAtoms))
        atomType = tempType(:nAtoms)
-       atom_pos = temp_pos(:,:nAtoms)  
-       
+       atom_pos = temp_pos(:,:nAtoms)
+
        if (present(removed_)) then
           allocate(removed_( count(removed/=0) ))
           removed_ = pack(removed,removed/=0)
@@ -494,7 +505,7 @@ CONTAINS
           atom_pos(:,i) = matmul(cart_to_latt, atom_pos(:,i))
        enddo
     endif
-    deallocate(fracts,lattice_point) 
+    deallocate(fracts,lattice_point)
   end subroutine make_primitive
 
   !!<summary>This routine returns only the point group of the lattice
@@ -507,7 +518,7 @@ CONTAINS
   subroutine get_lattice_pointGroup(aVecs, lattpg_op, eps_)
     real(dp), intent(in):: aVecs(3,3)
     real(dp), pointer:: lattpg_op(:,:,:)
-    real(dp), intent(in), optional:: eps_   
+    real(dp), intent(in), optional:: eps_
 
     real(dp) temp_op(3,3,48)         ! Temporary storage for the point group operations
     real(dp) new_vectors(3,3)        ! Possibly rotated set of primitive vectors
@@ -527,21 +538,21 @@ CONTAINS
     integer i, j, k      ! Loop variables
     integer num_Rs       ! Number of R vectors in the sphere that is searched
     integer num_ops      ! Used to count the number of point operations found
-    
+
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
     atol = 1E-3_dp
     call matrix_inverse(aVecs, inverse_aVecs)
     ! Store the norms of the three lattice vectors
     do i = 1, 3;norm_avecs(i) = norm(aVecs(:,i));enddo
 
-    ! Decide how many lattice points to look in each direction to get all the 
+    ! Decide how many lattice points to look in each direction to get all the
     ! points in a sphere that contains all of the longest _primitive_ vectors
     cell_volume = abs(dot_product(aVecs(:,1),cross_product(aVecs(:,2),aVecs(:,3))))
     max_norm = max(norm(aVecs(:,1)),norm(aVecs(:,2)),norm(aVecs(:,3)))
     n1 = ceiling(max_norm*norm(cross_product(aVecs(:,2),aVecs(:,3))/cell_volume)+eps)
     n2 = ceiling(max_norm*norm(cross_product(aVecs(:,3),aVecs(:,1))/cell_volume)+eps)
     n3 = ceiling(max_norm*norm(cross_product(aVecs(:,1),aVecs(:,2))/cell_volume)+eps)
-    
+
     ! Count the number of R vectors in the sphere before allocating arrays
     num_Rs = 0
     do i = -n1, n1
@@ -555,7 +566,7 @@ CONTAINS
        enddo
     enddo
     allocate(Rvecs(3, num_Rs), Rlengths(num_Rs))
-       
+
     ! Store the R vectors that lie within the sphere
     num_Rs = 0
     do i = -n1, n1
@@ -564,16 +575,16 @@ CONTAINS
              this_vector = i*aVecs(:,1) + j*aVecs(:,2) + k*aVecs(:,3)
              length = norm(this_vector)
              if(length > max_norm + eps) cycle ! This vector is outside sphere
-             num_Rs = num_Rs + 1      
-             Rvecs(:,num_Rs) = this_vector 
+             num_Rs = num_Rs + 1
+             Rvecs(:,num_Rs) = this_vector
              Rlengths(num_Rs) = length
           enddo
        enddo
     enddo
-       
-    ! Try all R vector triplets in the sphere and see which ones are valid 
+
+    ! Try all R vector triplets in the sphere and see which ones are valid
     ! rotations of the original basis vectors.
-    ! 
+    !
     ! The length of all vectors must be preserved under a unitary
     ! transformation so skip any trial vectors that aren't the same
     ! length as the original. We also skip any set of vectors that
@@ -589,10 +600,10 @@ CONTAINS
           if(j == i) cycle
           do k = 1, num_Rs
              if(abs(Rlengths(k) - norm_avecs(3)) > eps) cycle
-             
+
              if(k == i .or. k == j) cycle
              if(abs(cell_volume - abs(volume(Rvecs(:,i),Rvecs(:,j),Rvecs(:,k)))) > eps) cycle
-             
+
              ! Form the new set of "rotated" basis vectors
              new_vectors = reshape((/Rvecs(:,i),Rvecs(:,j),Rvecs(:,k)/),(/3,3/))
              ! If the transformation matrix that takes the original set to the new set is
@@ -608,10 +619,10 @@ CONTAINS
           enddo
        enddo
     enddo
-    
+
     allocate(lattpg_op(3,3,num_ops))
     lattpg_op = temp_op(:,:,1:num_ops)
-    
+
     deallocate(Rvecs, Rlengths)
   end subroutine get_lattice_pointGroup
 
@@ -643,11 +654,16 @@ CONTAINS
   subroutine bring_into_cell(v, cart_to_latt, latt_to_cart, eps)
     real(dp), intent(inout) ::  v(3)
     real(dp), intent(in)    ::  cart_to_latt(3,3), latt_to_cart(3,3), eps
+<<<<<<< HEAD
     ! integer c, maxc
     
+=======
+    integer c, maxc
+
+>>>>>>> temp-branch
     ! Put the representation of the point into lattice coordinates
     v = matmul(cart_to_latt, v)
-    
+
     ! counter to catch compiler bug
     ! c = 0
     ! maxc = max(ceiling(abs(maxval(v))),ceiling(abs(minval(v)))) *2
@@ -655,6 +671,7 @@ CONTAINS
     v = MOD(v, 1.0_dp)
     ! If a component >= 1, translate by subtracting a lattice vector
     ! If a component < 0, translate by adding a lattice vector
+<<<<<<< HEAD
     ! do while(any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) ih
     if (any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) then
        ! c = c +1
@@ -664,13 +681,22 @@ CONTAINS
     ! enddo
     end if
     
+=======
+    do while(any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps))
+       c = c +1
+       v = merge(v, v - 1.0_dp, v <  1.0_dp - eps)
+       v = merge(v, v + 1.0_dp, v >= 0.0_dp - eps)
+       if (c>maxc) stop "ERROR: loop does not end in bring_into_cell. Probably compiler bug."
+    enddo
+
+>>>>>>> temp-branch
     ! Put the point back into cartesion coordinate representation
     v = matmul(latt_to_cart, v)
   end subroutine bring_into_cell
 
   !!<summary>Checks to see if a mapping exists between the vector v and
   !! the position of any of the atoms of type "this_type".
-  !! If a mapping exists, then the logical "mapped" is 
+  !! If a mapping exists, then the logical "mapped" is
   !! returned .true., otherwise .false.</summary>
   !!<parameter name="v" regular="true">Position to check mapping
   !!for.</parameter>
@@ -686,6 +712,7 @@ CONTAINS
   !!equivalence.</parameter>
   subroutine does_mapping_exist(v, this_type, atom_pos, atomType, mapped, eps)
 
+<<<<<<< HEAD
     real(dp), intent(in) :: v(3)            
     integer, intent(in) :: this_type        
     real(dp), intent(in) :: atom_pos(:,:)   
@@ -693,6 +720,14 @@ CONTAINS
     logical, intent(out) :: mapped          
     real(dp), intent(in) :: eps
     real(dp) :: atol ! An absolute tolerance for the "equal" subroutine
+=======
+    real(dp), intent(in) :: v(3)
+    integer, intent(in) :: this_type
+    real(dp), intent(in) :: atom_pos(:,:)
+    integer, intent(in) :: atomType(:)
+    logical, intent(out) :: mapped
+    real(dp), intent(in) :: eps
+>>>>>>> temp-branch
 
     integer i   ! Loop over atoms
     real(dp) :: this_position(3) ! Position of atom to be checked
@@ -701,7 +736,7 @@ CONTAINS
     mapped = .false.
     do i = 1, size(atomType)
        if(atomType(i) == this_type) then
-          ! if the coordinates are the same, 
+          ! if the coordinates are the same,
           ! their difference will be zero for every component
           this_position = atom_pos(:,i)
           if(equal(v, this_position, eps,atol)) &
@@ -745,10 +780,10 @@ CONTAINS
     write(11,'(3x)',advance="no")
     do i = 1, Nops; write(11,'(i3)',advance="no") i; enddo; write(11,*)
     do i = 1, Nops
-       write(11,'(i3)',advance="no") i   
+       write(11,'(i3)',advance="no") i
        do k = 1, i-1; write(11,'(3x)',advance='no');enddo
        do j = i, Nops
-          exists = .false. 
+          exists = .false.
           ! Is the product of SG_i x SG_j in the set?
           testop = matmul(SGop(:,:,i),SGop(:,:,j))
           do k = 1, Nops
@@ -783,10 +818,10 @@ CONTAINS
     integer, pointer :: BasEq(:), siteLabel(:)
     real(dp), intent(in), optional :: eps_
     integer, intent(out) :: nSites
-    
-    real(dp), pointer :: tBas(:,:)
+
+    real(dp), allocatable :: tBas(:,:)
     real(dp) :: invLV(3,3), v(3)
-    real(dp), pointer :: sg_rot(:,:,:), sg_fract(:,:)
+    real(dp), allocatable :: sg_rot(:,:,:), sg_fract(:,:)
     integer :: iOps, iBas, jBas
     integer :: nOps, nBas
     logical :: equivalent
@@ -802,7 +837,7 @@ CONTAINS
 
     allocate(tBas(size(pBas,1), size(pBas,2)))
     tBas = pBas
-    
+
     call matrix_inverse(pLV, invLV)
     nBas = size(tBas,2)
     allocate(BasEq(nBas))
@@ -812,7 +847,7 @@ CONTAINS
 
     call get_spaceGroup(pLV, sitelabel, tBas,  sg_rot, sg_fract, .false.,eps)
     nOps = size(sg_rot,3)
-    
+
     do iBas=2, nBas
        call bring_into_cell(tBas(:,iBas),invLV,pLV,eps)
        equivalent = .false.
@@ -849,7 +884,7 @@ CONTAINS
   subroutine put_pointGroup_in_latticeCoords(pgOps, A, latticePtGrp_Ops, eps_)
     real(dp), intent(in) :: pgOps(:,:,:), A(3,3)
     integer,  pointer    :: latticePtGrp_Ops(:,:,:)
-    real(dp), optional   :: eps_ 
+    real(dp), optional   :: eps_
 
     real(dp) :: eps ! Local finite precision parameter
     real(dp) :: InvA(3,3) ! Inverse of aBas matrix
@@ -857,7 +892,7 @@ CONTAINS
     logical  :: err ! Error flag
     integer  :: i ! general loop counter
     real(dp) :: tempMat(3,3) ! Temporary matrix
-    
+
     if(.not. present(eps_)) then
        eps = 1e-10_dp
     else
@@ -883,5 +918,5 @@ CONTAINS
         latticePtGrp_Ops(:,:,iOp) = nint(tempMat)
     enddo
   endsubroutine put_pointGroup_in_latticeCoords
-  
+
 END MODULE symmetry

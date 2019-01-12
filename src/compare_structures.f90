@@ -2,17 +2,17 @@
 !! equivalent. Implicit in the approach is the assumption that the structures are derivatives
 !! structures of a parent lattice (the same one if they are equivalent).
 !! Gus Hart Dec. 2006
-!! * The code as it stands (12/2007) occasionally finds matches that really aren't 
+!! * The code as it stands (12/2007) occasionally finds matches that really aren't
 !!(or so it seems). Rather than debugging it, I'm going add new routines that compare structures
-!!using the "enum" approach---the g-representation---avoiding as much as possible, any geometric 
+!!using the "enum" approach---the g-representation---avoiding as much as possible, any geometric
 !!comparisons.</summary>
-MODULE compare_structures 
-use num_types 
+MODULE compare_structures
+use num_types
 use vector_matrix_utilities, only: volume, determinant, matrix_inverse
-use numerical_utilities, only: equal 
-use symmetry 
+use numerical_utilities, only: equal
+use symmetry
 
-implicit none 
+implicit none
 private
 public compare_arbitrary_structures, is_derivative, is_equiv_lattice, is_lattice_point
 
@@ -49,11 +49,11 @@ CONTAINS
   !!<parameter name="mapped" regular="true">True if structure 1 and structure 2 are symmetrically
   !!equivalent.</parameter>
   !!<parameter name="SMskipout" regular="true">Number of skipped cells.</parameter>
-  !!<parameter name="identical" regular="true">Logical that returns if the structures are the 
+  !!<parameter name="identical" regular="true">Logical that returns if the structures are the
   !!same under translations.</parameter>
   subroutine compare_arbitrary_structures(LV1in,aTyp1in,aPos1in,LV2in,aTyp2in,aPos2in,&
        eps,mapped,status,irot,SMskipout,identical)
-    real(dp),intent(in):: LV1in(3,3), LV2in(3,3)    
+    real(dp),intent(in):: LV1in(3,3), LV2in(3,3)
     real(dp),intent(in):: aPos1in(:,:), aPos2in(:,:)! Atomic positions for each structure
     integer,intent(in) :: aTyp1in(:), aTyp2in(:)    ! Atom types for each structure
     real(dp), intent(in):: eps ! Finite precision tolerance
@@ -68,15 +68,15 @@ CONTAINS
     ! 3 -- atoms of str2 do not lie on the underlying lattice of str1
     ! 4 -- number of atoms in the compared structures are different
     ! 5 -- number of types of atoms are not the same in each structure
- 
-    real(dp), pointer:: rots(:,:,:), shifts(:,:)! Space group rotations/shifts for 
-    ! the underlying lattice 
+
+    real(dp), allocatable:: rots(:,:,:), shifts(:,:)! Space group rotations/shifts for
+    ! the underlying lattice
     integer :: N1, N2 ! Number of atoms in each structure
     real(dp)         :: L2C(3,3), C2L(3,3) ! latt2cart, cart2latt conversion matrices
     integer          :: j, jrot, ip  ! Loop counters
     real(dp)         :: rescale
     integer,pointer  :: pTyp(:)   ! The "p" stands for the "primitive" cell
-    real(dp),pointer :: pPos(:,:) ! of the underlying lattice
+    real(dp),allocatable :: pPos(:,:) ! of the underlying lattice
     real(dp)         :: pVecs(3,3)! of str1
     real(dp),allocatable:: rotPos2(:,:)
     integer,allocatable :: rlaTyp2(:) ! "relabeled" list of types in the basis of str2
@@ -110,9 +110,9 @@ CONTAINS
     ! Get inverse of LV1 for use later
     call matrix_inverse(LV1,LV1inv,err)
     if (err) stop "Lattice vectors of first input structure are co-planar"
-    
+
     ! Map all atoms in each structure into the unit cell (in case they're not
-    ! input that way). 
+    ! input that way).
     call get_transformations(LV1,L2C,C2L)
     do j = 1,N1
        call bring_into_cell(aPos1(:,j),C2L,L2C,eps)
@@ -129,7 +129,7 @@ CONTAINS
     ! Get the underlying (multi)lattice
     call make_primitive(pVecs,pTyp,pPos,.false.,eps)
     call get_spacegroup(pVecs,pTyp,pPos,rots,shifts,.false.,eps)
-    
+
     ! This block could be its own subprogram
     ! Make the volume/atom the same for each structure
     vpa2 = abs(determinant(LV2in))  ! volume/atom for str2
@@ -141,27 +141,31 @@ CONTAINS
     ! These next two checks are redundant with main loop--early out
     ! Is lattice of str2 a derivative of str1's underlying lattice?
     if (.not. is_derivative(pVecs,LV2,eps)) then
-       if (present(status)) status=2; 
+       if (present(status)) status=2;
        deallocate(pTyp,pPos)
-       return; 
+       return;
     endif
     
     ! Are the atoms of str2 on lattice sites of str1's underlying lattice?
     if (.not. are_lattice_points(pVecs,aPos2,pPos,eps)) then
-       if (present(status)) status=3; 
+       if (present(status)) status=3;
        deallocate(pTyp,pPos)
-       return; 
+       return;
     endif
-    
+
     call unique(aTyp1,uqlist1,block1)
     call unique(aTyp2,uqlist2,block2)
     if (size(uqlist1)/=size(uqlist2)) then
-       if (present(status)) status = 5; 
+       if (present(status)) status = 5;
        deallocate(pTyp,pPos)
-       return; 
+       return;
     endif
+<<<<<<< HEAD
     
     ! Get a list of permutations here   
+=======
+    ! Get a list of permutations here
+>>>>>>> temp-branch
     call get_basis_permutations(uqlist2,perms)
     ! Loop over all possible operations of the spacegroup
     ! (because the structures may be equivalent but not aligned)
@@ -170,7 +174,7 @@ CONTAINS
     rotns_loop:do jrot=1,size(rots,3)
        ! Rotate the lattice using the jrot-th rotation of parent lattice pointgroup
        LV2=matmul(rots(:,:,jrot),rescale*LV2in)
-       ! Check that str2 lattice is a derivative lattice. 
+       ! Check that str2 lattice is a derivative lattice.
        if (.not. is_equiv_lattice(LV1,LV2,eps)) then
           SMskip = SMskip + 1  ! Keep track for debugging/testing
           !write(*,*) "## Santoro-Mighell skip ##"
@@ -179,7 +183,7 @@ CONTAINS
        
        ! If we get to here then the lattice vectors are equivalent
        ! (derivative lattices). So now check atomic configuration.
-       ! I think it makes sense that the rotated atomic basis vectors 
+       ! I think it makes sense that the rotated atomic basis vectors
        ! should be shifted by the non-symmorphic shift of the rotation,
        ! so add it to each of the atomic positions of cell 2 (the rotated one)
        rotPos2 = matmul(rots(:,:,jrot),aPos2) + spread(shifts(:,jrot),2,N2)
@@ -205,17 +209,17 @@ CONTAINS
           if (present(identical)) then
              if (mapped .and. identical) exit rotns_loop
           endif
-       enddo   
+       enddo
     enddo rotns_loop
     ! Set some debugging/testing values, if present in argument list
     if (present(status)) status=0  ! Structures were found to be equivalent
     if (present(status) .and. .not. mapped) status=1 ! They are inequivalent
     if (present(irot)) irot=jrot ! current spacegroup op # when loop ended
     if (present(SMskipout)) SMskipout = SMskip
-    
+
     deallocate(pTyp,pPos)
     deallocate(rotPos2,rlaTyp2)
-    
+
   end subroutine compare_arbitrary_structures
 
   !!<summary>This function determines whether two lattices are equivalent. That is, if one
@@ -283,11 +287,11 @@ CONTAINS
 
   END FUNCTION is_lattice_point
 
-  !!<summary>Checks whether a group of points are lattice points of the given 
+  !!<summary>Checks whether a group of points are lattice points of the given
   !!multilattice.</summary>
   !!<parameter name="LV" regular="true">The lattice vectors for the unit cell.</parameter>
   !!<parameter name="pt" regular="true">The lattice points inside the unit cell.</parameter>
-  !!<parameter name="pB" regular="true">Points to be checked to see if they are lattice 
+  !!<parameter name="pB" regular="true">Points to be checked to see if they are lattice
   !!points.</parameter>
   !!<parameter name="eps" regular="true">The finite precision tolerance.</parameter>
   FUNCTION are_lattice_points(LV,pt,pB,eps)
@@ -337,7 +341,7 @@ CONTAINS
     mapping_translation_exists = .false.
     N=size(aPos1,2)  ! Total number of atoms in the cell
     if (N/=size(aPos2,2)) stop "cells must contain the same # of atoms"
-    call get_transformations(LV2,L2C,C2L) 
+    call get_transformations(LV2,L2C,C2L)
     aPos1 = aPos1in
     do iatom = 1, N ! Move the atom positions of str1 into the cell of str2
        call bring_into_cell(aPos1(:,iatom),C2L,L2C,eps)
@@ -358,7 +362,7 @@ CONTAINS
     enddo
     if(mapped) mapping_translation_exists = .true.
   endfunction mapping_translation_exists
-  
+
   !!<summary>Subroutine to get the permutations of the basis vectors.</summary>
   !!<parameter name="uqlist" regular="true">A list of the unique basis.</parameter>
   !!<parameter name="perm">The permutation of the basis.</parameter>
@@ -383,14 +387,14 @@ CONTAINS
 
     ! Generate all permutations of pl (and store in perms)
     ip=0
-    do; ip=ip+1; 
+    do; ip=ip+1;
        perm(ip,:)=pl
        ! index rightmost element that is in *ascending* order
        do j=Nq-1,0,-1; if(j==0)exit; if (pl(j) < pl(j+1)) exit; enddo
        if (j==0) exit ! If there aren't any then all permutations generated
        ! index rightmost element larger than j-th one
        do l=Nq,1,-1; if (pl(j) < pl(l)) exit; enddo
-       ! Swap j-th and l-th elements   
+       ! Swap j-th and l-th elements
        temp = pl(j);
        pl(j) = pl(l);
        pl(l) = temp;
@@ -409,7 +413,7 @@ CONTAINS
     integer, intent(in) :: list(:)
     integer, pointer :: uqlist(:),block(:)
 
-    integer CurMin ! Current minimum 
+    integer CurMin ! Current minimum
     integer iq     ! Look counter over unique values in list
     integer Nq     ! Number of unique values in list
 
@@ -432,5 +436,5 @@ CONTAINS
     enddo
     if(sum(block)/=size(list)) stop "Bug in routine 'unique'"
   endsubroutine unique
-    
+
 END MODULE compare_structures
