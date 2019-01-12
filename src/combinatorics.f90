@@ -9,7 +9,7 @@ MODULE combinatorics
   type subset_mask
      private
      logical          :: init, done
-     logical, pointer :: mask(:) => null() 
+     logical, pointer :: mask(:) => null()
   end type subset_mask
 
   INTERFACE factorial
@@ -30,10 +30,10 @@ CONTAINS
     write(10,*) mask%mask
     CLOSE(10)
   END SUBROUTINE print_subset_mask
-  
+
   !!<summary>Initialize a mask for the generate_next_subset routine.</summary>
   !!<parameter name="mask">The mask that has been initialized</parameter>
-  !!<parameter name="initial_mask">The array of logicals to be converted to a 
+  !!<parameter name="initial_mask">The array of logicals to be converted to a
   !!mask.</parameter>
   SUBROUTINE initialize_subset_mask(mask,initial_mask)
     type(subset_mask) :: mask
@@ -44,9 +44,9 @@ CONTAINS
     mask%init=.true.
     mask%done=.false.
   END SUBROUTINE initialize_subset_mask
-  
+
   !!<summary>Creates a mask that picks out a subset of a given set. The mask is essentially
-  !!a binary number.This routine generates the next number (mask) in numerical order as if 
+  !!a binary number.This routine generates the next number (mask) in numerical order as if
   !!the logical array was a binary number.</summary>
   !!<parameter name="mask" regular="true">The mask that needs to be iterated.</parameter>
   !!<parameter name="outputmask" regular="true">The next mask in the iterable mask.</parameter>
@@ -102,18 +102,18 @@ CONTAINS
     end if
     nchoosek = t
   END FUNCTION nchoosek
-  
+
   !!<summary>Finds the binomial coefficient of two different numbers.</summary>
   FUNCTION binomial(n,k)
     integer(li) :: binomial
     integer, intent(in) :: n,k
     if (k > n) stop "Error in arguments to binomial"
     binomial = nchoosek(n,k)
-    
+
   END FUNCTION binomial
-  
+
   !!<summary>Calculates the multinomial for an input list of
-  !!numbers.</summary> 
+  !!numbers.</summary>
   !!<parameter name="n" regular="true">An array of the exponents of
   !!the term we are taking the multinomial of.</parameter>
   FUNCTION multinomial(n)
@@ -121,16 +121,15 @@ CONTAINS
     integer, intent(in) :: n(:)
     integer(li) :: binomials(size(n,1),2), bins(size(n,1))
     integer :: i
-    integer(li) :: nt(size(n)) ! Use long ints to avoid overflow during intermediate calculations
-    
-    
+
+
     binomials(1,1) = sum(n)
     binomials(1,2) = n(1)
     do i = 2, size(binomials,1)
        binomials(i,1) = binomials(i-1,1) - binomials(i-1,2)
-       binomials(i,2) = n(i) 
+       binomials(i,2) = n(i)
     enddo
-    
+
     do i = 1, size(binomials,1)
        bins(i) = binomial( int(binomials(i,1)) , int(binomials(i,2)) )
     enddo
@@ -179,7 +178,7 @@ CONTAINS
     enddo
     Np = ceiling(tot)
     if (Np < 0) stop "combinatorics.f90: temporary storage overflow. Cutoffs too big."
-    
+
     allocate(tempPerms(Nitems,Np))
     a = list ! Copy of the original input list
     ! Make sure the items are initially ordered
@@ -202,29 +201,28 @@ CONTAINS
        a(l) = temp
        a(j+1:Nitems)=a(Nitems:j+1:-1)
     enddo outer
-    !if(associated(perms)) deallocate(perms)     
+    !if(associated(perms)) deallocate(perms)
     allocate(perms(Nitems,ip),STAT=status)
-    if(status/=0) stop "problem allocating 'perms' array in get_permutations in combinatorics.f90 (celib)" 
+    if(status/=0) stop "problem allocating 'perms' array in get_permutations in combinatorics.f90 (celib)"
     perms = tempPerms(:,:ip) ! There will be fewer permutations than N! if there
     deallocate(tempPerms)    ! are identical items in the permuted list
-    
-  contains 
+
+  contains
     !!<summary>Finds the number of unique entries of each type in a
     !!list.</summary>
     !!<parameter name="list">A 1D array of for which the unique
     !!entries are to be found.</parameter>
     !!<parameter name="uqlist">A 1D array of the unique elemements of
     !!the input list.</parameter>
-    subroutine find_unique(list,uqlist) 
+    subroutine find_unique(list,uqlist)
       integer, intent(in) :: list(:)
       integer, intent(out):: uqlist(:)
       integer :: sm
       uqlist = 0
       sm = minval(list) ! smallest value in the list
       do i = 1, size(list) ! loop over the possible number of unique values
-         uqlist(i) = count(sm==list) ! How many of this size?  The
-         ! "real" around list below is need to work around a bug in
-         ! the Absoft compiler
+         uqlist(i) = count(sm==list) ! How many of this size?
+         !The "real" around list below is need to work around a bug in the Absoft compiler
          sm = minval(real(list),mask=(list>sm))    ! Next unique value bigger than the last
          if (count(sm==list)==0) exit ! If there aren't any of this
          ! size then we took the largest already
@@ -241,18 +239,18 @@ CONTAINS
   !!<parameter name="list">Resultant 2d list of numbers</parameter>
   SUBROUTINE k_ary_counter(list,base,n)
     integer, pointer :: list(:,:)
-    integer, intent(in) :: base 
+    integer, intent(in) :: base
     integer, intent(in) :: n ! number of digits
     integer :: k, j, il
     integer :: a(n)
-    
+
     k = base; allocate(list(n,k**n))
     il = 1; a = 0
     list(:,il) = a
     do
        j = n ! Number of digits
        do ! Check to see if we need to roll over any digits, start at the right
-          if (a(j) /= k - 1) exit 
+          if (a(j) /= k - 1) exit
           a(j) = 0  ! Rolling over so set to zero
           j = j - 1;       ! Look at the next (going leftways) digit
           if (j < 1) exit  ! If we updated the leftmost digit then we're done
@@ -262,7 +260,7 @@ CONTAINS
        il = il + 1
        list(:,il) = a
     enddo
-    
+
   ENDSUBROUTINE k_ary_counter
 
   !!<summary>This subroutine generates all partions of n into m
@@ -276,12 +274,12 @@ CONTAINS
   SUBROUTINE m_partitions_of_n(n,m,part)
     integer, intent(in) :: n, m ! number to be partitioned, number of block
     integer, pointer   :: part(:,:)
-    
+
     integer :: a(m)
     integer          :: ip  ! counter for number of partitions
     integer          :: x, s ! Temporary variables for swapping/reassigning values
     integer          :: j    ! index pointer for next position to be incremented
-    
+
     ! First we need to count the number of partitions to know how big
     ! to allocate the "part" array (is there a closed form expression
     ! for this? I don't think so but...)
@@ -346,15 +344,14 @@ CONTAINS
        a(1) = s
     enddo
   END SUBROUTINE m_partitions_of_n
-  
-  !!<summary>Factorial of the long int tpye.</summary>
+
+  !!<summary>Factorial of the long int type.</summary>
   FUNCTION factorial_long_int(N)
-    integer(li) :: factorial_long_int, N
-    integer :: i
+    integer(li) :: factorial_long_int, N, i
     factorial_long_int = 1
     do i=2,N;factorial_long_int=factorial_long_int*i;enddo
   END FUNCTION factorial_long_int
-     
+
   !!<summary>Factorial of the int type.</summary>
   FUNCTION factorial_int_scalar(N)
     integer :: N,i,factorial_int_scalar
@@ -370,7 +367,7 @@ CONTAINS
     do j=1,size(N)
        do i=2,N(j); factorial_int_rank1(j)=factorial_int_rank1(j)*i;enddo;enddo
   END FUNCTION factorial_int_rank1
-        
+
   !!<summary>Factorial of each element 1D array of tpye real.</summary>
   !!<parameter name="N" regular="true"></parameter>
   FUNCTION factorial_dp_rank1(N)
@@ -398,18 +395,18 @@ CONTAINS
     integer :: permutation_parity
     integer, intent(in) :: aP(:)        ! the permuted list
     integer             :: v(size(aP))  ! some helper array
-    integer :: j,x,p,n 
-    
+    integer :: j,x,p,n
+
     n=size(aP)
-    
+
     ! check if every number i
     do j=1,n
        if (.not. any(aP==j)) stop "ERROR: invalid list in permuation_parity."
     enddo
-    
+
     v = 0
     p = 0
-    
+
     do j=n,1,-1
        if (v(j)>0) then
           p=p+1
@@ -422,7 +419,7 @@ CONTAINS
           enddo
        endif
     end do
-    
+
     permutation_parity = -(mod(p,2)*2-1)
   end function permutation_parity
 END MODULE combinatorics

@@ -36,3 +36,6 @@ src/compile.log
 *.exe
 *.out
 *.app
+
+# Junk
+.DS_Store
