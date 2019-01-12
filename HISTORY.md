@@ -6,11 +6,18 @@
 - removed 'atom_pos' from the unit test xml file
 - All of the unit tests seem to be passing fine *except* for two routines that are used in uncle. One is an out of bounds error in 'find_site_equivalencies'. The other is a missing file of some sort: `ERROR: can't create representation for /Users/hart/codes/staging/symmetry.find_site_equivalencies.g/tests/find_site_equivalencies_nSites.2/nSites.out. File does not exist.`. Will have to sort out those tests later.
 
-
-
 # 2.0.0 Major revision (Jan 2019)
 - Changed some pointers to be `allocatable arrays` instead. This was to keep `symlib` compatible with `enumlib` which used allocatable arrays and general avoids pointers.
 - This counts as a major revision because it is a *breaking* change---the calling interface for several routines that are called from other programs are different now and the calling programs will have to change as a result.
+
+## Revision 1.1.4
+- Added a long int version of the `SmithNormalForm` algorithm.
+
+## Revision 1.1.3
+- Rewrote the `SmithNormalForm` algorithm to use a different pivoting
+  strategy.
+- Added an optional output err_ flag to the `SmithNormalForm`
+  alforithm to report an error but not stop if the code overflows.
 
 ## Revision 1.1.2
 - Changed the `bing_into_cell` subroutine to use `MOD` instead of a `do while` loop so improve runtimes.

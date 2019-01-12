@@ -160,12 +160,8 @@ CONTAINS
        deallocate(pTyp,pPos)
        return;
     endif
-<<<<<<< HEAD
-    
-    ! Get a list of permutations here   
-=======
+
     ! Get a list of permutations here
->>>>>>> temp-branch
     call get_basis_permutations(uqlist2,perms)
     ! Loop over all possible operations of the spacegroup
     ! (because the structures may be equivalent but not aligned)
@@ -236,8 +232,8 @@ CONTAINS
     real(dp), intent(in) :: lat1(3,3), lat2(3,3), eps
     logical :: is_equiv_lattice, err
     real(dp)  :: lat1inv(3,3), S(3,3)
-
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
+
     atol = 1E-6_dp
     is_equiv_lattice = .false.
     call matrix_inverse(lat1,lat1inv,err)

@@ -3,8 +3,6 @@
 
 module utilities
   use num_types
-  integer :: rndseed
-  real :: inf
   private
   public ucase, ralloc
 

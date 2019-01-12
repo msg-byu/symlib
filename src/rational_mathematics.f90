@@ -6,7 +6,7 @@ MODULE rational_mathematics
 implicit none
 private
 public gcd, SmithNormalForm, HermiteNormalForm, is_a_rational_in_range,&
-       get_rationals_in_range
+       SmithNormalForm_li, get_rationals_in_range
 
 ! Overloaded procedure for computing the greatest common denominator
 INTERFACE gcd
@@ -14,19 +14,28 @@ INTERFACE gcd
 END INTERFACE
 
 CONTAINS
+  
   !!<summary>This routine takes an integer 3x3 matrix and computes its
   !!Smith Normal Form.</summary>
   !!<parameter name="H" regular="True">Input matrix.</parameter>
   !!<parameter name="A" regular="True">Left Transform.</parameter>
   !!<parameter name="M" regular="true">Smith Normal Form matrix.</parameter>
   !!<parameter name="B" regular="True">Right Transform.</parameter>
-  subroutine SmithNormalForm(H,A,M,B)
-    integer, intent(in) :: H(3,3) 
-    integer, intent(out), dimension(3,3) :: M, A, B 
+  !!<parameter name="err_" regular="True">Returns 1 if overflow occures.</parameter>
+  subroutine SmithNormalForm_li(H,A,M,B,err_)
+    integer, intent(in) :: H(3,3)
+    integer, intent(out) :: M(3,3)
+    integer(li), intent(out), dimension(3,3) :: A, B
+    integer, optional, intent(out) :: err_
 
-    integer :: i, minm, maxidx, minidx, multiple, j, nondividx(2), check(9)
-    logical :: Ldiv(2,2)
-    integer :: itCnt
+    integer :: i, row, col, min_val, j, check(9)
+    integer :: multiple, tmpVec(3)
+    integer(li) :: tmpVec_li(3)
+    logical :: is_snf, new_pivot, OverFlowCheck
+    integer :: itCnt, min_row
+
+    OverFlowCheck = .False.
+    if (present(err_)) OverFlowCheck = .True.
     
     if(determinant(H)<1) stop "SmithNormalForm routine failed because the input matrix had a negative determinant"
     A = 0; B = 0; M = H ! M starts out as H, the input matrix
@@ -34,84 +43,251 @@ CONTAINS
 
     j=1
     itCnt = 0
-
-    do ! Keep doing steps (1) and (2) until all elements in j-th row and column are
-       ! zero except the one on the diagonal. When j == 1, if the (1,1) element doesn't
-       ! divide every other non-zero element left in the matrix at the end, then add the
-       ! offending row to row 1 and try again.
-       !(1) Use row operations to zero out the column
-       ! Divide the row with the smallest value into the largest
-
+    is_snf = .False.
+    new_pivot = .True.
+    do while (is_snf .eqv. .False. .and. j<4)
        itCnt = itCnt + 1
        if (itCnt>=100) stop "ERROR bad programming in SmithNormalForm"
+       
+       if (new_pivot) then
+          call get_min_val(M, j, min_val, row, col)
+       end if
 
-       do while (count(M(:,j)/=0) > 1) ! Keep going until only 1 non-zero element in column j
+       do i=1,3
+          if (i==col) cycle
+          multiple = nint(real(M(row,i),dp)/real(min_val,dp))
+          if (multiple==0) cycle
+          M(:,i) = M(:,i)-multiple*M(:,col)
+          B(:,i) = B(:,i)-multiple*B(:,col)
+       end do
 
-          call get_minmax_indices(M(:,j),minidx,maxidx)
-          minm = M(minidx,j)
-          ! Subtract a multiple of the row containing the smallest element from
-          ! the row containing the largest element
-          multiple = M(maxidx,j)/minm
-          M(maxidx,:) = M(maxidx,:) - multiple*M(minidx,:)
-          A(maxidx,:) = A(maxidx,:) - multiple*A(minidx,:)
-          if (any(matmul(matmul(A,H),B)/=M)) stop "ROW: Transformation matrices didn't work"
-       enddo ! End of step 1
+       do i=1,3
+          if (i==row) cycle
+          multiple = nint(real(M(i,col),dp)/real(min_val,dp))
+          if (multiple==0) cycle
+          M(i,:) = M(i,:)-multiple*M(row,:)
+          A(i,:) = A(i,:)-multiple*A(row,:)
+       end do
 
-       if (M(j,j) == 0) then; call swap_row(A,M,j)
-       endif
-       if (any(matmul(matmul(A,H),B)/=M)) stop "ROWSWAP: Transformation matrices didn't work"
-   
-       !(2) Use column operations to zero out first row
-       ! Divide the colum with the smallest value into the largest
-       do while (count(M(j,:)/=0) > 1) ! Keep going until only 1 non-zero element in row 1
-          !call printAMB(A,M,B)
-
-          call get_minmax_indices(M(j,:),minidx,maxidx)
-          minm = M(j,minidx)
-          ! Subtract a multiple of the column containing the smallest element from
-          ! the row containing the largest element
-          multiple = M(j,maxidx)/minm ! Factor to multiply by
-          M(:,maxidx) = M(:,maxidx) - multiple*M(:,minidx)
-          B(:,maxidx) = B(:,maxidx) - multiple*B(:,minidx)
-          if (any(matmul(matmul(A,H),B)/=M)) stop "COLS: Transformation matrices didn't work"
-       enddo ! End of step 2
-
-       if (M(j,j)<0) then ! Change signs
-          M(:,j) = -M(:,j); B(:,j) = -B(:,j)
-       elseif (M(j,j) == 0) then
-          call swap_column(M,B,j)
-       endif
-       if (count(M(j,:)/=0) > 1 .or. count(M(:,j)/=0) > 1) cycle
-
-       if (any(matmul(matmul(A,H),B)/=M)) stop "COLSWAP: Transformation matrices didn't work"
-
-       Ldiv = mod(M(2:,2:),M(1,1)) == 0
-       if (j==1 .and. any(Ldiv .eqv. .false.)) then! Add the offending row to row 1 
-          !      nondividx = maxloc(mod(M(2:,2:),M(1,1))) ! Find one of the elements that isn't 
-          nondividx = maxloc(abs( mod(M(2:,2:),M(1,1)) )) ! Find one of the elements that isn't 
-          M(1,:) = M(1,:) + M(nondividx(1)+1,:)    ! divided by the diagonal element, and 
-          A(1,:) = A(1,:) + A(nondividx(1)+1,:)    ! add the row it's in to row 1
-          cycle ! Go back to the top of the outer do loop
-       endif
-       if (j==2) then 
-          if (mod(M(3,3),M(2,2))/=0) then
-             M(2,:) = M(2,:) + M(3,:)
-             A(2,:) = A(2,:) + A(3,:)
-             cycle
-          endif
-       else
-          j = 2;cycle;endif ! Start row/col 2
-       ! Try again if the matrix still isn't diagonal
-       if (j == 2 .and. (M(3,2)/=0 .or. M(2,3)/=0)) then; cycle; endif
-       exit ! We should be done if we hit this point
-    enddo
-    if (M(3,3)<0) then ! Change signs
-       M(:,3) = -M(:,3); B(:,3) = -B(:,3);
-    endif
+       new_pivot = .True.
+       if ((count(M(:,col)==0)==2) .and. (count(M(row,:)==0)==2)) then
+          if (all(mod(M(j:,j:),min_val)==0)) then
+             if (j < col) then
+                tmpVec_li = B(:,j); B(:,j) = B(:,col); B(:,col) = tmpVec_li
+                tmpVec = M(:,j); M(:,j) = M(:,col); M(:,col) = tmpVec
+             end if
+             if (j < row) then
+                tmpVec_li = A(j,:); A(j,:) = A(row,:); A(row,:) = tmpVec_li
+                tmpVec = M(j,:); M(j,:) = M(row,:); M(row,:) = tmpVec
+             end if
+             j = j + 1
+          else
+             new_pivot = .False.
+             call get_min_loc(M, min_val, j, min_row)
+             M(row,:) = M(row,:) + M(min_row,:)
+             A(row,:) = A(row,:) + A(min_row,:)             
+          end if
+       end if
+       
+       check = reshape(M,(/9/))
+       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
+            mod(M(3,3),M(2,2))==0) then
+          is_snf = .True.
+       end if
+    end do
+    
+    do i=1,3
+       if (M(i,i) < 0) then
+          M(i,:) = -M(i,:)
+          A(i,:) = -A(i,:)
+       end if
+    end do
     if (any(matmul(matmul(A,H),B)/=M)) stop "END: Transformation matrices didn't work"
     check = reshape(M,(/9/))
     if (any(check((/2,3,4,6,7,8/))/=0)) stop "Not diagonal"
     if (mod(M(2,2),M(1,1))/=0 .or. mod(M(3,3),M(2,2))/=0) stop "SNF conditions not met"
+    if (OverFlowCheck) then
+       if ((any(abs(real(A,dp)) > 1E17)) .or. (any(abs(real(B,dp)) > 1E17))) then
+          write(*,*) "Warning Values in SmithNormalForm overflowing standard ints."
+          err_ = 1
+       else
+          err_ = 0
+       end if
+    else 
+       if ((any(abs(real(A,dp)) > 1E17)) .or. (any(abs(real(B,dp)) > 1E17))) stop "Warning Values in SmithNormalForm overflowing standard ints."
+    end if
+  ENDSUBROUTINE SmithNormalForm_Li
+  
+  !!<summary>Finds the minimal value in the sub matrix of A where the
+  !!sub matrix consits of every row and colum greater than or equal to
+  !!diag.</summary>
+  !!<parameter name="A" regular="true">The input matrix.</parameter>
+  !!<parameter name="diag" regular="true">The row/column number we
+  !!want to be below.</parameter>
+  !!<parameter name="min_val" regular="true">The smallest value in A
+  !!that's not in an empty row or column.</parameter>
+  !!<parameter name="row" regular="true">The row with the lowest value
+  !!in it.</parameter>
+  !!<parameter name="col" regular="true">The column with the lowest
+  !!value in it.</parameter>
+  subroutine get_min_val(A, diag, min_val, row, col)
+    integer, intent(in) :: A(3,3), diag
+    integer, intent(out) :: min_val, row, col
+
+    integer :: temp_A(3,3), i, tmploc(2)
+    logical :: found
+
+    found = .False.
+    temp_A = abs(A)
+    do i=1,9
+       tmploc = minloc(temp_A, temp_A>0)
+       row = tmploc(1)
+       col = tmploc(2)
+       min_val = A(row,col)
+       if (row >= diag .and. col >= diag) then
+          found = .True.
+          exit
+       else
+          temp_A(row, col) = -1
+       end if
+    end do
+
+    if (found .eqv. .False.) stop "Failed to find minimal value in get_min_val."
+  end subroutine get_min_val
+
+  !!<summary>Finds the row of the smallest value not divisible by a
+  !!pivot within the sub matrix of A consisting of the row and column
+  !!numbers greater than or equal to diag.</summary>  
+  !!<parameter name="A" regular="true">The input matrix.</parameter>
+  !!<parameter name="pivot" regular="true">The pivot.</parameter>  
+  !!<parameter name="diag" regular="true">The row/column number we
+  !!want to be below.</parameter>
+  !!<parameter name="row" regular="true">The row with the lowest value
+  !!in it.</parameter>
+  subroutine get_min_loc(A, pivot, diag, row)
+    integer, intent(in) :: A(3,3), pivot, diag
+    integer, intent(out) :: row
+
+    integer :: temp_A(3,3), i, tmploc(2), mod_p(3,3), col
+    logical :: found
+
+    found = .False.
+    temp_A = abs(A)
+    mod_p = mod(A,pivot)
+    do i=1,9
+       tmploc = minloc(temp_A, temp_A>0)
+       row = tmploc(1)
+       col = tmploc(2)
+       if (row >= diag .and. col >= diag .and. mod_p(row,col) /= 0) then
+          found = .True.
+          exit
+       else
+          temp_A(row, col) = -1
+       end if
+    end do
+
+    if (found .eqv. .False.) stop "Failed to find minimal value in get_min_val."
+  end subroutine get_min_loc
+  
+  !!<summary>This routine takes an integer 3x3 matrix and computes its
+  !!Smith Normal Form.</summary>
+  !!<parameter name="H" regular="True">Input matrix.</parameter>
+  !!<parameter name="A" regular="True">Left Transform.</parameter>
+  !!<parameter name="M" regular="true">Smith Normal Form matrix.</parameter>
+  !!<parameter name="B" regular="True">Right Transform.</parameter>
+  !!<parameter name="err_" regular="True">Returns 1 if overflow occures.</parameter>
+  subroutine SmithNormalForm(H,A,M,B,err_)
+    integer, intent(in) :: H(3,3) 
+    integer, intent(out), dimension(3,3) :: M, A, B
+    integer, optional, intent(out) :: err_
+
+    integer :: i, row, col, min_val, j, check(9)
+    integer :: multiple, tmpVec(3)
+    logical :: is_snf, new_pivot, OverFlowCheck
+    integer :: itCnt, min_row
+
+    OverFlowCheck = .False.
+    if (present(err_)) OverFlowCheck = .True.
+    
+    if(determinant(H)<1) stop "SmithNormalForm routine failed because the input matrix had a negative determinant"
+    A = 0; B = 0; M = H ! M starts out as H, the input matrix
+    forall(i=1:3); A(i,i) = 1; B(i,i) = 1; end forall ! A & B = identity
+
+    j=1
+    itCnt = 0
+    is_snf = .False.
+    new_pivot = .True.
+    do while (is_snf .eqv. .False. .and. j<4)
+       itCnt = itCnt + 1
+       if (itCnt>=100) stop "ERROR bad programming in SmithNormalForm"
+       
+       if (new_pivot) then
+          call get_min_val(M, j, min_val, row, col)
+       end if
+
+       do i=1,3
+          if (i==col) cycle
+          multiple = nint(real(M(row,i),dp)/real(min_val,dp))
+          if (multiple==0) cycle
+          M(:,i) = M(:,i)-multiple*M(:,col)
+          B(:,i) = B(:,i)-multiple*B(:,col)
+       end do
+
+       do i=1,3
+          if (i==row) cycle
+          multiple = nint(real(M(i,col),dp)/real(min_val,dp))
+          if (multiple==0) cycle
+          M(i,:) = M(i,:)-multiple*M(row,:)
+          A(i,:) = A(i,:)-multiple*A(row,:)
+       end do
+
+       new_pivot = .True.
+       if ((count(M(:,col)==0)==2) .and. (count(M(row,:)==0)==2)) then
+          if (all(mod(M(j:,j:),min_val)==0)) then
+             if (j < col) then
+                tmpVec = B(:,j); B(:,j) = B(:,col); B(:,col) = tmpVec
+                tmpVec = M(:,j); M(:,j) = M(:,col); M(:,col) = tmpVec
+             end if
+             if (j < row) then
+                tmpVec = A(j,:); A(j,:) = A(row,:); A(row,:) = tmpVec
+                tmpVec = M(j,:); M(j,:) = M(row,:); M(row,:) = tmpVec
+             end if
+             j = j + 1
+          else
+             new_pivot = .False.
+             call get_min_loc(M, min_val, j, min_row)
+             M(row,:) = M(row,:) + M(min_row,:)
+             A(row,:) = A(row,:) + A(min_row,:)             
+          end if
+       end if
+       
+       check = reshape(M,(/9/))
+       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
+            mod(M(3,3),M(2,2))==0) then
+          is_snf = .True.
+       end if
+    end do
+    
+    do i=1,3
+       if (M(i,i) < 0) then
+          M(i,:) = -M(i,:)
+          A(i,:) = -A(i,:)
+       end if
+    end do
+    if (any(matmul(matmul(A,H),B)/=M)) stop "END: Transformation matrices didn't work"
+    check = reshape(M,(/9/))
+    if (any(check((/2,3,4,6,7,8/))/=0)) stop "Not diagonal"
+    if (mod(M(2,2),M(1,1))/=0 .or. mod(M(3,3),M(2,2))/=0) stop "SNF conditions not met"
+    if (OverFlowCheck) then
+       if ((any(abs(A) > 1E9)) .or. (any(abs(B) > 1E9))) then
+          write(*,*) "Warning Values in SmithNormalForm overflowing standard ints."
+          err_ = 1
+       else
+          err_ = 0
+       end if
+    else 
+       if ((any(abs(A) > 1E9)) .or. (any(abs(B) > 1E9))) stop "Warning Values in SmithNormalForm overflowing standard ints."
+    end if
   ENDSUBROUTINE SmithNormalForm
 
   !!<summary>Find the Hermite normal form of a a given integer
@@ -222,19 +398,19 @@ CONTAINS
     if (check(2) > check(5) .or. check(3) > check(9) .or. check(6) > check(9)) stop "Lower triangular elements bigger than diagonal"
   ENDSUBROUTINE HermiteNormalForm
 
-  !!<summary>Support routines for the Smith and Hermite normal form finders.</summary>
-  !!<parameter name="A" regular="true"></parameter>
-  !!<parameter name="M" regular="true"></parameter>
-  !!<parameter name="k" regular="true"></parameter>
-  subroutine swap_row(A,M,k) ! Swap rows of M (and A)
-    integer, intent(inout) :: M(3,3), A(3,3)
-    integer, intent(in) :: k
-    integer :: tmpRow(3), maxidx(1)
+  ! !!<summary>Support routines for the Smith and Hermite normal form finders.</summary>
+  ! !!<parameter name="A" regular="true"></parameter>
+  ! !!<parameter name="M" regular="true"></parameter>
+  ! !!<parameter name="k" regular="true"></parameter>
+  ! subroutine swap_row(A,M,k) ! Swap rows of M (and A)
+  !   integer, intent(inout) :: M(3,3), A(3,3)
+  !   integer, intent(in) :: k
+  !   integer :: tmpRow(3), maxidx(1)
  
-    maxidx = maxloc(abs(M(k:,k)))+k-1  ! find index of the non-zero element in col k
-    tmpRow = A(k,:); A(k,:) = A(maxidx(1),:); A(maxidx(1),:) = tmpRow
-    tmpRow = M(k,:); M(k,:) = M(maxidx(1),:); M(maxidx(1),:) = tmpRow
-  endsubroutine swap_row
+  !   maxidx = maxloc(abs(M(k:,k)))+k-1  ! find index of the non-zero element in col k
+  !   tmpRow = A(k,:); A(k,:) = A(maxidx(1),:); A(maxidx(1),:) = tmpRow
+  !   tmpRow = M(k,:); M(k,:) = M(maxidx(1),:); M(maxidx(1),:) = tmpRow
+  ! endsubroutine swap_row
 
   !!<summary>Swaps the column 'k' with whichever column has the
   !!highest value (out of the columns to the right of 'k' in row
@@ -256,6 +432,28 @@ CONTAINS
     tmpCol = M(:,k); M(:,k) = M(:,maxidx(1)); M(:,maxidx(1)) = tmpCol
   endsubroutine swap_column
 
+  ! !!<summary>Finds the indices corresponding the maximum and second
+  ! !!maximum Values in an integer vector.</summary>
+  ! !!<parameter name="invec" regular="true">Input vector</parameter>
+  ! !!<parameter name="max" regular="true">Location of maximum
+  ! !!value</parameter>
+  ! !!<parameter name="smax" regular="true">Location of second maximum
+  ! !!value</parameter>
+  ! subroutine get_max2max_indices(invec,smax,max)
+  !   integer, intent(in) :: invec(3)
+  !   integer, intent(out) :: max, smax
+
+  !   integer :: tmpmax(1), tmpmax2(1), vec(3)
+  !   vec = abs(invec)
+  !   ! Search from the right for the max, this prevents inifinite
+  !   ! looping in the SNF routine.
+  !   tmpmax = 4 - maxloc(vec(3:1:-1),vec(3:1:-1)>0)
+  !   vec(tmpmax(1)) = 0
+  !   tmpmax2 = maxloc(vec, vec>0)!4 - maxloc(vec(3:1:-1),vec(3:1:-1)>0)
+  !   smax = tmpmax2(1)
+  !   max = tmpmax(1)
+  ! endsubroutine get_max2max_indices
+  
   !!<summary>Finds the indices corresponding the minimum and maximum
   !!values in an integer vector.</summary>
   !!<parameter name="invec" regular="true"></parameter>
@@ -323,7 +521,7 @@ CONTAINS
        if (all(a == a(indx(1)))) then ! check if all numbers are the same
           big2 = a(indx(1))
        else   ! The "real" around 'a' is a workaround for a problem in the Absoft compiler
-          big2 = maxval(real(a),mask=a < a(indx(1))) ! Find the size of the 2nd biggest number
+          big2 = int(maxval(real(a),mask=a < a(indx(1)))) ! Find the size of the 2nd biggest number
        endif
        if (big2 == 0) exit
        a(indx(1)) = mod(a(indx(1)),big2)

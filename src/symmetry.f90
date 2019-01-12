@@ -701,11 +701,9 @@ CONTAINS
 
   !!<summary>This subroutine checks the space group.</summary>
   !!<parameter name="SGop"></parameter>
-  !!<parameter name="SGfrac"></parameter>
   !!<parameter name="eps_" regular="true"></parameter>
-  subroutine check_spaceGroup(SGop, SGfrac, eps_)
+  subroutine check_spaceGroup(SGop, eps_)
     real(dp), pointer :: SGop(:,:,:)
-    real(dp), pointer :: SGfrac(:,:)
     real(dp), optional, intent(in):: eps_
 
     integer i, j, k, Nops
@@ -834,7 +832,7 @@ CONTAINS
   !!<parameter name="A" regular="true">Basis vectors (columns) of the lattice.</parameter>
   !!<parameter name="latticePtGrp_Ops" regular="true">Returned point group operators in direct
   !!coordinates (integer entries).</parameter>
-  !!<parameter name="eps" regular="true">Finite precision parameter</parameter>
+  !!<parameter name="eps_" regular="true">Finite precision parameter</parameter>
   subroutine put_pointGroup_in_latticeCoords(pgOps, A, latticePtGrp_Ops, eps_)
     real(dp), intent(in) :: pgOps(:,:,:), A(3,3)
     integer,  pointer    :: latticePtGrp_Ops(:,:,:)

@@ -266,14 +266,9 @@
 		when="each" />
       </test>
       <global name="SGop" type="real(dp)" modifiers="pointer" dimensions=":,:,:"/>
-      <global name="SGfrac" type="real(dp)" modifiers="pointer" dimensions=":,:"/>
       <assignment name="SGop" value = "SGopfile" allocate="true">
 	<value identifier="SGopfile" folder="../tests/symmetry"
 	       file="check_spaceGroup_SGop.in.{}" rename="SGop.in" />
-      </assignment>
-      <assignment name="SGfrac" value = "SGfracfile" allocate="true">
-	<value identifier="Sgfracfile" folder="../tests/symmetry"
-	       file="check_spaceGroup_SGfrac.in.{}" rename="this_type.in" />
       </assignment>
       <assignment name="eps_" value = "ep">
 	<value identifier="ep" folder="../tests/symmetry"

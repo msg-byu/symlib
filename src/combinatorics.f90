@@ -18,56 +18,6 @@ MODULE combinatorics
   END INTERFACE factorial
 CONTAINS
 
-  !!<summary>Prints the subset mask to file for comparison.</summary>
-  !!<parameter name="filename" regular="true">The name of the file to be saved to.</parameter>
-  !!<parameter name="mask" regular="true">The mask to be saved.</parameter>
-  SUBROUTINE print_subset_mask(mask,filename)
-    type(subset_mask), intent(in) :: mask
-    ! character(100), intent(in) :: filename
-    character(len=*), intent(in) :: filename
-    if (.not. mask%init) stop "ERROR: mask was not initialized in print_subset_mask"
-    open(unit=10, file=trim(filename), action="write", status="new")
-    write(10,*) mask%mask
-    CLOSE(10)
-  END SUBROUTINE print_subset_mask
-
-  !!<summary>Initialize a mask for the generate_next_subset routine.</summary>
-  !!<parameter name="mask">The mask that has been initialized</parameter>
-  !!<parameter name="initial_mask">The array of logicals to be converted to a
-  !!mask.</parameter>
-  SUBROUTINE initialize_subset_mask(mask,initial_mask)
-    type(subset_mask) :: mask
-    logical, pointer :: initial_mask(:)
-    if(.not. associated(initial_mask)) stop "ERROR: initial_mask is not initialized in initialize_subset_mask"
-    allocate(mask%mask(size(initial_mask)))
-    mask%mask=initial_mask
-    mask%init=.true.
-    mask%done=.false.
-  END SUBROUTINE initialize_subset_mask
-
-  !!<summary>Creates a mask that picks out a subset of a given set. The mask is essentially
-  !!a binary number.This routine generates the next number (mask) in numerical order as if
-  !!the logical array was a binary number.</summary>
-  !!<parameter name="mask" regular="true">The mask that needs to be iterated.</parameter>
-  !!<parameter name="outputmask" regular="true">The next mask in the iterable mask.</parameter>
-  SUBROUTINE generate_next_subset(mask,outputmask)
-    type(subset_mask) :: mask
-    logical :: outputmask(:)
-    integer :: n, j
-    if (.not. mask%init) stop "ERROR: mask was not initialized in generate_next_subset"
-    if (mask%done) stop "ERROR: mask has been through all cycles in generate_next_subset"
-    n = size(mask%mask)
-    j = n
-    do
-       mask%mask(j) = .not. mask%mask(j)
-       if (mask%mask(j) .eqv. .true.) exit
-       j = j - 1
-       if (j<1) exit
-    end do
-    if(all(mask%mask)) mask%done = .true.
-    outputmask = mask%mask
-  END SUBROUTINE generate_next_subset
-
   !!<summary>Binomial coefficient. Computes the number of permutations
   !!of n things, taken k at a time</summary>
   !!<comments>! This implementation was taken from "Binomial
@@ -121,7 +71,6 @@ CONTAINS
     integer, intent(in) :: n(:)
     integer(li) :: binomials(size(n,1),2), bins(size(n,1))
     integer :: i
-
 
     binomials(1,1) = sum(n)
     binomials(1,2) = n(1)
@@ -221,6 +170,7 @@ CONTAINS
       uqlist = 0
       sm = minval(list) ! smallest value in the list
       do i = 1, size(list) ! loop over the possible number of unique values
+
          uqlist(i) = count(sm==list) ! How many of this size?
          !The "real" around list below is need to work around a bug in the Absoft compiler
          sm = minval(real(list),mask=(list>sm))    ! Next unique value bigger than the last
@@ -347,6 +297,7 @@ CONTAINS
 
   !!<summary>Factorial of the long int type.</summary>
   FUNCTION factorial_long_int(N)
+
     integer(li) :: factorial_long_int, N, i
     factorial_long_int = 1
     do i=2,N;factorial_long_int=factorial_long_int*i;enddo

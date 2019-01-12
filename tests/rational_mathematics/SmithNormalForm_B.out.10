@@ -1,4 +1,4 @@
- # <fortpy version="1" template="integer"></fortpy>
-           1           3          86
-           0          -1         -41
-           0           0           1
+# <fortpy version="1" template="integer"></fortpy>
+                        1                       -1                       86
+                        0                        1                      -41
+                        0                        0                        1

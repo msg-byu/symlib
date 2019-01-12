@@ -1,6 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fortpy mode="docstring">
 
+  <decorates name="rational_mathematics.get_min_loc">
+    <group name="min_loc_tests" purpose="testing" staging="../unittests/">
+      <test identifier="min_loc_row" description="Test of get_min_loc"
+	    timed="true"  cases="[1-5]">
+	<output identifier="row.out" folder="../tests/rational_mathematics"
+		file="get_min_loc_row.out.{}" template="integer.xml" />
+	<target name="row" compareto="row.out" varfile="row.out" when="each" />
+      </test>
+      <assignment name="A" value="ain">
+	<value identifier="ain" folder="../tests/rational_mathematics"
+	       file="get_min_A.in.{}" rename="A.in"/>
+      </assignment>
+      <assignment name="pivot" value="pivotin">
+	<value identifier="pivotin" folder="../tests/rational_mathematics"
+	       file="get_min_pivot.in.{}" rename="pivot.in"/>
+      </assignment>
+      <assignment name="diag" value="diagin">
+	<value identifier="diagin" folder="../tests/rational_mathematics"
+	       file="get_min_diag.in.{}" rename="diag.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="rational_mathematics.get_min_val">
+    <group name="min_val_tests" purpose="testing" staging="../unittests/">
+      <test identifier="min_val_val" description="Test of get_min_val"
+	    timed="true"  cases="[1-5]">
+	<output identifier="val.out" folder="../tests/rational_mathematics"
+		file="get_min_val_val.out.{}" template="integer.xml" />
+	<target name="min_val" compareto="val.out" varfile="val.out" when="each" />
+      </test>
+      <test identifier="min_val_row" description="Test of get_min_val"
+	    timed="true"  cases="[1-5]">
+	<output identifier="row.out" folder="../tests/rational_mathematics"
+		file="get_min_val_row.out.{}" template="integer.xml" />
+	<target name="row" compareto="row.out" varfile="row.out" when="each" />
+      </test>
+      <test identifier="min_val_col" description="Test of get_min_val"
+	    timed="true"  cases="[1-5]">
+	<output identifier="col.out" folder="../tests/rational_mathematics"
+		file="get_min_val_col.out.{}" template="integer.xml" />
+	<target name="col" compareto="col.out" varfile="col.out" when="each" />
+      </test>
+      <assignment name="A" value="ain">
+	<value identifier="ain" folder="../tests/rational_mathematics"
+	       file="get_min_A.in.{}" rename="A.in"/>
+      </assignment>
+      <assignment name="diag" value="diagin">
+	<value identifier="diagin" folder="../tests/rational_mathematics"
+	       file="get_min_diag.in.{}" rename="diag.in"/>
+      </assignment>
+    </group>
+  </decorates>
+
+  <decorates name="rational_mathematics.SmithNormalForm_li">
+    <group name="SNF_li_tests" purpose="testing" staging="../unittests/">
+      <test identifier="SNF_A" description="Original SNF testing"
+	    timed="true"  cases="[1-20]">
+	<output identifier="A.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_A.out.{}" template="integer.xml" />
+	<target name="A" compareto="A.out" varfile="A.out" when="each" />
+      </test>
+      <test identifier="SNF_M" description="Original SNF testing"
+	    timed="true"  cases="[1-20]">
+	<output identifier="M.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_M.out.{}" template="integer.xml" />
+	<target name="M" compareto="M.out" varfile="M.out" when="each" />
+      </test>
+      <test identifier="SNF_B" description="Original SNF testing"
+	    timed="true"  cases="[1-20]">
+	<output identifier="B.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_B.out.{}" template="integer.xml" />
+	<target name="B" compareto="B.out" varfile="B.out" when="each" />
+      </test>
+      <assignment name="H" value="hin">
+	<value identifier="hin" folder="../tests/rational_mathematics"
+	       file="SmithNormalForm_H.in.{}" rename="H.in"/>
+      </assignment>
+      <assignment name="M" value="min">
+	<value identifier="min" constant="0"/>
+      </assignment>
+      <assignment name="A" constant="0" />
+      <assignment name="B" value="bin">
+	<value identifier="bin" constant="0"/>
+      </assignment>
+    </group>
+  </decorates>
+  
   <decorates name="rational_mathematics.SmithNormalForm">
     <group name="SNF_tests" purpose="testing" staging="../unittests/">
       <test identifier="SNF_A" description="Original SNF testing"
@@ -8,6 +96,12 @@
 	<output identifier="A.out" folder="../tests/rational_mathematics"
 		file="SmithNormalForm_A.out.{}" template="integer.xml" />
 	<target name="A" compareto="A.out" varfile="A.out" when="each" />
+      </test>
+      <test identifier="SNF_err" description="Original SNF testing"
+	    timed="true"  cases="18,19">
+	<output identifier="err.out" folder="../tests/rational_mathematics"
+		file="SmithNormalForm_err.out.{}" template="integer.xml" />
+	<target name="err_" compareto="err.out" varfile="err.out" when="each" />
       </test>
       <test identifier="SNF_M" description="Original SNF testing"
 	    timed="true"  cases="[1-20]">
@@ -62,36 +156,36 @@
     </group>
   </decorates>
 
-  <decorates name="rational_mathematics.swap_row">
-    <group name="swap" purpose="testing" staging="../unittests/">
-      <test identifier="swapr_M" description="Swap function testing."
-  	    timed="true" cases="[1-50]">
-  	<output identifier="M.out" folder="../tests/rational_mathematics"
-		file="swap_row_M.out.{}" template="integer.xml" />
-  	<target name="M" compareto="M.out" varfile="M.out"
-		when="each" />
-      </test>
-      <test identifier="swapr_A" description="Swap function testing."
-  	    timed="true" cases="[1-50]">
-  	<output identifier="A.out" folder="../tests/rational_mathematics"
-		file="swap_row_A.out.{}" template="integer.xml" />
-  	<target name="A" compareto="A.out" varfile="A.out"
-		when="each" />
-      </test>
-      <assignment name="A" value="afile" >
-  	<value identifier="afile" file="swap_row_A.in.{}"
-  	       folder="../tests/rational_mathematics" rename="A.in"/>
-      </assignment>
-      <assignment name="M" value="mfile" >
-  	<value identifier="mfile" file="swap_row_M.in.{}"
-  	       folder="../tests/rational_mathematics" rename="M.in"/>
-      </assignment>
-      <assignment name="k" value="kfile">
-  	<value identifier="kfile" file="swap_row_k.in.{}"
-  	       folder="../tests/rational_mathematics" rename="k.in"/>
-      </assignment>
-    </group>
-  </decorates>
+  <!-- <decorates name="rational_mathematics.swap_row"> -->
+  <!--   <group name="swap" purpose="testing" staging="../unittests/"> -->
+  <!--     <test identifier="swapr_M" description="Swap function testing." -->
+  <!-- 	    timed="true" cases="[1-50]"> -->
+  <!-- 	<output identifier="M.out" folder="../tests/rational_mathematics" -->
+  <!-- 		file="swap_row_M.out.{}" template="integer.xml" /> -->
+  <!-- 	<target name="M" compareto="M.out" varfile="M.out" -->
+  <!-- 		when="each" /> -->
+  <!--     </test> -->
+  <!--     <test identifier="swapr_A" description="Swap function testing." -->
+  <!-- 	    timed="true" cases="[1-50]"> -->
+  <!-- 	<output identifier="A.out" folder="../tests/rational_mathematics" -->
+  <!-- 		file="swap_row_A.out.{}" template="integer.xml" /> -->
+  <!-- 	<target name="A" compareto="A.out" varfile="A.out" -->
+  <!-- 		when="each" /> -->
+  <!--     </test> -->
+  <!--     <assignment name="A" value="afile" > -->
+  <!-- 	<value identifier="afile" file="swap_row_A.in.{}" -->
+  <!-- 	       folder="../tests/rational_mathematics" rename="A.in"/> -->
+  <!--     </assignment> -->
+  <!--     <assignment name="M" value="mfile" > -->
+  <!-- 	<value identifier="mfile" file="swap_row_M.in.{}" -->
+  <!-- 	       folder="../tests/rational_mathematics" rename="M.in"/> -->
+  <!--     </assignment> -->
+  <!--     <assignment name="k" value="kfile"> -->
+  <!-- 	<value identifier="kfile" file="swap_row_k.in.{}" -->
+  <!-- 	       folder="../tests/rational_mathematics" rename="k.in"/> -->
+  <!--     </assignment> -->
+  <!--   </group> -->
+  <!-- </decorates> -->
 
   <decorates name="rational_mathematics.swap_column">
     <group name="swap" purpose="testing" staging="../unittests/">
