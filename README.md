@@ -1,12 +1,9 @@
 # symlib
-Symmetry-related routines for cluster expansion and other codes that
-rely on symmetries of lattices and crystals. This code was started by
-GLWH in 1999 with help from Harold Stokes (Mr. Isotropy, see
-[iso.byu.edu](http://iso.byu.edu/iso/isodistort.php)). It now includes
-a number of numerical and combinatorial routines that have been useful
-in developing UNCLE (the Unversal CLuster Expansion code). The [enum
-project](https://github.com/glwhart/enum4) also relies on this
-library.
+Symmetry-related routines for cluster expansion and other codes that rely on symmetries of lattices
+and crystals. This code was started by GLWH in 1997 with help from Harold Stokes (Mr. Isotropy, see
+[iso.byu.edu](http://iso.byu.edu/iso/isodistort.php)). It now includes a number of numerical and
+combinatorial routines that have been useful in developing UNCLE (the Unversal CLuster Expansion code). The [enum
+project](https://github.com/glwhart/enum4) also relies on this library.  
 
 Some key algorithms found in `symlib` include:
 

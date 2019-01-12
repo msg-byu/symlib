@@ -133,7 +133,7 @@ CONTAINS
     ! nearest the origin. Call this T.
     cpdAB = cross_product(A,B)/norm(cross_product(A,B))
     T = C - cpdAB*dot_product(C,cpdAB)
-    
+
     if(.not. equal(dot_product(T,cross_product(A,B)),0._dp,eps)) then
        print *,dot_product(T,cross_product(A,B))
        stop "Projection of C into A,B plane failed"
@@ -145,8 +145,8 @@ CONTAINS
     call matrix_inverse(ABC,ABCinv,err)
     if(err)stop "A,B,C vectors in reduce_C_in_ABC are co-planar"
     LC = floor(matmul(ABCinv,T) + eps)
-    
-!    dist(1) = norm(T-matmul(ABC,LC)) 
+
+!    dist(1) = norm(T-matmul(ABC,LC))
 !    dist(2) = norm(T-matmul(ABC,(/LC(1)+1,LC(2),LC(3)/)))
 !    dist(3) = norm(T-matmul(ABC,(/LC(1),LC(2)+1,LC(3)/)))
 !    dist(4) = norm(T-matmul(ABC,(/LC(1)+1,LC(2)+1,LC(3)/)))
@@ -161,7 +161,7 @@ CONTAINS
     corners(3,:) =(/0,1,0/)
     corners(4,:) =(/1,1,0/)
     do i = 1,4
-       dist(i) = norm(T-matmul(ABC,LC+corners(i,:))) 
+       dist(i) = norm(T-matmul(ABC,LC+corners(i,:)))
     enddo
     idx = minloc(dist)
 
@@ -179,7 +179,7 @@ CONTAINS
        write(*,'("Lattice coordinates in the A,B plane: ",2(i2,1x))') LC
        stop
     end select
-    
+
     ABC = reshape((/A,B,C/),(/3,3/))
     call matrix_inverse(ABC,ABCinv,err)
     if(any(abs(matmul(ABCinv,oldABC)-nint(matmul(ABCinv,oldABC)))>eps)) stop "Lattice was not preserved &
@@ -206,12 +206,12 @@ CONTAINS
   subroutine gaussian_reduce_two_vectors(U,V,eps)
     real(dp) :: U(3), V(3), R(3)
     real(dp), intent(in) :: eps
-    
+
     real(dp) temp(3)
     integer it
 
     it = 0
-    if (norm(U) > norm(V) - eps) then 
+    if (norm(U) > norm(V) - eps) then
        ! Make sure that the {U,V} are listed in ascending order; ||U||<||V||
        temp = U; U = V; V = temp ! Keep V as the longest vector
     end if
@@ -259,7 +259,7 @@ CONTAINS
        call reduce_C_in_ABC(OUT(:,1),OUT(:,2),OUT(:,3),eps)
        !   write(*,'(f7.3)') orthogonality_defect(OUT)
        if (norm(OUT(:,3))>=norm(OUT(:,2))-eps) exit
-   
+
     end do
     ! print *,"mink past first loop"
     !if (it>limit+1) stop "Too many iterations in 'minkowski_reduce_basis'"
@@ -268,17 +268,17 @@ CONTAINS
        write(*,'("Number of iterations:",i3)') limit
        stop
     end if
-    
+
     ! we want to make sure that the det is positive.
     ! NOTE: This *destroys* the mathematical picture of a "greedy reduced basis" (Minkowski), but
     !       from a physical point of view we don't care ;-)
     !       Either way, the basis is as orthogonal as possible.
-    if (determinant(OUT)<0) then 
+    if (determinant(OUT)<0) then
        temp(:,1) = OUT(:,2)
        OUT(:,2) = OUT(:,3)
        OUT(:,3) = temp(:,1)
     endif
-    
+
   END SUBROUTINE minkowski_reduce_basis
 
   !!<summary>This function calculates the "orthogonality defect" of
@@ -296,7 +296,7 @@ CONTAINS
     od = od/abs(determinant(basis))
     orthogonality_defect = od
   endfunction orthogonality_defect
-  
+
   !!<summary>Given the matrix a, finds its inverse b</summary>
   !!<parameter name="a" regular="true"></parameter>
   !!<parameter name="b" regular="true"></parameter>
@@ -307,10 +307,10 @@ CONTAINS
     real(dp),intent(out):: b(3,3)
     real(dp) :: c,avec(9)
     real(dp)           :: eps
-    
+
     logical,  optional :: err_
     real(dp), optional :: eps_
-    
+
     if(present(err_)) err_ = .false.
     if(present(eps_)) then; eps=eps_; else; eps=10d-14; endif
 
@@ -403,7 +403,7 @@ CONTAINS
   function volume(a1, a2, a3)
     real(dp) :: volume
     real(dp) :: a1(3), a2(3), a3(3)
-    
+
     volume = dot_product(a1, cross_product(a2,a3))
   end function volume
 
@@ -415,14 +415,12 @@ CONTAINS
   subroutine find_lvalue_in_larray1(array,vals,loc,nfound)
     logical, intent(in)     :: array(:)
     logical, intent(in)     :: vals(:)
-    integer, intent(out)    :: loc(:)   
-    integer, intent(out)    :: nfound   
+    integer, intent(out)    :: loc(:)
+    integer, intent(out)    :: nfound
 
     integer, parameter :: dim=1
-    
-    integer :: l
-    integer :: count
-   
+    integer :: count, l
+
     count = 0
     do l=1,size(array,1)
        if (any(array(l).eqv.vals(:))) then
@@ -435,6 +433,8 @@ CONTAINS
 
   end subroutine find_lvalue_in_larray1
 
+
+
   !!<summary>Find a int value inside a 3-dim array</summary>
   !!<parameter name="array" regular="true"></parameter>
   !!<parameter name="vals" regular="true"></parameter>
@@ -443,14 +443,14 @@ CONTAINS
   subroutine find_intvalue_in_intarray3(array,vals,loc,nfound)
     integer, intent(in)     :: array(:,:,:)
     integer, intent(in)     :: vals(:)
-    integer, pointer        :: loc(:,:) 
-    integer, intent(out)    :: nfound   
-    
+    integer, pointer        :: loc(:,:)
+    integer, intent(out)    :: nfound
+
     integer, parameter :: dim=3
-    
-    integer :: j, k, l
+
+    integer :: j,k,l
     integer :: count
-    
+
     count = 0
     do j=1,size(array,3)
        do k=1,size(array,2)
@@ -464,7 +464,7 @@ CONTAINS
     enddo
 
     nfound=count
-    
+
   end subroutine find_intvalue_in_intarray3
 
   !!<summary>Find a int value inside a 3-dim array, si version</summary>
@@ -475,12 +475,12 @@ CONTAINS
   subroutine find_sintvalue_in_sintarray3(array,vals,loc,nfound)
     integer(si), intent(in)     :: array(:,:,:)
     integer(si), intent(in)     :: vals(:)
-    integer, pointer        :: loc(:,:) 
-    integer, intent(out)    :: nfound   
-    
+    integer, pointer        :: loc(:,:)
+    integer, intent(out)    :: nfound
+
     integer, parameter :: dim=3
-    
-    integer :: j, k, l
+
+    integer :: j,k,l
     integer :: count
 
     count = 0
@@ -494,9 +494,9 @@ CONTAINS
           enddo
        enddo
     enddo
-    
+
     nfound=count
-    
+
   end subroutine find_sintvalue_in_sintarray3
 
 
@@ -510,9 +510,9 @@ CONTAINS
     integer, intent(in)     :: vals(:)
     integer, pointer        :: loc(:,:) ! intent(out), { #coordinate, #found_value }
     integer, intent(out)    :: nfound   ! number of val occurrences in array
-    
+
     integer, parameter :: dim=4
-    
+
     integer :: i,j,k,l
     integer :: count
 
@@ -531,7 +531,7 @@ CONTAINS
     enddo
 
     nfound=count
-    
+
   end subroutine find_intvalue_in_intarray4
 
   !!<summary>Find a int value inside a 4-dim array, si version</summary>
@@ -542,11 +542,11 @@ CONTAINS
   subroutine find_sintvalue_in_sintarray4(array,vals,loc,nfound)
     integer(si), intent(in)     :: array(:,:,:,:)
     integer(si), intent(in)     :: vals(:)
-    integer, pointer        :: loc(:,:) 
-    integer, intent(out)    :: nfound   
+    integer, pointer        :: loc(:,:)
+    integer, intent(out)    :: nfound
 
     integer, parameter :: dim=4
-    
+
     integer :: i,j,k,l
     integer :: count
 
