@@ -1,16 +1,22 @@
 # Revision History for `symlib`
 
-<<<<<<< HEAD
+## Rev 2.0.1
+- At the last revision, there were some left over markers from merge conflicts. Removed those.
+- added 'regular = "true" to parameter tag for atom_pos; it had been changed from 'pointer' to 'allocatable'
+- removed 'atom_pos' from the unit test xml file
+- All of the unit tests seem to be passing fine *except* for two routines that are used in uncle. One is an out of bounds error in 'find_site_equivalencies'. The other is a missing file of some sort: `ERROR: can't create representation for /Users/hart/codes/staging/symmetry.find_site_equivalencies.g/tests/find_site_equivalencies_nSites.2/nSites.out. File does not exist.`. Will have to sort out those tests later.
+
+
+
+# 2.0.0 Major revision (Jan 2019)
+- Changed some pointers to be `allocatable arrays` instead. This was to keep `symlib` compatible with `enumlib` which used allocatable arrays and general avoids pointers.
+- This counts as a major revision because it is a *breaking* change---the calling interface for several routines that are called from other programs are different now and the calling programs will have to change as a result.
+
 ## Revision 1.1.2
 - Changed the `bing_into_cell` subroutine to use `MOD` instead of a `do while` loop so improve runtimes.
 
 ## Revision 1.1.1
 - Fixed bug (reported in [#19](https://github.com/msg-byu/symlib/issues/19)) where `max` and not `maxval` was being used when comparing arrays.
-=======
-# 2.0.0 Major revision (Jan 2019)
-- Changed some pointers to be `allocatable arrays` instead. This was to keep `symlib` compatible with `enumlib` which used allocatable arrays and general avoids pointers.
-- This counts as a major revision because it is a *breaking* change---the calling interface for several routines that are called from other programs are different now and the calling programs will have to change as a result.
->>>>>>> temp-branch
 
 ## Revision 1.1.0
 
