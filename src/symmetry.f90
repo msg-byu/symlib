@@ -177,7 +177,7 @@ CONTAINS
        enddo
     enddo
     deallocate(lattpg_op)
-    
+
     ! Now that we know how many space group operations there are,
     ! store them in a matrix of the appropriate size as well as the
     ! fractional translations
@@ -273,18 +273,12 @@ CONTAINS
     real(dp), intent(in) :: eps
     real(dp), allocatable :: tSGrots(:,:,:),tSGshifts(:,:)
     integer :: nRot, iRot, status, i
-<<<<<<< HEAD
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
     atol = 1E-6_dp
-    
+
     if (.not.equal(aVecs(2:3,1),0._dp,eps,atol) .or. &
          .not.equal(aVecs(1,2:3),0._dp,eps,atol) )    &
-=======
-
-    if (.not.equal(aVecs(2:3,1),0._dp,eps) .or. &
-         .not.equal(aVecs(1,2:3),0._dp,eps) )    &
->>>>>>> temp-branch
          stop "Error in rm_3d_operations: only allowed for primitive vectors x00,0xx,0xx"
 
     nRot = size(sgrots,3)
@@ -293,13 +287,8 @@ CONTAINS
 
     irot = 0
     do i = 1, nRot
-<<<<<<< HEAD
        if (equal(sgrots(2:3,1,i),0._dp,eps,atol) .and. equal(sgrots(1,2:3,i),0._dp,eps,atol) .and.&
-            & equal(abs(sgrots(1,1,i)),1._dp,eps,atol)) then ! this operation is "2D"         
-=======
-       if (equal(sgrots(2:3,1,i),0._dp,eps) .and. equal(sgrots(1,2:3,i),0._dp,eps) .and.&
-            & equal(abs(sgrots(1,1,i)),1._dp,eps)) then ! this operation is "2D"
->>>>>>> temp-branch
+            & equal(abs(sgrots(1,1,i)),1._dp,eps,atol)) then ! this operation is "2D"
           irot = irot + 1
           tSGrots(:,:,irot) = sgrots(:,:,i)
           tSGshifts(:,irot) = sgshifts(:,i)
@@ -323,7 +312,7 @@ CONTAINS
   !!lattice vectors.</parameter>
   !!<parameter name="atomType">intent(inout): Atom types represented
   !!as integers.</parameter>
-  !!<parameter name="atom_pos">intent(inout): Positions of the basis
+  !!<parameter name="atom_pos" regular="true">intent(inout): Positions of the basis
   !!atoms.</parameter>
   !!<parameter name="lattCoords" regular="true">True if positions are
   !!in lattice coordinates.</parameter>
@@ -460,7 +449,7 @@ CONTAINS
                    mapped = .true.
                    if(.not. equal(v, anint((v),dp), eps,atol)) &
                         then; mapped = .false.; exit; endif
-                enddo 
+                enddo
                 if(mapped) exit l1 ! found new vectors so exit
              enddo
           enddo
@@ -654,42 +643,18 @@ CONTAINS
   subroutine bring_into_cell(v, cart_to_latt, latt_to_cart, eps)
     real(dp), intent(inout) ::  v(3)
     real(dp), intent(in)    ::  cart_to_latt(3,3), latt_to_cart(3,3), eps
-<<<<<<< HEAD
-    ! integer c, maxc
-    
-=======
-    integer c, maxc
-
->>>>>>> temp-branch
     ! Put the representation of the point into lattice coordinates
     v = matmul(cart_to_latt, v)
-
-    ! counter to catch compiler bug
-    ! c = 0
-    ! maxc = max(ceiling(abs(maxval(v))),ceiling(abs(minval(v)))) *2
-
     v = MOD(v, 1.0_dp)
     ! If a component >= 1, translate by subtracting a lattice vector
     ! If a component < 0, translate by adding a lattice vector
-<<<<<<< HEAD
     ! do while(any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) ih
     if (any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps)) then
        ! c = c +1
-       v = merge(v, v - 1.0_dp, v <  1.0_dp - eps) 
-       v = merge(v, v + 1.0_dp, v >= 0.0_dp - eps)
-    !    if (c>maxc) stop "ERROR: loop does not end in bring_into_cell. Probably compiler bug."
-    ! enddo
-    end if
-    
-=======
-    do while(any(v >= 1.0_dp - eps) .or. any(v < 0.0_dp - eps))
-       c = c +1
        v = merge(v, v - 1.0_dp, v <  1.0_dp - eps)
        v = merge(v, v + 1.0_dp, v >= 0.0_dp - eps)
-       if (c>maxc) stop "ERROR: loop does not end in bring_into_cell. Probably compiler bug."
-    enddo
+    end if
 
->>>>>>> temp-branch
     ! Put the point back into cartesion coordinate representation
     v = matmul(latt_to_cart, v)
   end subroutine bring_into_cell
@@ -711,24 +676,13 @@ CONTAINS
   !!<parameter name="eps" regular="true">Epsilon for checking
   !!equivalence.</parameter>
   subroutine does_mapping_exist(v, this_type, atom_pos, atomType, mapped, eps)
-
-<<<<<<< HEAD
-    real(dp), intent(in) :: v(3)            
-    integer, intent(in) :: this_type        
-    real(dp), intent(in) :: atom_pos(:,:)   
-    integer, intent(in) :: atomType(:)      
-    logical, intent(out) :: mapped          
-    real(dp), intent(in) :: eps
-    real(dp) :: atol ! An absolute tolerance for the "equal" subroutine
-=======
     real(dp), intent(in) :: v(3)
     integer, intent(in) :: this_type
     real(dp), intent(in) :: atom_pos(:,:)
     integer, intent(in) :: atomType(:)
     logical, intent(out) :: mapped
     real(dp), intent(in) :: eps
->>>>>>> temp-branch
-
+    real(dp) :: atol ! An absolute tolerance for the "equal" subroutine
     integer i   ! Loop over atoms
     real(dp) :: this_position(3) ! Position of atom to be checked
 
