@@ -1,5 +1,9 @@
 # Revision History for `symlib`
 
+# 2.0.0 Major revision (Jan 2019)
+- Changed some pointers to be `allocatable arrays` instead. This was to keep `symlib` compatible with `enumlib` which used allocatable arrays and general avoids pointers.
+- This counts as a major revision because it is a *breaking* change---the calling interface for several routines that are called from other programs are different now and the calling programs will have to change as a result.
+
 ## Revision 1.1.0
 
 - Added classes.f90 and intertolls.f90 to symlib from the polya repo
@@ -17,20 +21,20 @@ In symmetry.f90, added some "regular = true" flags in the xml comments.
 
 Added unit tests for combinatorics.f90, it now has working unit tests for 66% of it's subroutines,
 and its supporting combinatorics.xml file. Also cleaned up the combinatorics.f90 file and adde XML
-documentation. 
+documentation.
 
 Added unit tests for compare_structures.f90, it has working unit tests for 100% of the subroutines
 used in the UNCLE code. There are 5 other subroutines that are not used that have not yet been unit
 tested. Also cleaned up and added XML documentation to the compare_structures.f90 file. Added the
-compare_structures.xml file as well. 
+compare_structures.xml file as well.
 
 Added unit tests for `numerical_utilities.f90`, it has working unit tests for 90% of its
 subroutines. Also changed the `equal` subroutines so that if the values are the same, it returns `true` no
 matter the tolerance that is used. Added the XML documentation to `numerical_utilities.f90`, the unit
-test files, and the numerical_utililties.xml file. 
+test files, and the numerical_utililties.xml file.
 
 Added unit tests for `rational_mathematics.f90`, it has working unit tests for 60% of its
-subroutines. The last 37% are waiting on a `fortpy` bug to get sorted out. 
+subroutines. The last 37% are waiting on a `fortpy` bug to get sorted out.
 
 Added unit tests for `symmetry.f90`, but it is still a bit messy. For the 10, subroutines only 2 have fully functional unit tests. The rest are rank3 arrays, or require logical inputs. There are a few, marked in the xml doc, that fail because the saved and new files have different precision apparently `dp8` and `dp4`.
 
@@ -43,4 +47,4 @@ Added unit tests for `vector_utilities.f90`. It is now 70% unit tested though th
 The first few commits were to get the repo up to scratch and nice and clean with installation
 instructions, etc. This includes the commit for new revision number 0.0.0. It includes an update of
 the `*.xml` files defining the unit tests so that they work with the distribution directory's
-structure. 
+structure.
