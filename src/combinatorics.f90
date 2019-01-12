@@ -35,7 +35,7 @@ CONTAINS
   !!<parameter name="mask">The mask that has been initialized</parameter>
   !!<parameter name="initial_mask">The array of logicals to be converted to a 
   !!mask.</parameter>
-  SUBROUTINE initialize_subset_mask(mask,initial_mask)
+
     type(subset_mask) :: mask
     logical, pointer :: initial_mask(:)
     if(.not. associated(initial_mask)) stop "ERROR: initial_mask is not initialized in initialize_subset_mask"
@@ -121,7 +121,6 @@ CONTAINS
     integer, intent(in) :: n(:)
     integer(li) :: binomials(size(n,1),2), bins(size(n,1))
     integer :: i
-    integer(li) :: nt(size(n)) ! Use long ints to avoid overflow during intermediate calculations
     
     
     binomials(1,1) = sum(n)
@@ -222,9 +221,8 @@ CONTAINS
       uqlist = 0
       sm = minval(list) ! smallest value in the list
       do i = 1, size(list) ! loop over the possible number of unique values
-         uqlist(i) = count(sm==list) ! How many of this size?  The
-         ! "real" around list below is need to work around a bug in
-         ! the Absoft compiler
+         uqlist(i) = count(sm==list) ! How many of this size?
+         !The "real" around list below is need to work around a bug in the Absoft compiler
          sm = minval(real(list),mask=(list>sm))    ! Next unique value bigger than the last
          if (count(sm==list)==0) exit ! If there aren't any of this
          ! size then we took the largest already
@@ -347,10 +345,9 @@ CONTAINS
     enddo
   END SUBROUTINE m_partitions_of_n
   
-  !!<summary>Factorial of the long int tpye.</summary>
+  !!<summary>Factorial of the long int type.</summary>
   FUNCTION factorial_long_int(N)
-    integer(li) :: factorial_long_int, N
-    integer :: i
+    integer(li) :: factorial_long_int, N, i
     factorial_long_int = 1
     do i=2,N;factorial_long_int=factorial_long_int*i;enddo
   END FUNCTION factorial_long_int
