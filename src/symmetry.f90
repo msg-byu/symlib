@@ -176,6 +176,7 @@ CONTAINS
           endif
        enddo
     enddo
+
     deallocate(lattpg_op)
 
     ! Now that we know how many space group operations there are,
@@ -275,7 +276,7 @@ CONTAINS
     integer :: nRot, iRot, status, i
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
 
     if (.not.equal(aVecs(2:3,1),0._dp,eps,atol) .or. &
          .not.equal(aVecs(1,2:3),0._dp,eps,atol) )    &
@@ -354,7 +355,7 @@ CONTAINS
     if(.not. present(eps_)) then; eps = 1e-10_dp
     else; eps = eps_
     endif
-    atol = 1E-6_dp
+    atol = 5E-4_dp
 
     call get_transformations(aVecs, latt_to_cart, cart_to_latt)
 
@@ -529,7 +530,7 @@ CONTAINS
     integer num_ops      ! Used to count the number of point operations found
 
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
-    atol = 1E-3_dp
+    atol = 5E-4_dp
     call matrix_inverse(aVecs, inverse_aVecs)
     ! Store the norms of the three lattice vectors
     do i = 1, 3;norm_avecs(i) = norm(aVecs(:,i));enddo
@@ -608,6 +609,7 @@ CONTAINS
           enddo
        enddo
     enddo
+    print*,"numops",num_ops
 
     allocate(lattpg_op(3,3,num_ops))
     lattpg_op = temp_op(:,:,1:num_ops)
@@ -686,7 +688,7 @@ CONTAINS
     integer i   ! Loop over atoms
     real(dp) :: this_position(3) ! Position of atom to be checked
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     mapped = .false.
     do i = 1, size(atomType)
        if(atomType(i) == this_type) then
@@ -713,7 +715,7 @@ CONTAINS
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     open(11, file="sym_check.out", status="unknown")
     ! Are the operations unique? (Necessary but *insufficient* condition)
     Nops = size(SGop,3)

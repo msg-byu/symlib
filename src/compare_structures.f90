@@ -234,7 +234,7 @@ CONTAINS
     real(dp)  :: lat1inv(3,3), S(3,3)
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     is_equiv_lattice = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_equiv_lattice'"
@@ -255,7 +255,7 @@ CONTAINS
     real(dp)  :: lat1inv(3,3), S(3,3)
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
     
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     is_derivative = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_derivative'"
@@ -274,7 +274,7 @@ CONTAINS
     logical :: is_lattice_point, err
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
     
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     is_lattice_point = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'is_lattice_point'"
@@ -297,7 +297,7 @@ CONTAINS
     integer :: iB, nB, nPt, iPt
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     are_lattice_points = .false.; flag = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'are_lattice_points'"

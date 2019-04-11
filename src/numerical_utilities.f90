@@ -37,7 +37,7 @@ CONTAINS
     real(dp) :: a(:), b(:), rtolerance
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
-    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 5E-5_dp; endif
+    if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 5E-4_dp; endif
 
     equal_rank1 = .false.
     if(all(abs(a-b) == 0.0)) then
