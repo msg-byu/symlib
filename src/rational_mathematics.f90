@@ -48,11 +48,10 @@ CONTAINS
     do while (is_snf .eqv. .False. .and. j<4)
        itCnt = itCnt + 1
        if (itCnt>=100) stop "ERROR bad programming in SmithNormalForm"
-       
        if (new_pivot) then
           call get_min_val(M, j, min_val, row, col)
        end if
-
+       
        do i=1,3
           if (i==col) cycle
           multiple = nint(real(M(row,i),dp)/real(min_val,dp))
@@ -88,20 +87,22 @@ CONTAINS
              A(row,:) = A(row,:) + A(min_row,:)             
           end if
        end if
-       
+
        check = reshape(M,(/9/))
-       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
-            mod(M(3,3),M(2,2))==0) then
-          is_snf = .True.
+       if (all(check((/2,3,4,6,7,8/))==0) .and. all(check((/1,5,9/))/=0)) then
+          if (mod(M(2,2),M(1,1))==0 .and. mod(M(3,3),M(2,2))==0) then
+             is_snf = .True.
+          end if
        end if
     end do
-    
+
     do i=1,3
        if (M(i,i) < 0) then
           M(i,:) = -M(i,:)
           A(i,:) = -A(i,:)
        end if
     end do
+
     if (any(matmul(matmul(A,H),B)/=M)) stop "END: Transformation matrices didn't work"
     check = reshape(M,(/9/))
     if (any(check((/2,3,4,6,7,8/))/=0)) stop "Not diagonal"
@@ -262,9 +263,10 @@ CONTAINS
        end if
        
        check = reshape(M,(/9/))
-       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
-            mod(M(3,3),M(2,2))==0) then
-          is_snf = .True.
+       if (all(check((/2,3,4,6,7,8/))==0) .and. all(check((/1,5,9/))/=0)) then
+          if (mod(M(2,2),M(1,1))==0 .and. mod(M(3,3),M(2,2))==0) then
+             is_snf = .True.
+          end if
        end if
     end do
     
