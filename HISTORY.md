@@ -4,6 +4,7 @@
 - Fixed a bug in both Smith Normal Form routines where it would
   attempt to divide by zero when one of diagonals was set to zero
   during one of the row/column operations.
+- Added an optional absolute tolerance to the minkowski reduce code.
 
 ## Rev 2.0.1
 - At the last revision, there were some left over markers from merge conflicts. Removed those.

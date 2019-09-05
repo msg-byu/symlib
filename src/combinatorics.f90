@@ -173,7 +173,7 @@ CONTAINS
 
          uqlist(i) = count(sm==list) ! How many of this size?
          !The "real" around list below is need to work around a bug in the Absoft compiler
-         sm = minval(real(list),mask=(list>sm))    ! Next unique value bigger than the last
+         sm = minval(list,mask=(list>sm))    ! Next unique value bigger than the last
          if (count(sm==list)==0) exit ! If there aren't any of this
          ! size then we took the largest already
       enddo
