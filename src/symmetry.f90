@@ -609,7 +609,6 @@ CONTAINS
           enddo
        enddo
     enddo
-    print*,"numops",num_ops
 
     allocate(lattpg_op(3,3,num_ops))
     lattpg_op = temp_op(:,:,1:num_ops)
