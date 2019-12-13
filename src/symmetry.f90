@@ -60,7 +60,7 @@ CONTAINS
   !!they are treated as cartesian</parameter>
   !!<parameter name="eps_" regular="true">"epsilon" for checking
   !!equivalence in floating point arithmetic ></parameter>
-  subroutine get_spaceGroup(aVecs, atomType, input_pos,  sg_op, sg_fract, lattcoords, eps_)
+  subroutine get_spaceGroup(aVecs, atomType, input_pos, sg_op, sg_fract, lattcoords, eps_)
 
     real(dp), intent(in):: aVecs(3,3)
     integer, intent(inout):: atomType(:)
@@ -275,7 +275,7 @@ CONTAINS
     integer :: nRot, iRot, status, i
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
 
     if (.not.equal(aVecs(2:3,1),0._dp,eps,atol) .or. &
          .not.equal(aVecs(1,2:3),0._dp,eps,atol) )    &
@@ -354,7 +354,7 @@ CONTAINS
     if(.not. present(eps_)) then; eps = 1e-10_dp
     else; eps = eps_
     endif
-    atol = 1E-6_dp
+    atol = 5E-4_dp
 
     call get_transformations(aVecs, latt_to_cart, cart_to_latt)
 
@@ -521,6 +521,7 @@ CONTAINS
     real(dp) length                  ! Length of currenct vector being checked
     real(dp), parameter:: Identity(3,3) = reshape((/1,0,0, 0,1,0, 0,0,1/),(/3,3/))
     real(dp) eps                     ! "epsilon" for checking equivalence in floating point arithmetic
+                                     ! This is a "relative" tolerance with the new equal routine
     real(dp) atol                    ! An absolute tolerance for the 'equal' subroutine
 
     integer n1, n2, n3              ! Upper limit for loops over R vectors
@@ -529,7 +530,7 @@ CONTAINS
     integer num_ops      ! Used to count the number of point operations found
 
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
-    atol = 1E-3_dp
+    atol = 5E-4_dp
     call matrix_inverse(aVecs, inverse_aVecs)
     ! Store the norms of the three lattice vectors
     do i = 1, 3;norm_avecs(i) = norm(aVecs(:,i));enddo
@@ -600,7 +601,7 @@ CONTAINS
              rotation_matrix = matmul(new_vectors,inverse_aVecs)
              ! Check orthogonality of rotation matrix by [R][R]^T = [1]
              test_matrix = matmul(rotation_matrix,transpose(rotation_matrix))
-             if(equal(test_matrix, Identity, eps,atol)) then ! Found valid rotation
+             if(equal(test_matrix, Identity, eps, atol)) then ! Found valid rotation
                 num_ops = num_ops + 1 ! Count number of rotations
                 temp_op(:,:,num_ops) = rotation_matrix
                 !write(10,'(i5,3i4)') num_ops, i, j, k
@@ -608,7 +609,6 @@ CONTAINS
           enddo
        enddo
     enddo
-
     allocate(lattpg_op(3,3,num_ops))
     lattpg_op = temp_op(:,:,1:num_ops)
 
@@ -686,7 +686,7 @@ CONTAINS
     integer i   ! Loop over atoms
     real(dp) :: this_position(3) ! Position of atom to be checked
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     mapped = .false.
     do i = 1, size(atomType)
        if(atomType(i) == this_type) then
@@ -713,7 +713,7 @@ CONTAINS
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
     if(.not. present(eps_)) then; eps = 1e-10_dp; else; eps = eps_;endif
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     open(11, file="sym_check.out", status="unknown")
     ! Are the operations unique? (Necessary but *insufficient* condition)
     Nops = size(SGop,3)
