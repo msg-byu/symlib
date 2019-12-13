@@ -1,7 +1,12 @@
+
 # Set up conditional compilation so that one Makefile can handle
 # multiple platforms/compilers. Branch according to an environmental
 # variable F90. I wish someone would show me a better way of doing this.
 
+ifeq (${F90},) # Set gfortran as a default if F90 is not set
+  F90 = gfortran
+#  error:  echo Warning: environmental variable "F90" not set. Using gfortran
+endif
 ifeq (${F90},gfortran)  # free fortran compiler
   FFLAGS =  -g -fbounds-check -fPIC -pedantic -Wall -ffree-line-length-none
   FOUND = true
@@ -29,7 +34,7 @@ ifeq (${F90},ifc)  # Intel compiler
   FOUND = true
 endif
 ifeq (${F90},xlf90) # IBM compiler
-  FFLAGS = -g -C -fPIC -qsuffix=f=f90  
+  FFLAGS = -g -C -fPIC -qsuffix=f=f90
   FOUND = true
 endif
 ifeq (${F90},f95) # Absoft PPC compiler
@@ -37,23 +42,24 @@ ifeq (${F90},f95) # Absoft PPC compiler
 # B80 entry into each subroutine  ; Rb bounds; Rc array conformance
   FOUND = true
 endif
+
 ifeq (${F90},)  # If the variable isn't set, make sure compilation bombs
 error:
 	echo Error: environmental variable "F90" not set! Use make F90=[gfortran|ifort]
 endif
 ifneq (${FOUND},true) # If it's set but no matching flags then bomb
-error:	
+error:
 	echo Error: makefile doesn\'t have flags for this compiler; use make F90=[gfortran|ifort]
 endif
 
 SRC = num_types.f90 utilities.f90 numerical_utilities.f90	\
 vector_matrix_utilities.f90 symmetry.f90 compare_structures.f90 \
 combinatorics.f90 rational_mathematics.f90 group_theory.f90 itertools.f90 \
-classes.f90
+classes.f90 spacegroup.f90
 OBJS = ${SRC:.f90=.o}
 
 
-.SUFFIXES :  
+.SUFFIXES :
 .SUFFIXES :  .f .f90 .f95 .o
 
 all: libutils.a libsym.a libcomparestructs.a librational.a \
@@ -87,30 +93,37 @@ libcombinatorics.a: combinatorics.o
 	ranlib $@
 
 compare.x: compare.o compare_driver.o
-	${F90} ${LDFLAGS} -o $@ compare.o compare_driver.o 
+	${F90} ${LDFLAGS} -o $@ compare.o compare_driver.o
 
-#test.x:  combinatorics.o test_mask.o 
+# This exe is needed to generate spacegroup information for tests of enumlib. This is a one-off code
+# but could be adjusted for a more general purpose, stand-alone spacegroup finder
+spacegroup4fortpy.x: num_types.o numerical_utilities.o utilities.o vector_matrix_utilities.o \
+	symmetry.o spacegroup.o
+	${F90} ${LDFLAGS} -o $@ num_types.o numerical_utilities.o utilities.o vector_matrix_utilities.o \
+		symmetry.o spacegroup.o
+
+#test.x:  combinatorics.o test_mask.o
 #	${F90} ${LDFLAGS} -o $@  combinatorics.o test_mask.o libutils.a
-test.x:  test_reduce.o 
+test.x:  test_reduce.o
 	${F90} ${LDFLAGS} -o $@  test_reduce.o libutils.a librational.a
 
 HNFSNF_check: HNF_driver.o
 	${F90} ${LDFLAGS} -o $@ ${OBJS}
 
-.f95.o : 
+.f95.o :
 	${F90} ${FFLAGS} -c $<
 
-.f90.o : 
+.f90.o :
 	${F90} ${FFLAGS} -c $<
 
 CLEAN  = *.o *.mod *.a
-clean : 
+clean :
 	rm -f ${CLEAN}
 
 remake:
 	make clean
 	make
 
-clobber: 
+clobber:
 	rm -f  ${CLEAN}  *~ \#*
 	make
