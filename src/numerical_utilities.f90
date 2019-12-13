@@ -6,7 +6,7 @@ public equal
 ! Overloaded procedure for comparing real types
    INTERFACE equal
       MODULE PROCEDURE equal_scalar , &
-                       equal_rank1,  &                       
+                       equal_rank1,  &
                        equal_rank2,  &
                        equal_rank3,  &
                        equal_rank1_rank0, &
@@ -38,14 +38,14 @@ CONTAINS
     real(dp) :: atolerance
     real(dp), OPTIONAL :: atolerance_
     if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 5E-4_dp; endif
-   
+
     equal_rank1 = .false.
     if(all(abs(a-b) == 0.0)) then
        equal_rank1 = .true. !This line was added so that if a user did
     !request a comparison with a tolerance of zero it would return the
     !correct result, or if the values are actually zero. We added this
     !line instead of making the following one <= so that the codes
-    !original functionallity would be unaltered.
+    !original functionality would be unaltered.
     else if(all(abs(a - b) < atolerance + rtolerance * max(maxval(abs(a)),maxval(abs(b))))) then
        equal_rank1 = .true.
     end if
@@ -231,7 +231,6 @@ CONTAINS
     real(dp), OPTIONAL :: atolerance_
     if(present(atolerance_)) then; atolerance = atolerance_; else; atolerance = 5E-4_dp; endif
 
-    
     equal_rank1_rank0 = .false.
     if(all(abs(a-b) == 0.0)) then
        equal_rank1_rank0 = .true. !This line was added so that if a user did

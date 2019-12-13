@@ -1,4 +1,4 @@
-!!<summary>The point of this module take two structures and compare them to see if the are
+   !!<summary>The point of this module take two structures and compare them to see if the are
 !! equivalent. Implicit in the approach is the assumption that the structures are derivatives
 !! structures of a parent lattice (the same one if they are equivalent).
 !! Gus Hart Dec. 2006
@@ -257,7 +257,6 @@ CONTAINS
     logical :: is_derivative, err
     real(dp)  :: lat1inv(3,3), S(3,3)
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
-
     atol = 5E-4_dp
     is_derivative = .false.
     call matrix_inverse(lat1,lat1inv,err)

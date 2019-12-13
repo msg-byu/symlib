@@ -176,6 +176,7 @@ CONTAINS
           endif
        enddo
     enddo
+
     deallocate(lattpg_op)
 
     ! Now that we know how many space group operations there are,

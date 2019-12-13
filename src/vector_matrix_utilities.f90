@@ -231,16 +231,18 @@ CONTAINS
   !!<parameter name="IN" regular="true"></parameter>
   !!<parameter name="OUT" regular="true"></parameter>
   !!<parameter name="eps" regular="true"></parameter>
-  SUBROUTINE minkowski_reduce_basis(IN,OUT,eps)
+  !!<parameter name="aeps_" regular="true"></parameter>
+  SUBROUTINE minkowski_reduce_basis(IN, OUT, eps, aeps_)
     real(dp), intent(in) :: IN(3,3)
     real(dp), intent(out) :: OUT(3,3)
     real(dp), intent(in) :: eps
-    real(dp)             :: norms(3), temp(3,3)
+    real(dp), optional, intent(in) :: aeps_
+    real(dp)             :: norms(3), temp(3,3), aeps
     integer              :: i, idx(1), it, limit
 
+    if (present(aeps_)) then; aeps = aeps_; else; aeps = 5e-5_dp; endif
     limit = 10
-
-    if (equal(determinant(IN),0._dp,eps)) stop "Input basis for 'minkowski_reduce_basis' was not linearly independent"
+    if (equal(determinant(IN),0._dp,eps, atolerance_=aeps)) stop "Input basis for 'minkowski_reduce_basis' was not linearly independent"
     OUT = IN
 
     ! print*,"in mink routine"
