@@ -1,5 +1,8 @@
 # Revision History for `symlib`
 
+## Rev. 2.0.4 (GLWH)
+- Changed `pointer` to `allocatable` in `find_site_equivalencies` so that UNCLE will compile with new symlib. This routine is only used in UNCLE (not used elsewhere in symlib or enumlib).
+
 ## Rev. 2.0.3 (GLWH)
 - There were many small changes on my local copy that I committed, mostly changes in the
 absolute tolerances. They were made so long ago I don't remember why they were made.
