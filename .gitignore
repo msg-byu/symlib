@@ -36,6 +36,7 @@ src/compile.log
 *.exe
 *.out
 *.app
+spacegroup4fortpy.x
 
 # Junk
 .DS_Store

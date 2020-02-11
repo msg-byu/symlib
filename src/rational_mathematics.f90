@@ -14,7 +14,7 @@ INTERFACE gcd
 END INTERFACE
 
 CONTAINS
-  
+
   !!<summary>This routine takes an integer 3x3 matrix and computes its
   !!Smith Normal Form.</summary>
   !!<parameter name="H" regular="True">Input matrix.</parameter>
@@ -36,7 +36,7 @@ CONTAINS
 
     OverFlowCheck = .False.
     if (present(err_)) OverFlowCheck = .True.
-    
+
     if(determinant(H)<1) stop "SmithNormalForm routine failed because the input matrix had a negative determinant"
     A = 0; B = 0; M = H ! M starts out as H, the input matrix
     forall(i=1:3); A(i,i) = 1; B(i,i) = 1; end forall ! A & B = identity
@@ -48,7 +48,7 @@ CONTAINS
     do while (is_snf .eqv. .False. .and. j<4)
        itCnt = itCnt + 1
        if (itCnt>=100) stop "ERROR bad programming in SmithNormalForm"
-       
+
        if (new_pivot) then
           call get_min_val(M, j, min_val, row, col)
        end if
@@ -85,23 +85,25 @@ CONTAINS
              new_pivot = .False.
              call get_min_loc(M, min_val, j, min_row)
              M(row,:) = M(row,:) + M(min_row,:)
-             A(row,:) = A(row,:) + A(min_row,:)             
+             A(row,:) = A(row,:) + A(min_row,:)
           end if
        end if
-       
+
        check = reshape(M,(/9/))
-       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
-            mod(M(3,3),M(2,2))==0) then
-          is_snf = .True.
+       if (all(check((/2,3,4,6,7,8/))==0) .and. all(check((/1,5,9/))/=0)) then
+          if (mod(M(2,2),M(1,1))==0 .and. mod(M(3,3),M(2,2))==0) then
+             is_snf = .True.
+          end if
        end if
     end do
-    
+
     do i=1,3
        if (M(i,i) < 0) then
           M(i,:) = -M(i,:)
           A(i,:) = -A(i,:)
        end if
     end do
+
     if (any(matmul(matmul(A,H),B)/=M)) stop "END: Transformation matrices didn't work"
     check = reshape(M,(/9/))
     if (any(check((/2,3,4,6,7,8/))/=0)) stop "Not diagonal"
@@ -113,11 +115,11 @@ CONTAINS
        else
           err_ = 0
        end if
-    else 
+    else
        if ((any(abs(real(A,dp)) > 1E17)) .or. (any(abs(real(B,dp)) > 1E17))) stop "Warning Values in SmithNormalForm overflowing standard ints."
     end if
   ENDSUBROUTINE SmithNormalForm_Li
-  
+
   !!<summary>Finds the minimal value in the sub matrix of A where the
   !!sub matrix consits of every row and colum greater than or equal to
   !!diag.</summary>
@@ -157,9 +159,9 @@ CONTAINS
 
   !!<summary>Finds the row of the smallest value not divisible by a
   !!pivot within the sub matrix of A consisting of the row and column
-  !!numbers greater than or equal to diag.</summary>  
+  !!numbers greater than or equal to diag.</summary>
   !!<parameter name="A" regular="true">The input matrix.</parameter>
-  !!<parameter name="pivot" regular="true">The pivot.</parameter>  
+  !!<parameter name="pivot" regular="true">The pivot.</parameter>
   !!<parameter name="diag" regular="true">The row/column number we
   !!want to be below.</parameter>
   !!<parameter name="row" regular="true">The row with the lowest value
@@ -188,7 +190,7 @@ CONTAINS
 
     if (found .eqv. .False.) stop "Failed to find minimal value in get_min_val."
   end subroutine get_min_loc
-  
+
   !!<summary>This routine takes an integer 3x3 matrix and computes its
   !!Smith Normal Form.</summary>
   !!<parameter name="H" regular="True">Input matrix.</parameter>
@@ -197,7 +199,7 @@ CONTAINS
   !!<parameter name="B" regular="True">Right Transform.</parameter>
   !!<parameter name="err_" regular="True">Returns 1 if overflow occures.</parameter>
   subroutine SmithNormalForm(H,A,M,B,err_)
-    integer, intent(in) :: H(3,3) 
+    integer, intent(in) :: H(3,3)
     integer, intent(out), dimension(3,3) :: M, A, B
     integer, optional, intent(out) :: err_
 
@@ -208,7 +210,7 @@ CONTAINS
 
     OverFlowCheck = .False.
     if (present(err_)) OverFlowCheck = .True.
-    
+
     if(determinant(H)<1) stop "SmithNormalForm routine failed because the input matrix had a negative determinant"
     A = 0; B = 0; M = H ! M starts out as H, the input matrix
     forall(i=1:3); A(i,i) = 1; B(i,i) = 1; end forall ! A & B = identity
@@ -220,7 +222,7 @@ CONTAINS
     do while (is_snf .eqv. .False. .and. j<4)
        itCnt = itCnt + 1
        if (itCnt>=100) stop "ERROR bad programming in SmithNormalForm"
-       
+
        if (new_pivot) then
           call get_min_val(M, j, min_val, row, col)
        end if
@@ -257,17 +259,18 @@ CONTAINS
              new_pivot = .False.
              call get_min_loc(M, min_val, j, min_row)
              M(row,:) = M(row,:) + M(min_row,:)
-             A(row,:) = A(row,:) + A(min_row,:)             
+             A(row,:) = A(row,:) + A(min_row,:)
           end if
        end if
-       
+
        check = reshape(M,(/9/))
-       if (all(check((/2,3,4,6,7,8/))==0) .and. mod(M(2,2),M(1,1))==0 .and. &
-            mod(M(3,3),M(2,2))==0) then
-          is_snf = .True.
+       if (all(check((/2,3,4,6,7,8/))==0) .and. all(check((/1,5,9/))/=0)) then
+          if (mod(M(2,2),M(1,1))==0 .and. mod(M(3,3),M(2,2))==0) then
+             is_snf = .True.
+          end if
        end if
     end do
-    
+
     do i=1,3
        if (M(i,i) < 0) then
           M(i,:) = -M(i,:)
@@ -285,7 +288,7 @@ CONTAINS
        else
           err_ = 0
        end if
-    else 
+    else
        if ((any(abs(A) > 1E9)) .or. (any(abs(B) > 1E9))) stop "Warning Values in SmithNormalForm overflowing standard ints."
     end if
   ENDSUBROUTINE SmithNormalForm
@@ -302,8 +305,8 @@ CONTAINS
   !!<parameter name="B" regular="true">The transformation matrix such
   !!that $H = SB$.</parameter>
   subroutine HermiteNormalForm(S,H,B)
-    integer, intent(in) :: S(3,3) 
-    integer, intent(out), dimension(3,3) :: H, B 
+    integer, intent(in) :: S(3,3)
+    integer, intent(out), dimension(3,3) :: H, B
 
     !!<local name="tempcol">When two columns need to be swapped,
     !!tempcol mediates the swap.</local>
@@ -324,7 +327,7 @@ CONTAINS
     forall(i=1:3); B(i,i) = 1; end forall ! B = identity
 
     do ! Keep doing column operations until all elements in row 1 are
-       ! zero except the one on the diagonal. 
+       ! zero except the one on the diagonal.
        ! Divide the column with the smallest value into the largest
        do while (count(H(1,:)/=0) > 1) ! Keep going until only zeros beyond first element
           call get_minmax_indices(H(1,:),minidx,maxidx)
@@ -347,8 +350,8 @@ CONTAINS
     do
        do while (H(2,3)/=0)
           if (H(2,2) == 0) then
-             tempcol = H(:,2); H(:,2) = H(:,3); H(:,3) = tempcol 
-             tempcol = B(:,2); B(:,2) = B(:,3); B(:,3) = tempcol 
+             tempcol = H(:,2); H(:,2) = H(:,3); H(:,3) = tempcol
+             tempcol = B(:,2); B(:,2) = B(:,3); B(:,3) = tempcol
              if (H(2,3) == 0) exit
           endif
           if (abs(H(2,3))<abs(H(2,2))) then; maxidx = 2; minidx = 3
@@ -359,7 +362,7 @@ CONTAINS
           if (any(matmul(S,B)/=H)) stop "COLS: Transformation matrices didn't work"
        enddo
        if (H(2,2) == 0) then
-          tempcol = H(:,2); H(:,2) = H(:,3); H(:,3) = tempcol 
+          tempcol = H(:,2); H(:,2) = H(:,3); H(:,3) = tempcol
        endif
        if (H(2,2)<0) then ! Change signs
        H(:,2) = -H(:,2); B(:,2) = -B(:,2); endif
@@ -374,8 +377,8 @@ CONTAINS
     check = reshape(H,(/9/))
     if (any(check((/4,7,8/))/=0)) stop "Not lower triangular"
     if (any(matmul(S,B)/=H)) stop "END PART1: Transformation matrices didn't work"
- 
-    ! Now that the matrix is in lower triangular form, make sure the lower off-diagonal 
+
+    ! Now that the matrix is in lower triangular form, make sure the lower off-diagonal
     ! elements are non-negative but less than the diagonal elements
     do while (H(2,2) <= H(2,1) .or. H(2,1)<0)
        if (H(2,2) <= H(2,1)) then; multiple = 1
@@ -406,7 +409,7 @@ CONTAINS
   !   integer, intent(inout) :: M(3,3), A(3,3)
   !   integer, intent(in) :: k
   !   integer :: tmpRow(3), maxidx(1)
- 
+
   !   maxidx = maxloc(abs(M(k:,k)))+k-1  ! find index of the non-zero element in col k
   !   tmpRow = A(k,:); A(k,:) = A(maxidx(1),:); A(maxidx(1),:) = tmpRow
   !   tmpRow = M(k,:); M(k,:) = M(maxidx(1),:); M(maxidx(1),:) = tmpRow
@@ -422,11 +425,11 @@ CONTAINS
   !!of the transformation steps on 'M'.</parameter>
   !!<parameter name="k" regular="true">The column to swap, as
   !!described in summary.</parameter>
-  subroutine swap_column(M,B,k) 
+  subroutine swap_column(M,B,k)
     integer, intent(inout) :: M(3,3), B(3,3)
     integer, intent(in) :: k
     integer :: tmpCol(3), maxidx(1)
- 
+
     maxidx = maxloc(abs(M(k,k:)))+k-1 ! find index of the non-zero element in row k
     tmpCol = B(:,k); B(:,k) = B(:,maxidx(1)); B(:,maxidx(1)) = tmpCol
     tmpCol = M(:,k); M(:,k) = M(:,maxidx(1)); M(:,maxidx(1)) = tmpCol
@@ -453,7 +456,7 @@ CONTAINS
   !   smax = tmpmax2(1)
   !   max = tmpmax(1)
   ! endsubroutine get_max2max_indices
-  
+
   !!<summary>Finds the indices corresponding the minimum and maximum
   !!values in an integer vector.</summary>
   !!<parameter name="invec" regular="true"></parameter>
@@ -484,8 +487,8 @@ CONTAINS
 
     integer :: a, b
     a = abs(x1); b = abs(x2) ! Make sure inputs are positive
-    if (b>a) call swap(a,b)  
-    
+    if (b>a) call swap(a,b)
+
     do ! Keep dividing a by b, until one of them is zero
        if (b>a) call swap(a,b) ! Keep the bigger number in a's place
        if (b == 0) exit ! we're done when b == 0
@@ -510,12 +513,12 @@ CONTAINS
   function gcd_rank1(x) result(divisor)
     integer, intent(in) :: x(:)
     integer :: divisor
-    
+
     integer :: a(size(x)), N, indx(1), big2
 
     N = size(x); a = abs(x)
     if (any(a<0)) stop "GCD requires non-negative integers"
-    do ! Divide the biggest number by the second biggest until 
+    do ! Divide the biggest number by the second biggest until
        ! the second biggest is zero
        indx = maxloc(a)  ! Find the location of the biggest number
        if (all(a == a(indx(1)))) then ! check if all numbers are the same
@@ -528,7 +531,7 @@ CONTAINS
     enddo
     divisor = a(indx(1)) ! The divisor is the number left when every other member==0
   endfunction gcd_rank1
-  
+
   !!<summary>This function finds the greatest common denominator of
   !!several integers. This case works on 3 integers, not in an array.</summary>
   !!<parameter name="x1" ></parameter>
@@ -565,7 +568,7 @@ CONTAINS
     logical :: is_a_rational_in_range
     integer :: j2
     real(dp) :: eps,left,right
-    
+
     is_a_rational_in_range = .false.
 
     if (present(eps_)) then
@@ -602,7 +605,7 @@ CONTAINS
     real(dp) :: eps,left,right
 
     nullify(numerators)
-    
+
     if (present(eps_)) then
        eps = eps_
     else

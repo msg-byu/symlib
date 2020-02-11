@@ -1,4 +1,4 @@
-!!<summary>The point of this module take two structures and compare them to see if the are
+   !!<summary>The point of this module take two structures and compare them to see if the are
 !! equivalent. Implicit in the approach is the assumption that the structures are derivatives
 !! structures of a parent lattice (the same one if they are equivalent).
 !! Gus Hart Dec. 2006
@@ -90,7 +90,7 @@ CONTAINS
     integer :: il, lab ! loop counter over label types in str1, temporary label
     integer :: SMskip  ! counts number of lattices skipped because they don't match in the
                        ! Santoro and Mighell sense.
-    
+
     if(present(status)) status = 0
     N1 = size(aTyp1) ! Number of atoms in str1
     N2 = size(aTyp2) ! Number of atoms in str2
@@ -98,7 +98,7 @@ CONTAINS
     SMskip = 0       ! Number of times a rotation was skipped because, for
                      ! this particular orientation, the cells of str1 and str2
                      ! aren't derivative lattices
-    identical = .false. 
+    identical = .false.
     LV1 = LV1in; aPos1 = aPos1in; aTyp1 = aTyp1in
     LV2 = LV2in; aPos2 = aPos2in; aTyp2 = aTyp2in
     ! Check that structures have the same # atoms/cell
@@ -106,7 +106,7 @@ CONTAINS
        if (present(status)) status=4
        return
     endif
-    
+
     ! Get inverse of LV1 for use later
     call matrix_inverse(LV1,LV1inv,err)
     if (err) stop "Lattice vectors of first input structure are co-planar"
@@ -145,7 +145,7 @@ CONTAINS
        deallocate(pTyp,pPos)
        return;
     endif
-    
+
     ! Are the atoms of str2 on lattice sites of str1's underlying lattice?
     if (.not. are_lattice_points(pVecs,aPos2,pPos,eps)) then
        if (present(status)) status=3;
@@ -176,7 +176,7 @@ CONTAINS
           !write(*,*) "## Santoro-Mighell skip ##"
           cycle
        endif
-       
+
        ! If we get to here then the lattice vectors are equivalent
        ! (derivative lattices). So now check atomic configuration.
        ! I think it makes sense that the rotated atomic basis vectors
@@ -234,9 +234,12 @@ CONTAINS
     real(dp)  :: lat1inv(3,3), S(3,3)
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     is_equiv_lattice = .false.
     call matrix_inverse(lat1,lat1inv,err)
+     print*,"after matrix_inverse in symlib"
+    print*,lat1
+    print*,lat1inv
     if (err) stop "Problem with input vectors in function 'is_equiv_lattice'"
     S = matmul(lat1inv,lat2)
     if (equal(abs(determinant(S)),1._dp,eps,atol) .and. &
@@ -254,8 +257,7 @@ CONTAINS
     logical :: is_derivative, err
     real(dp)  :: lat1inv(3,3), S(3,3)
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
-    
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     is_derivative = .false.
     call matrix_inverse(lat1,lat1inv,err)
     if (err) stop "Problem with input vectors in function 'is_derivative'"
@@ -273,8 +275,8 @@ CONTAINS
     real(dp) :: lattcoords(3)
     logical :: is_lattice_point, err
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
-    
-    atol = 1E-6_dp
+
+    atol = 5E-4_dp
     is_lattice_point = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'is_lattice_point'"
@@ -297,7 +299,7 @@ CONTAINS
     integer :: iB, nB, nPt, iPt
     real(dp) :: atol  ! An absolute tolerance for the "equal" function
 
-    atol = 1E-6_dp
+    atol = 5E-4_dp
     are_lattice_points = .false.; flag = .false.
     call matrix_inverse(LV,LVinv,err)
     if(err) stop "Problem with matrix inverse in function 'are_lattice_points'"
