@@ -758,7 +758,7 @@ CONTAINS
 
   end subroutine check_spaceGroup
 
-  !!<summary>This subroutine finds site equivalencies.</summary>
+  !!<summary>This subroutine finds site equivalencies. Only used in UNCLE (2/6/2020)</summary>
   !!<parameter name="pBas"></parameter>
   !!<parameter name="siteLabel"></parameter>
   !!<parameter name="pLV" regular="true"></parameter>
@@ -766,7 +766,7 @@ CONTAINS
   !!<parameter name="nSites" regular="true"></parameter>
   !!<parameter name="eps_" regular="true"></parameter>
   SUBROUTINE find_site_equivalencies(pBas, siteLabel, pLV, BasEq, nSites, eps_)
-    real(dp), pointer :: pBas(:,:)
+    real(dp) :: pBas(:,:)
     real(dp), intent(in) :: pLV(3,3)
     integer, pointer :: BasEq(:), siteLabel(:)
     real(dp), intent(in), optional :: eps_
