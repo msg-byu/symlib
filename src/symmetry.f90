@@ -60,7 +60,7 @@ CONTAINS
   !!they are treated as cartesian</parameter>
   !!<parameter name="eps_" regular="true">"epsilon" for checking
   !!equivalence in floating point arithmetic ></parameter>
-  subroutine get_spaceGroup(aVecs, atomType, input_pos,  sg_op, sg_fract, lattcoords, eps_)
+  subroutine get_spaceGroup(aVecs, atomType, input_pos, sg_op, sg_fract, lattcoords, eps_)
 
     real(dp), intent(in):: aVecs(3,3)
     integer, intent(inout):: atomType(:)
@@ -522,6 +522,7 @@ CONTAINS
     real(dp) length                  ! Length of currenct vector being checked
     real(dp), parameter:: Identity(3,3) = reshape((/1,0,0, 0,1,0, 0,0,1/),(/3,3/))
     real(dp) eps                     ! "epsilon" for checking equivalence in floating point arithmetic
+                                     ! This is a "relative" tolerance with the new equal routine
     real(dp) atol                    ! An absolute tolerance for the 'equal' subroutine
 
     integer n1, n2, n3              ! Upper limit for loops over R vectors
@@ -601,7 +602,7 @@ CONTAINS
              rotation_matrix = matmul(new_vectors,inverse_aVecs)
              ! Check orthogonality of rotation matrix by [R][R]^T = [1]
              test_matrix = matmul(rotation_matrix,transpose(rotation_matrix))
-             if(equal(test_matrix, Identity, eps,atol)) then ! Found valid rotation
+             if(equal(test_matrix, Identity, eps, atol)) then ! Found valid rotation
                 num_ops = num_ops + 1 ! Count number of rotations
                 temp_op(:,:,num_ops) = rotation_matrix
                 !write(10,'(i5,3i4)') num_ops, i, j, k
@@ -609,7 +610,7 @@ CONTAINS
           enddo
        enddo
     enddo
-    
+
     allocate(lattpg_op(3,3,num_ops))
     lattpg_op = temp_op(:,:,1:num_ops)
 
@@ -758,7 +759,7 @@ CONTAINS
 
   end subroutine check_spaceGroup
 
-  !!<summary>This subroutine finds site equivalencies.</summary>
+  !!<summary>This subroutine finds site equivalencies. Only used in UNCLE (2/6/2020)</summary>
   !!<parameter name="pBas"></parameter>
   !!<parameter name="siteLabel"></parameter>
   !!<parameter name="pLV" regular="true"></parameter>
@@ -766,7 +767,7 @@ CONTAINS
   !!<parameter name="nSites" regular="true"></parameter>
   !!<parameter name="eps_" regular="true"></parameter>
   SUBROUTINE find_site_equivalencies(pBas, siteLabel, pLV, BasEq, nSites, eps_)
-    real(dp), pointer :: pBas(:,:)
+    real(dp) :: pBas(:,:)
     real(dp), intent(in) :: pLV(3,3)
     integer, pointer :: BasEq(:), siteLabel(:)
     real(dp), intent(in), optional :: eps_
