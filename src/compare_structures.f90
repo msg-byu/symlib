@@ -1,4 +1,4 @@
-   !!<summary>The point of this module take two structures and compare them to see if the are
+!!<summary>The point of this module take two structures and compare them to see if the are
 !! equivalent. Implicit in the approach is the assumption that the structures are derivatives
 !! structures of a parent lattice (the same one if they are equivalent).
 !! Gus Hart Dec. 2006
@@ -237,9 +237,6 @@ CONTAINS
     atol = 5E-4_dp
     is_equiv_lattice = .false.
     call matrix_inverse(lat1,lat1inv,err)
-     print*,"after matrix_inverse in symlib"
-    print*,lat1
-    print*,lat1inv
     if (err) stop "Problem with input vectors in function 'is_equiv_lattice'"
     S = matmul(lat1inv,lat2)
     if (equal(abs(determinant(S)),1._dp,eps,atol) .and. &
