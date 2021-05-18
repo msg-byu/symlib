@@ -181,7 +181,7 @@ CONTAINS
     end select
 
     ABC = reshape((/A,B,C/),(/3,3/))
-    call matrix_inverse(ABC,ABCinv,err)
+    call matrix_inverse(ABC,ABCinv,err,eps)
     if(any(abs(matmul(ABCinv,oldABC)-nint(matmul(ABCinv,oldABC)))>eps)) stop "Lattice was not preserved &
          & in reduce_A_in_ABC"
 
