@@ -142,7 +142,7 @@ CONTAINS
     ! Now find the four points of the A,B lattice, in the affine plane, that enclose the point T
     ABC = reshape((/A,B,C/),(/3,3/))
 
-    call matrix_inverse(ABC,ABCinv,err)
+    call matrix_inverse(ABC,ABCinv,err,eps)
     if(err)stop "A,B,C vectors in reduce_C_in_ABC are co-planar"
     LC = floor(matmul(ABCinv,T) + eps)
 
