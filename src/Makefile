@@ -80,15 +80,15 @@ libsym.a: symmetry.o group_theory.o itertools.o classes.o
 	ar ru $@ $?
 	ranlib $@
 
-libcomparestructs.a: compare_structures.o
-	ar ru $@ $?
-	ranlib $@
-
 librational.a: rational_mathematics.o
 	ar ru $@ $?
 	ranlib $@
 
 libcombinatorics.a: combinatorics.o
+	ar ru $@ $?
+	ranlib $@
+
+libcomparestructs.a: compare_structures.o
 	ar ru $@ $?
 	ranlib $@
 
@@ -102,14 +102,11 @@ spacegroup4fortpy.x: num_types.o numerical_utilities.o utilities.o vector_matrix
 	${F90} ${LDFLAGS} -o $@ num_types.o numerical_utilities.o utilities.o vector_matrix_utilities.o \
 		symmetry.o spacegroup.o
 
-#test.x:  combinatorics.o test_mask.o
-#	${F90} ${LDFLAGS} -o $@  combinatorics.o test_mask.o libutils.a
-test.x:  test_reduce.o
-	${F90} ${LDFLAGS} -o $@  test_reduce.o libutils.a librational.a
-
-HNFSNF_check: HNF_driver.o
-	${F90} ${LDFLAGS} -o $@ ${OBJS}
-
+sym.x: num_types.o numerical_utilities.o utilities.o vector_matrix_utilities.o \
+	symmetry.o symdriver.o
+	${F90} ${LDFLAGS} -o $@ num_types.o numerical_utilities.o utilities.o vector_matrix_utilities.o \
+		symmetry.o symdriver.o
+	
 .f95.o :
 	${F90} ${FFLAGS} -c $<
 
