@@ -609,7 +609,6 @@ CONTAINS
           enddo
        enddo
     enddo
-    print*,"numops",num_ops
 
     allocate(lattpg_op(3,3,num_ops))
     lattpg_op = temp_op(:,:,1:num_ops)
@@ -767,7 +766,7 @@ CONTAINS
   !!<parameter name="nSites" regular="true"></parameter>
   !!<parameter name="eps_" regular="true"></parameter>
   SUBROUTINE find_site_equivalencies(pBas, siteLabel, pLV, BasEq, nSites, eps_)
-    real(dp), pointer :: pBas(:,:)
+    real(dp), allocatable :: pBas(:,:)
     real(dp), intent(in) :: pLV(3,3)
     integer, pointer :: BasEq(:), siteLabel(:)
     real(dp), intent(in), optional :: eps_
