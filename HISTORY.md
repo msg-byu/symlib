@@ -1,5 +1,18 @@
 # Revision History for `symlib`
 
+## Rev. 2.0.4 (GLWH)
+- Changed `pointer` to `allocatable` in `find_site_equivalencies` so that UNCLE will compile with new symlib. This routine is only used in UNCLE (not used elsewhere in symlib or enumlib).
+
+## Rev. 2.0.3 (GLWH)
+- There were many small changes on my local copy that I committed, mostly changes in the
+absolute tolerances. They were made so long ago I don't remember why they were made.
+
+## Rev 2.0.2
+- Fixed a bug in both Smith Normal Form routines where it would
+  attempt to divide by zero when one of diagonals was set to zero
+  during one of the row/column operations.
+- Added an optional absolute tolerance to the minkowski reduce code.
+
 ## Rev 2.0.1
 - At the last revision, there were some left over markers from merge conflicts. Removed those.
 - added 'regular = "true" to parameter tag for atom_pos; it had been changed from 'pointer' to 'allocatable'

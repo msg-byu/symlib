@@ -88,11 +88,11 @@
       </assignment>
     </group>
   </decorates>
-  
+
   <decorates name="rational_mathematics.SmithNormalForm">
     <group name="SNF_tests" purpose="testing" staging="../unittests/">
       <test identifier="SNF_A" description="Original SNF testing"
-	    timed="true"  cases="[1-20]">
+	    timed="true"  cases="[1-21]">
 	<output identifier="A.out" folder="../tests/rational_mathematics"
 		file="SmithNormalForm_A.out.{}" template="integer.xml" />
 	<target name="A" compareto="A.out" varfile="A.out" when="each" />
