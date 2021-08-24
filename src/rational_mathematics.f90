@@ -210,7 +210,8 @@ CONTAINS
 
     OverFlowCheck = .False.
     if (present(err_)) OverFlowCheck = .True.
-
+    if(H(1,2)/=0 .or. H(1,3)/=0 .or. H(2,3)/=0) stop "SmithNormalForm routine failed. Non-zero elements above the diagonal"
+    if(H(1,1)==0 .or. H(2,2)==0 .or. H(3,3)==0) stop "SmithNormalForm routine failed. Zeros on diagonal of input matrix"
     if(determinant(H)<1) stop "SmithNormalForm routine failed because the input matrix had a negative determinant"
     A = 0; B = 0; M = H ! M starts out as H, the input matrix
     forall(i=1:3); A(i,i) = 1; B(i,i) = 1; end forall ! A & B = identity
@@ -283,13 +284,13 @@ CONTAINS
     if (mod(M(2,2),M(1,1))/=0 .or. mod(M(3,3),M(2,2))/=0) stop "SNF conditions not met"
     if (OverFlowCheck) then
        if ((any(abs(A) > 1E9)) .or. (any(abs(B) > 1E9))) then
-          write(*,*) "Warning Values in SmithNormalForm overflowing standard ints."
+          write(*,*) "WARNING: Values in SmithNormalForm overflowing standard ints."
           err_ = 1
        else
           err_ = 0
        end if
-    else
-       if ((any(abs(A) > 1E9)) .or. (any(abs(B) > 1E9))) stop "Warning Values in SmithNormalForm overflowing standard ints."
+    else 
+       if ((any(abs(A) > 1E9)) .or. (any(abs(B) > 1E9))) stop "WARNING: Values in SmithNormalForm overflowing standard ints."
     end if
   ENDSUBROUTINE SmithNormalForm
 

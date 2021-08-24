@@ -766,7 +766,8 @@ CONTAINS
   !!<parameter name="nSites" regular="true"></parameter>
   !!<parameter name="eps_" regular="true"></parameter>
   SUBROUTINE find_site_equivalencies(pBas, siteLabel, pLV, BasEq, nSites, eps_)
-    real(dp) :: pBas(:,:)
+    real(dp), allocatable :: pBas(:,:)
+
     real(dp), intent(in) :: pLV(3,3)
     integer, pointer :: BasEq(:), siteLabel(:)
     real(dp), intent(in), optional :: eps_
