@@ -13,7 +13,7 @@
 MODULE symmetry
   use num_types
   use numerical_utilities, only: equal
-  use vector_matrix_utilities, only: matrix_inverse, norm, cross_product, volume
+  use vector_matrix_utilities, only: matrix_inverse, norm, cross_product, volume, determinant
 
   implicit none
   private
@@ -339,7 +339,7 @@ CONTAINS
     integer tempType(size(atomType))    ! Temporary storage for use during reallocation
     real(dp) temp_pos(3,size(atomType)) ! Temporary storage for use during reallocation
     real(dp) fract(3)       ! Fractional translation
-    real(dp) v(3)           ! Position of current atom after a fractional translation
+    real(dp) v(3), minvol   ! Position of current atom after a fractional translation
     real(dp) cart_to_latt(3,3)  ! Transforms vectors from cartesian coords to lattice coords
     real(dp) latt_to_cart(3,3)  ! Transforms vectors from lattice coords to cartesian coords
     real(dp) eps            ! "epsilon" for checking equivalence in floating point arithmetic
@@ -350,8 +350,7 @@ CONTAINS
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
 
     nAtoms = size(atomType)
-
-    ! optional arguments
+    minvol = abs(determinant(aVecs))/nAtoms !smallest possible cell volume for a reduced cell
     if(.not. present(eps_)) then; eps = 1e-10_dp
     else; eps = eps_
     endif
@@ -438,10 +437,10 @@ CONTAINS
                 aVecs(:,1) = lattice_point(:,i)
                 aVecs(:,2) = lattice_point(:,j)
                 aVecs(:,3) = lattice_point(:,k)
-                ! If the points are coplanar, inverse will be singular.
-                ! If so, try the next triplet
-                call matrix_inverse(aVecs, cart_to_latt, err, eps)
-                if(err) cycle
+                ! If the new vectors are linearly independent, then their volume will be smaller
+                ! than cell_volume/nAtoms, the smallest possible value (==minvol).
+                if (abs(determinant(aVecs))+eps < minvol) cycle
+                call matrix_inverse(aVecs, cart_to_latt)
                 do iFract = 1, nFracts
                    ! put points in lattice coordinates using the new basis vectors
                    v = matmul(cart_to_latt, lattice_point(:,iFract))
@@ -488,8 +487,7 @@ CONTAINS
           removed_ = pack(removed,removed/=0)
        endif
     endif
-
-    ! Convert the positions of the basis atoms back to cartesion coordinates, if necessary
+    ! Convert the positions of the basis atoms back to Cartesian coordinates, if necessary
     if(lattcoords .eqv. .true.) then
        do i = 1, nAtoms
           atom_pos(:,i) = matmul(cart_to_latt, atom_pos(:,i))
