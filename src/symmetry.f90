@@ -344,7 +344,6 @@ CONTAINS
     real(dp) latt_to_cart(3,3)  ! Transforms vectors from lattice coords to cartesian coords
     real(dp) eps            ! "epsilon" for checking equivalence in floating point arithmetic
     logical mapped          ! Set to true by "does_mapping_exist" if the atom is mapped
-    logical err             ! Used in matrix_inverse to check for coplanar vectors
     real(dp), allocatable:: fracts(:,:) ! Array of possible fractional translations
     real(dp), allocatable:: lattice_point(:,:) ! Stores extra lattice points
     real(dp) :: atol  ! An absolute tolerance for the "equal" subroutine
