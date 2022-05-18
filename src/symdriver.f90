@@ -29,8 +29,8 @@ allocate(aTyp(nAt),d(3,nAt))
 do i = 1,nAt
   read(33,*) aTyp(i), d(:,i)
 enddo
-call get_lattice_pointGroup(LV, pg)
-call get_spacegroup(LV, aTyp, d, rots, shifts, .false.)
+call get_lattice_pointGroup(LV, pg, 2e-3_dp)
+call get_spacegroup(LV, aTyp, d, rots, shifts, .false.,2e-3_dp)
 close(33)
 
 nSG=size(rots,3); nLPG=size(pg,3)
