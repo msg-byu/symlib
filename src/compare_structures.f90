@@ -236,7 +236,7 @@ CONTAINS
 
     atol = 5E-4_dp
     is_equiv_lattice = .false.
-    call matrix_inverse(lat1,lat1inv,err)
+    call matrix_inverse(lat1,lat1inv,err,10d-13)
     if (err) stop "Problem with input vectors in function 'is_equiv_lattice'"
     S = matmul(lat1inv,lat2)
     if (equal(abs(determinant(S)),1._dp,eps,atol) .and. &
