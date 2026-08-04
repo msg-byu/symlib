@@ -242,7 +242,16 @@ CONTAINS
 
     if (present(aeps_)) then; aeps = aeps_; else; aeps = 5e-5_dp; endif
     limit = 10
-    if (equal(determinant(IN),0._dp,eps, atolerance_=aeps)) &
+    ! Scale-free linear independence check:
+    ! Compare |det| against the product of column norms so that uniform
+    ! scaling of the basis (which preserves linear independence) does not
+    ! trigger the stop at some mesh densities.  |det| and ∏‖colᵢ‖ share
+    ! the same physical dimension (bohr⁻³ or Å⁻³), making their ratio
+    ! dimensionless and independent of the mesh.
+    norms(1) = sqrt(dot_product(IN(:,1), IN(:,1)))
+    norms(2) = sqrt(dot_product(IN(:,2), IN(:,2)))
+    norms(3) = sqrt(dot_product(IN(:,3), IN(:,3)))
+    if (abs(determinant(IN)) < aeps * product(norms)) &
     stop "Input basis for 'minkowski_reduce_basis' was not linearly independent"
     OUT = IN
 
